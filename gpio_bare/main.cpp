@@ -122,6 +122,8 @@ int notmain ( )
     i2c i2c1(reinterpret_cast<unsigned int*>(i2c::BSC1_BAR));
     uart_outln();
 
+    unsigned ctrl = i2c1.get_control()/i2c1.get_status();
+    uart_out(ctrl);
     i2c1.init();
     i2c1.enable();
     uart_out(" bar=");
