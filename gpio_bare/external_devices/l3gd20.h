@@ -10,6 +10,22 @@
 
 #include "i2c.h"
 
+//    enum { LG3D20_ADDR=0x06B };
+//    l3gd20 gyro(LG3D20_ADDR, i2c1);
+//    gyro.enable();
+//    short address = gyro.identify();
+//    short temp=0;
+//    unsigned char status=0;
+//    short x=0,y=0,z=0;
+//    if (gyro.measurements(temp, status, x, y, z))
+//    {
+//		// use data
+//    }
+//    else
+//    {
+//    	// no data update
+//    }
+
 class l3gd20 {
 public:
 	l3gd20(unsigned char address, i2c& i2cbus) : addr_(address), i2cbus_(i2cbus) {}

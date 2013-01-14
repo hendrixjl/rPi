@@ -20,6 +20,7 @@ extern "C" void enable_irq ( void );
 volatile unsigned int icount;
 extern "C" void c_irq_handler ( void )
 {
+	uart_out(".");
 	arm_timer_clear_irq();
     icount++;
     if(icount&1)
@@ -40,23 +41,6 @@ int notmain ( )
     disable_basic_interrupt(IRQ_ARM_TIMER);
 
 	uart_out("Hello from gpio_bare");
-	uart_outln();
-    uart_outln();
-    unsigned long n = 0xffffffff;
-    uart_out(n);
-    uart_outln();
-    uart_out("123456789012345678901234567890");
-    uart_outln();
-    n = 123456789UL;
-    uart_out(n);
-    uart_outln();
-
-    long nn = -1234;
-    uart_out(nn);
-    uart_outln();
-
-    nn = -123456789;
-    uart_out(nn);
     uart_outln();
 
     gpio_t::fsel(gpio_t::PIN_16, gpio_t::OUTPUT);
@@ -66,28 +50,6 @@ int notmain ( )
     	TIMER_RELOAD=1000000-1,
     	PRESCALE_CNTRL=0xF9
     };
-//    timer.setup(TIMER_LOAD, TIMER_RELOAD, PRESCALE_CNTRL);
-//    timer.enable();
-//    uart_out("Enable Timer: (IRQ Disabled)");
-//	uart_outln();
-//    timer_reg_dump();
-//
-//    for (unsigned int ra=0; ra<3; ++ra) {
-//    	timer_reg_dump();
-//		if (timer.irq_pending_raw()) {
-//			timer.clear_timer_irq();
-//		}
-//		busy_loop(2500000);
-//    }
-//
-//    timer.clear_timer_irq();
-//    timer.irq_enable();
-//    uart_out("IRQ Enabled");
-//	uart_outln();
-//    timer_reg_dump();
-//
-//	uart_outln();
-
     uart_out("Use ISR to toggle LED.");
 	uart_outln();
 
@@ -113,42 +75,6 @@ int notmain ( )
     uart_out(" status=");
     uart_hex_out(i2c1.get_status());
     uart_outln();
-
-    enum { LG3D20_ADDR=0x06B };
-    l3gd20 gyro(LG3D20_ADDR, i2c1);
-    gyro.enable();
-    uart_out("cntrl1=");
-    uart_hex_out(gyro.get_ctrl1());
-    uart_out(" who=");
-    uart_hex_out(gyro.identify());
-    uart_outln();
-
-    for (unsigned g=0; g<10; g++)
-    {
-    	short temp=0;
-    	unsigned char status=0;
-    	short x=0,y=0,z=0;
-    	if (gyro.measurements(temp, status, x, y, z))
-    	{
-			uart_out(" temp=");
-			uart_out(temp);
-			uart_out(" status=");
-			uart_hex_out(status);
-			uart_out(" (");
-			uart_out(x);
-			uart_out(",");
-			uart_out(y);
-			uart_out(",");
-			uart_out(z);
-			uart_out(")");
-			uart_outln();
-    	}
-    	else
-    	{
-    		uart_out("no data");
-    		uart_outln();
-    	}
-    }
 
     enum { MCP23008_ADDRESS=0x20 };
     mcp23008 mcp(MCP23008_ADDRESS, i2c1);
