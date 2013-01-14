@@ -4,8 +4,9 @@
 
 
 #include "gpio.h"
-#include "bsp_irq.h"
+#include "bsp.h"
 #include "arm_timer.h"
+#include "interrupts.h"
 #include "utils.h"
 #include "uart.h"
 #include "i2c.h"
@@ -17,27 +18,10 @@ extern "C" void enable_irq ( void );
 //-------------------------------------------------------------------------
 
 
-void timer_reg_dump()
-{
-	static arm_timer_t& timer = arm_timer_t::get_reference();
-    uart_out(" : ");
-    uart_hex_out(timer.get_timer_ctrl());
-	uart_out("  ");
-	uart_hex_out(timer.get_free_val());
-	uart_out("  ");
-	uart_hex_out(timer.get_current_val());
-	uart_out("  ");
-	uart_hex_out(static_cast<unsigned char>(timer.irq_pending_raw()));
-	uart_out("  ");
-	uart_hex_out(static_cast<unsigned char>(timer.irq_pending()));
-	uart_outln();
-}
-
 volatile unsigned int icount;
 extern "C" void c_irq_handler ( void )
 {
-	static arm_timer_t& timer = arm_timer_t::get_reference();
-    timer.clear_timer_irq();
+	arm_timer_clear_irq();
     icount++;
     if(icount&1)
     {
@@ -52,9 +36,9 @@ extern "C" void c_irq_handler ( void )
 extern "C"
 int notmain ( )
 {
-	static arm_timer_t& timer = arm_timer_t::get_reference();
 	uart_init ();
-    bsp_irq_t::disable_basic_interrupt(bsp_irq_t::ARM_TIMER);
+
+    disable_basic_interrupt(IRQ_ARM_TIMER);
 
 	uart_out("Hello from gpio_bare");
 	uart_outln();
@@ -108,13 +92,12 @@ int notmain ( )
     uart_out("Use ISR to toggle LED.");
 	uart_outln();
 
-	timer.setup(TIMER_LOAD, TIMER_RELOAD, PRESCALE_CNTRL);
-    timer.clear_timer_irq();
-    timer.irq_enable();
-    timer.enable();
-    bsp_irq_t::enable_basic_interrupt(bsp_irq_t::ARM_TIMER);
+	arm_timer_setup(TIMER_LOAD, TIMER_RELOAD, PRESCALE_CNTRL, PRESCALE_IS_CLOCK_DIV_1, TWENTY_THREE_BITS);
+    arm_timer_clear_irq();
+    arm_timer_irq_enable();
+    arm_timer_enable();
+    enable_basic_interrupt(IRQ_ARM_TIMER);
     enable_irq();
-    timer_reg_dump();
 
     uart_outln();
 
@@ -122,8 +105,6 @@ int notmain ( )
     i2c i2c1(reinterpret_cast<unsigned int*>(i2c::BSC1_BAR));
     uart_outln();
 
-    unsigned ctrl = i2c1.get_control()/i2c1.get_status();
-    uart_out(ctrl);
     i2c1.init();
     i2c1.enable();
     uart_out(" bar=");

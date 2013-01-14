@@ -16,8 +16,6 @@ extern "C" unsigned int hexstring ( unsigned int d );
 
 extern "C" unsigned int putstr(const unsigned char* s);
 
-#include "l3gd20.h"
-
 
 unsigned int uart_outln()
 {
