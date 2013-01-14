@@ -8,7 +8,11 @@
 #ifndef UART_H_
 #define UART_H_
 
-extern "C" void uart_init ( void );
+
+#ifdef __cplusplus
+extern "C"
+#endif
+void uart_init ( void );
 
 
 unsigned int uart_hex_out(const unsigned int n);

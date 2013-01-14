@@ -7,7 +7,6 @@
 #include "bsp.h"
 #include "arm_timer.h"
 #include "interrupts.h"
-#include "utils.h"
 #include "uart.h"
 #include "i2c.h"
 #include "l3gd20.h"

@@ -9,12 +9,17 @@ CPP_SRCS += \
 C_SRCS += 
 
 S_UPPER_SRCS += \
-./0_link_first.S 
+./vectors.S 
 
 OBJS += \
-./0_link_first.o \
+./vectors.o \
 ./main.o 
 
+INCLUDES += -I bsp -I external_devices
+
+CPP_OPTS += -O0 -Wall -c -fmessage-length=0 -nostdlib -nostartfiles -ffreestanding -fno-exceptions -fno-rtti
+
+C_OPTS += -O0 -g3 -Wall -c -fmessage-length=0
 
 # Each subdirectory must supply rules for building sources it contributes
 %.o: ./%.S
@@ -27,14 +32,14 @@ OBJS += \
 %.o: ./%.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross G++ Compiler'
-	arm-none-eabi-g++ -I"/Users/jonathanhendrix/git/rPi/gpio_bare/bsp" -O0 -Wall -c -fmessage-length=0 -nostdlib -nostartfiles -ffreestanding -fno-exceptions -fno-rtti -o "$@" "$<"
+	arm-none-eabi-g++ ${INCLUDES} ${CPP_OPTS} -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
 %.o: ./%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross GCC Compiler'
-	arm-none-eabi-gcc -I"/Users/jonathanhendrix/git/rPi/gpio_bare/bsp" -O0 -g3 -Wall -c -fmessage-length=0 -o "$@" "$<"
+	arm-none-eabi-gcc ${INCLUDES} ${C_OPTS}  -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
