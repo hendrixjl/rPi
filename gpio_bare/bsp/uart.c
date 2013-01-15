@@ -1,6 +1,8 @@
 
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
+#include "uart.h"
+
 extern void PUT32 ( unsigned int, unsigned int );
 extern unsigned int GET32 ( unsigned int );
 extern void dummy ( unsigned int );
@@ -124,14 +126,83 @@ unsigned int putstr( const unsigned char* s )
 	return (s - start);
 }
 
-//-------------------------------------------------------------------------
-//
-// Copyright (c) 2012 David Welch dwelch@dwelch.com
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
-//-------------------------------------------------------------------------
+
+unsigned int uart_hex_out(const unsigned int n)
+{
+	return hexstrings(n);
+}
+
+unsigned int uart_hex_byte_out(const unsigned char n)
+{
+	return hexstrings(n);
+}
+
+
+unsigned int uart_outln()
+{
+	uart_putc('\n');
+	uart_putc('\r');
+	enum { TWO_CHARS=2 };
+	return TWO_CHARS;
+}
+
+unsigned int uart_string_out(const char* s)
+{
+	return putstr((const unsigned char*)s);
+}
+
+unsigned int uart_ustring_out(const unsigned char* s)
+{
+	return putstr(s);
+}
+
+unsigned int uart_char_out(const char n)
+{
+	uart_putc(n);
+	enum { ONE_BYTE=1 };
+	return ONE_BYTE;
+}
+
+unsigned int uart_uchar_out(const unsigned char n)
+{
+	uart_putc(n);
+	enum { ONE_BYTE=1 };
+	return ONE_BYTE;
+}
+
+unsigned int uart_unsigned_out(const unsigned long n)
+{
+	enum { MAX_DIGITS_IN_32_BIT_NUM=10 };
+	unsigned char buffer[MAX_DIGITS_IN_32_BIT_NUM+2]={}; // last char stays null
+	unsigned temp = n;
+	unsigned count = 0;
+	while (temp > 0)
+	{
+		buffer[MAX_DIGITS_IN_32_BIT_NUM-count]='0' + temp%10;
+		temp /= 10;
+		count++;
+	}
+	return putstr(&buffer[MAX_DIGITS_IN_32_BIT_NUM-count+1]);
+}
+
+unsigned int uart_signed_out(const long number)
+{
+	unsigned int n = (number < 0) ? -number : number;
+	enum { MAX_DIGITS_IN_32_BIT_NUM=11 };
+	unsigned char buffer[MAX_DIGITS_IN_32_BIT_NUM+2]={};
+	unsigned temp = n;
+	unsigned count = 0;
+	while (temp > 0)
+	{
+		buffer[MAX_DIGITS_IN_32_BIT_NUM-count]='0' + temp%10;
+		temp /= 10;
+		count++;
+	}
+
+	if (number < 0)
+	{
+		buffer[MAX_DIGITS_IN_32_BIT_NUM-count]='-';
+		count++;
+	}
+	return putstr(&buffer[MAX_DIGITS_IN_32_BIT_NUM-count+1]);
+}

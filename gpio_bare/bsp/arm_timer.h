@@ -26,6 +26,8 @@ typedef enum {
 extern "C" {
 #endif
 
+void dump_arm_timer_registers(void);
+
 unsigned int arm_timer_val();
 
 unsigned int arm_free_timer_val();

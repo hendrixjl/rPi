@@ -82,9 +82,9 @@ public:
 		{
 			gpio &= ~pins;
 		}
-	    uart_out(" setting gpio=");
+	    uart_string_out(" setting gpio=");
 	    uart_hex_out(gpio);
-	    uart_out(" pins=");
+	    uart_string_out(" pins=");
 	    uart_hex_out(pins);
 	    uart_outln();
 		i2cbus_.command(addr_, GPIO, &gpio, 1);
@@ -104,9 +104,9 @@ public:
 		{
 			gpio &= ~pins;
 		}
-	    uart_out(" setting olat=");
+	    uart_string_out(" setting olat=");
 	    uart_hex_out(gpio);
-	    uart_out(" pins=");
+	    uart_string_out(" pins=");
 	    uart_hex_out(pins);
 	    uart_outln();
 		i2cbus_.command(addr_, OLAT, &gpio, 1);

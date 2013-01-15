@@ -8,6 +8,8 @@
 #include "arm_timer.h"
 #include "bsp.h"
 
+#include "uart.h"
+
 enum {
 	ARM_TIMER_LOD = ARM_TIMER_BAR + 0x0000,
 	ARM_TIMER_VAL = ARM_TIMER_BAR + 0x0004,
@@ -19,6 +21,48 @@ enum {
 	ARM_TIMER_DIV = ARM_TIMER_BAR + 0x001C,
 	ARM_TIMER_CNT = ARM_TIMER_BAR + 0x0020
 };
+
+void dump_arm_timer_registers(void)
+{
+	uart_string_out(" arm timer regs: ");
+	uart_string_out("LOD     ");
+	uart_char_out(' ');
+	uart_string_out("VAL     ");
+	uart_char_out(' ');
+	uart_string_out("CTL     ");
+	uart_char_out(' ');
+	uart_string_out("CLI     ");
+	uart_char_out(' ');
+	uart_string_out("RIS     ");
+	uart_char_out(' ');
+	uart_string_out("MIS     ");
+	uart_char_out(' ');
+	uart_string_out("RLD     ");
+	uart_char_out(' ');
+	uart_string_out("DIV     ");
+	uart_char_out(' ');
+	uart_string_out("CNT     ");
+	uart_outln();
+	uart_string_out(" arm timer regs: ");
+	uart_hex_out(*(unsigned*)ARM_TIMER_LOD);
+	uart_char_out(' ');
+	uart_hex_out(*(unsigned*)ARM_TIMER_VAL);
+	uart_char_out(' ');
+	uart_hex_out(*(unsigned*)ARM_TIMER_CTL);
+	uart_char_out(' ');
+	uart_hex_out(*(unsigned*)ARM_TIMER_CLI);
+	uart_char_out(' ');
+	uart_hex_out(*(unsigned*)ARM_TIMER_RIS);
+	uart_char_out(' ');
+	uart_hex_out(*(unsigned*)ARM_TIMER_MIS);
+	uart_char_out(' ');
+	uart_hex_out(*(unsigned*)ARM_TIMER_RLD);
+	uart_char_out(' ');
+	uart_hex_out(*(unsigned*)ARM_TIMER_DIV);
+	uart_char_out(' ');
+	uart_hex_out(*(unsigned*)ARM_TIMER_CNT);
+	uart_outln();
+}
 
 enum {
 	TIMER_SIZE_BIT = 1,
@@ -36,8 +80,8 @@ enum {
 };
 
 unsigned int set_timer_ctrl(
-		int enable,
-		int irq_enable,
+		unsigned int enable,
+		unsigned int irq_enable,
 		unsigned prescale,
 		timer_size_t timer_size) {
 	enum {
@@ -48,19 +92,18 @@ unsigned int set_timer_ctrl(
 			+ (enable << TIMER_ENABLE_BIT)
 			+ (irq_enable << TIMER_INT_ENABLE_BIT) + (prescale << TIMER_PRESCALE_BIT)
 			+ (timer_size << TIMER_SIZE_BIT);
-
 	*(unsigned int*) ARM_TIMER_CTL = temp;
 	return temp;
 }
 
 unsigned int get_timer_ctrl(
-		int* enable,
-		int* irq_enable,
+		unsigned int* enable,
+		unsigned int* irq_enable,
 		unsigned int* prescale,
 		unsigned int* timer_size) {
 	unsigned int temp = *(unsigned int*) ARM_TIMER_CTL;
-	*enable = (temp & (1 << TIMER_ENABLE_BIT));
-	*irq_enable = (temp & (1 << TIMER_INT_ENABLE_BIT));
+	*enable = ((temp & (1 << TIMER_ENABLE_BIT)) > 0);
+	*irq_enable = ((temp & (1 << TIMER_INT_ENABLE_BIT)) > 0);
 	enum {
 		TIMER_PRESCALE_MASK = 0x03 // all bits set
 	};
@@ -107,18 +150,21 @@ void arm_timer_setup(unsigned int timer_load, unsigned int timer_reload,
 }
 
 unsigned int arm_timer_enable() {
-	int ignore;
-	int irq_enable;
+	unsigned int ignore;
+	unsigned int irq_enable;
 	unsigned int prescale;
 	unsigned int tsize;
 	unsigned int temp = get_timer_ctrl(&ignore, &irq_enable, &prescale, &tsize);
+	uart_string_out("irq_enable=");
+	uart_unsigned_out(irq_enable);
+	uart_outln();
 	set_timer_ctrl(TIMER_ENABLE, irq_enable, prescale, tsize);
 	return temp;
 }
 
 void arm_timer_disable() {
-	int ignore;
-	int irq_enable;
+	unsigned int ignore;
+	unsigned int irq_enable;
 	unsigned int prescale;
 	unsigned int tsize;
 	get_timer_ctrl(&ignore, &irq_enable, &prescale, &tsize);
@@ -126,8 +172,8 @@ void arm_timer_disable() {
 }
 
 void arm_timer_irq_enable() {
-	int enable;
-	int ignore;
+	unsigned int enable;
+	unsigned int ignore;
 	unsigned int prescale;
 	unsigned int tsize;
 	get_timer_ctrl(&enable, &ignore, &prescale, &tsize);
@@ -135,8 +181,8 @@ void arm_timer_irq_enable() {
 }
 
 void arm_timer_irq_disable() {
-	int enable;
-	int ignore;
+	unsigned int enable;
+	unsigned int ignore;
 	unsigned int prescale;
 	unsigned int tsize;
 	get_timer_ctrl(&enable, &ignore, &prescale, &tsize);
