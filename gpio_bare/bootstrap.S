@@ -7,7 +7,6 @@
 
 
 
-.globl _start
 _start:
     ldr pc,reset_handler
     ldr pc,undefined_handler
