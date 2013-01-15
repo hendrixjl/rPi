@@ -1,6 +1,3 @@
-################################################################################
-# Automatically-generated file. Do not edit!
-################################################################################
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
@@ -9,9 +6,12 @@ CPP_SRCS += \
 C_SRCS += 
 
 S_UPPER_SRCS += \
-./vectors.S 
+./bootstrap.S \
+./vectors.S
 
+# leave off bootstrap.o since it is called out in the linker script
 OBJS += \
+./bootstrap.o \
 ./vectors.o \
 ./main.o 
 
