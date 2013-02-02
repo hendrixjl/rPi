@@ -3,24 +3,24 @@ RM := rm -rf
 
 LIBS := 
 
-CPP := arm-none-eabi-g++
+CPP := g++ # arm-none-eabi-g++
 
-AR := arm-none-eabi-ar
+AR := ar # arm-none-eabi-ar
 
 CPP_SRCS += \
-../i2c.cpp 
+../main.cpp 
 
 OBJS += \
-./i2c.o 
+./main.o 
 
 # All Target
-all: librPi_devices.a
+all: librPi_devices_test
 
 # Tool invocations
 librPi_devices.a: $(OBJS) 
 	@echo 'Building target: $@'
-	@echo 'Invoking: Cross GCC Archiver'
-	$(AR) -r  "librPi_devices.a" $(OBJS) $(LIBS)
+	@echo 'Invoking: Cross GCC'
+	$(CPP)  "librPi_devices_test" $(OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -33,10 +33,7 @@ librPi_devices.a: $(OBJS)
 
 # Other Targets
 clean:
-	-$(RM) *.o librPi_devices.a
+	-$(RM) *.o librPi_devices_test
 	-@echo ' '
 
 .PHONY: all clean dependents
-.SECONDARY:
-
--include ../makefile.targets
