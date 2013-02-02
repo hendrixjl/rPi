@@ -8,10 +8,13 @@
 #ifndef I2C_H_
 #define I2C_H_
 
-class i2c;
-extern i2c* i2c0;
-extern i2c* i2c1;
-extern i2c* i2c2;   // Not available on RPi
+/**
+ * The i2c class encapsulates interactions on an i2c bus.
+ * Usage:
+ * Invoke i2c::setup(bus), where bus is 0, 1, or 2.
+ * This will initialize the given i2c bus. The associated i2c0, i2c1, and i2c2 pointers
+ * will be setup for use. Only i2c0 and ic21 are available on the raspberry pi (rev 2 board)
+ */
 
 class i2c {
 	enum {
@@ -21,16 +24,16 @@ class i2c {
 	};
 public:
 	/**
-	 * Setup the three bsc buses and
-	 * initialize them to disabled.
+	 * Setup the i2c bus and initialize it to disabled.
+	 * @param bus
+	 * @return a i2c object address
 	 */
-	static void setup() {
-		static i2c i2c0r(reinterpret_cast<unsigned int*>(BSC0_BAR));
-		static i2c i2c1r(reinterpret_cast<unsigned int*>(BSC1_BAR));
-		static i2c i2c2r(reinterpret_cast<unsigned int*>(BSC2_BAR));  // Not available on RPi
-		i2c0 = &i2c0r; i2c0->init();
-		i2c1 = &i2c1r; i2c1->init();
-		i2c2 = &i2c2r; i2c2->init();  // Not available on RPi
+	static i2c& setup(unsigned short bus) {
+		switch (bus)
+		case 0: return setup0();
+		case 1: return setup1();
+		case 2: return setup2();
+		default: return setup0();
 	}
 
 	/**
@@ -417,6 +420,32 @@ private:
 
 	i2c(const i2c&); // no copy
 	i2c& operator=(const i2c&); // no assign
+
+	/**
+	 * Setup the i2c bus 0 and initialize it to disabled.
+	 */
+	static i2c& setup0() {
+		static i2c i2c0(reinterpret_cast<unsigned int*>(BSC0_BAR));
+		i2c0.init();
+		return i2c0;
+	}
+	/**
+	 * Setup the i2c bus 1 and initialize it to disabled.
+	 */
+	static i2c& setup1() {
+		static i2c i2c1(reinterpret_cast<unsigned int*>(BSC1_BAR));
+		i2c1.init();
+		return&i2c1;
+	}
+	/**
+	 * Setup the i2c bus 2 and initialize it to disabled.
+	 */
+	static i2c& setup2() {
+		static i2c i2c2(reinterpret_cast<unsigned int*>(BSC2_BAR));  // Not available on RPi
+		i2c2.init();  // Not available on RPi
+		return i2c2;
+	}
+
 };
 
 

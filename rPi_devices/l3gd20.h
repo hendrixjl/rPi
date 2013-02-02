@@ -10,6 +10,7 @@
 
 #include "i2c.h"
 
+//    Usage
 //    enum { LG3D20_ADDR=0x06B };
 //    l3gd20 gyro(LG3D20_ADDR, i2c1);
 //    gyro.enable();
