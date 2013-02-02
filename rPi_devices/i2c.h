@@ -30,10 +30,12 @@ public:
 	 */
 	static i2c& setup(unsigned short bus) {
 		switch (bus)
+		{
 		case 0: return setup0();
 		case 1: return setup1();
 		case 2: return setup2();
 		default: return setup0();
+		}
 	}
 
 	/**

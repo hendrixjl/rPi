@@ -37,7 +37,7 @@ private:
 		OUT_X_H_A,
 		OUT_Y_L_A,
 		OUT_Y_H_A,
-		OUT_Z_H_A,
+		OUT_Z_L_A,
 		OUT_Z_H_A,
 		FIFO_CTRL_REG_A,
 		FIFO_SRC_REG_A,
