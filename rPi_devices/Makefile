@@ -14,13 +14,13 @@ OBJS += \
 ./main.o 
 
 # All Target
-all: librPi_devices_test
+all: rPi_devices_test
 
 # Tool invocations
-librPi_devices.a: $(OBJS) 
+rPi_devices_test: $(OBJS) 
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross GCC'
-	$(CPP)  "librPi_devices_test" $(OBJS) $(LIBS)
+	$(CPP)  "rPi_devices_test" $(OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
