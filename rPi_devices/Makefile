@@ -20,7 +20,7 @@ all: rPi_devices_test
 rPi_devices_test: $(OBJS) 
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross GCC'
-	$(CPP)  "rPi_devices_test" $(OBJS) $(LIBS)
+	$(CPP)  -o "rPi_devices_test" $(OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
