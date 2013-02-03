@@ -52,7 +52,7 @@ public:
 			unsigned data_size=0)
 	{
 		set_slave(slaveaddr);
-		if ((write(fd_, cmd, 1)) != 1) {
+		if ((write(fd_, &cmd, 1)) != 1) {
 			cerr << "Error writing to i2c slave" << endl;
 			return 0;
 		}
@@ -104,7 +104,7 @@ public:
 			unsigned buffer_size)
 	{
 		set_slave(slaveaddr);
-		if ((write(fd_, slave_register, 1)) != 1) { // Send register we want to read from
+		if ((write(fd_, &slave_register, 1)) != 1) { // Send register we want to read from
 			cerr << "Error writing to i2c slave" << endl;
 			return 0;
 		}
@@ -150,7 +150,7 @@ private:
 
 	void set_slave(int address)
 	{
-		if (ioctl(fd, I2C_SLAVE, address) < 0) {
+		if (ioctl(fd_, I2C_SLAVE, address) < 0) {
 			// Set the port options and set the address of the device we wish to speak to
 			cerr << "Unable to get bus access to talk to slave" << endl;
 			exit(1);
@@ -167,7 +167,6 @@ private:
 	 */
 	static i2c& setup0() {
 		static i2c i2c0("/dev/i2c-0");
-		i2c0.init();
 		return i2c0;
 	}
 	/**
@@ -175,18 +174,15 @@ private:
 	 */
 	static i2c& setup1() {
 		static i2c i2c1("/dev/i2c-1");
-		i2c1.init();
-		return&i2c1;
+		return i2c1;
 	}
 	/**
 	 * Setup the i2c bus 2 and initialize it to disabled.
 	 */
 	static i2c& setup2() {
-		static i2c i2c2(/dev/i2c-2);  // Not available on RPi
-		i2c2.init();  // Not available on RPi
+		static i2c i2c2("/dev/i2c-2");  // Not available on RPi
 		return i2c2;
 	}
-
 };
 
 

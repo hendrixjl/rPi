@@ -8,7 +8,7 @@
 #ifndef L3GD20_H_
 #define L3GD20_H_
 
-#include "i2c.h"
+#include "i2c_linux.h"
 
 //    Usage
 //    enum { LG3D20_ADDR=0x06B };

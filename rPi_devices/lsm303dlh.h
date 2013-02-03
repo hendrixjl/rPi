@@ -7,7 +7,7 @@
 
 #ifndef LSM303DLH_H_
 #define LSM303DLH_H_
-#include "i2c.h"
+#include "i2c_linux.h"
 
 class lsm303dlh
 {
@@ -18,6 +18,15 @@ public:
 		return i2cbus_.query(addr_, WHO_AM_I_A);
 	}
 
+	unsigned int get_temp() 
+	{
+		unsigned char buff[2];
+		if (i2cbus_.query(addr_, TEMP_OUT_H_M)==2)
+		{
+			return static_cast<unsigned int>(buff[0]);
+		}
+		return 0;
+	}
 private:
 	/**
 	 * The registers for the Accelerometer (marked _A) and
