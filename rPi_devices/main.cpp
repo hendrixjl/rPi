@@ -11,17 +11,14 @@ int main()
 	i2c& i2c1(i2c::setup(1));
 
 	l3gd20 gyro(L3GD20,i2c1);
-
 	gyro.enable();
+
+	lsm303dlh accel(LSM303_A,i2c1);
 
 	while (true)
 	{
 		sleep(1);
 
-		cout << "Gyro address = " << hex << (unsigned)gyro.identify() << " temp=" << gyro.get_temp() << endl;
-
-		lsm303dlh accel(LSM303_A,i2c1);
-
-		cout << "accel address = " << hex << (unsigned)accel.identify() << " temp=" << accel.get_temp() << endl;
+		cout << "Gyro temp=" << gyro.get_temp() << " accel temp=" << accel.get_temp() << endl;
 	}
 }

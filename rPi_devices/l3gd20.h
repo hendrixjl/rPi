@@ -8,7 +8,11 @@
 #ifndef L3GD20_H_
 #define L3GD20_H_
 
+#ifdef __BARE_METAL__
+#include "i2c.h"
+#else
 #include "i2c_linux.h"
+#endif
 
 //    Usage
 //    enum { LG3D20_ADDR=0x06B };

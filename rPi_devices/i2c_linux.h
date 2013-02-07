@@ -52,18 +52,14 @@ public:
 			unsigned data_size=0)
 	{
 		set_slave(slaveaddr);
-		if ((write(fd_, &cmd, 1)) != 1) {
+		unsigned char* buffer = new unsigned char[1 + data_size];
+		buffer[0] = cmd;
+		memcpy(&buffer[1], data_addr, data_size);
+		if ((write(fd_, &cmd, 1+data_size)) != 1+data_size) {
 			cerr << "Error writing to i2c slave" << endl;
 			return 0;
 		}
-		if (data_size>0)
-		{
-			if ((write(fd_, data_addr, data_size)) != data_size) {
-				cerr << "Error writing to i2c slave" << endl;
-				return 0;
-			}
-
-		}
+		delete buffer;
 		return data_size;
 	}
 
