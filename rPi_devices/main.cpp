@@ -49,6 +49,15 @@ int main()
 		usleep(500);
 		gpio.set_olat(it->dir, it->state);
 		++it;
-		cout << "Gyro temp=" << gyro.get_temp() << " accel temp=" << accel.get_temp() << endl;
+		short temp; unsigned char status; short xa; short ya; short za;
+		gyro.measurements(temp, status, xa, ya, za);
+		uint16_t accels[3] = {};
+		accel.getAcc(accels);
+		uint16_t mags[3] = {};
+		accel.getMag(mags);
+		cout << "Gyro: " << temp << " " << xa << " " << ya << " " << za
+				<< " accel: " << accels[0] << " " << accels[1] << " " << accels[2]
+				<< " mags: " << mags[0] << " " << mags[1] << " " << mags[2]
+				<< endl;
 	}
 }
