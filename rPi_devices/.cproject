@@ -31,7 +31,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.1572869916" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.1996248981" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.debugging.level.1998641721" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
-								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1461054155" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1461054155" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__BARE_METAL__"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1696634589" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
@@ -39,6 +39,10 @@
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1041685139" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
 								<option id="gnu.cpp.compiler.option.optimization.level.1379431138" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.debugging.level.1391254788" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.preprocessor.def.2055528991" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="__BARE_METAL__"/>
+								</option>
+								<option id="gnu.cpp.compiler.option.other.other.1770268580" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.2086055498" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.1359740187" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>

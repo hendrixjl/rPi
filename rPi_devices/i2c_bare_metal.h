@@ -438,7 +438,7 @@ private:
 	static i2c& setup1() {
 		static i2c i2c1(reinterpret_cast<unsigned int*>(BSC1_BAR));
 		i2c1.init();
-		return&i2c1;
+		return i2c1;
 	}
 	/**
 	 * Setup the i2c bus 2 and initialize it to disabled.
