@@ -3,7 +3,7 @@ RM := rm -rf
 
 LIBS := 
 
-CPP := g++ # arm-none-eabi-g++
+CPP := g++ -std=c++0x # arm-none-eabi-g++
 
 AR := ar # arm-none-eabi-ar
 
