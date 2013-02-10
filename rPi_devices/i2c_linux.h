@@ -105,7 +105,7 @@ public:
 			return 0;
 		}
 
-		if (read(fd_, buffer, buffer_size) != buffer_size) {		// Read back data into buf[]
+		if (read(fd_, buffer, buffer_size) != int(buffer_size)) {		// Read back data into buf[]
 			cerr << "Unable to read from slave" << endl;
 			return 0;
 		}
