@@ -9,6 +9,7 @@
 #define L3GD20_H_
 
 #include "i2c.h"
+#include <stdint.h>
 
 //    Usage
 //    enum { LG3D20_ADDR=0x06B };
@@ -16,7 +17,7 @@
 //    gyro.enable();
 //    short address = gyro.identify();
 //    short temp=0;
-//    unsigned char status=0;
+//    uint8_t status=0;
 //    short x=0,y=0,z=0;
 //    if (gyro.measurements(temp, status, x, y, z))
 //    {
@@ -29,9 +30,9 @@
 
 class l3gd20 {
 public:
-	l3gd20(unsigned char address, i2c& i2cbus) : addr_(address), i2cbus_(i2cbus) {}
+	l3gd20(uint8_t address, i2c& i2cbus) : addr_(address), i2cbus_(i2cbus) {}
 
-	unsigned char identify() {
+	uint8_t identify() {
 		return i2cbus_.query(addr_, WHO_AM_I);
 	}
 
@@ -43,7 +44,7 @@ public:
 		XYZEN= XEN | YEN | ZEN
 	};
 
-	void enable(unsigned char bits = XYZEN) {
+	void enable(uint8_t bits = XYZEN) {
 		i2cbus_.command(addr_, CNTRL_REG1, &bits, 1);
 	}
 
@@ -51,11 +52,11 @@ public:
 		return i2cbus_.query(addr_, OUT_TEMP);
 	}
 
-	bool measurements(short& temp, unsigned char& status, short& x, short& y, short& z)
+	bool measurements(short& temp, uint8_t& status, int16_t& x, int16_t& y, int16_t& z)
 	{
 		bool rst = false;
 		enum { BYTES_IN_MEASUREMENT=8 };
-		unsigned char buffer[BYTES_IN_MEASUREMENT];
+		uint8_t buffer[BYTES_IN_MEASUREMENT];
 		if (i2cbus_.query(addr_, OUT_TEMP, buffer, BYTES_IN_MEASUREMENT))
 		{
 			temp = buffer[0];
@@ -68,7 +69,7 @@ public:
 		return rst;
 	}
 
-	unsigned char get_ctrl1() {
+	uint8_t get_ctrl1() {
 		return i2cbus_.query(addr_, CNTRL_REG1);
 	}
 
@@ -94,7 +95,7 @@ private:
 		FIFO_SRC_REG=0x2F
 	};
 
-	unsigned char addr_;
+	uint8_t addr_;
 	i2c& i2cbus_;
 
 	l3gd20(const l3gd20&); // no copy

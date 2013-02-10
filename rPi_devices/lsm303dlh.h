@@ -76,7 +76,7 @@ public:
 		i2cbus_.command(mag_addr_, MR_REG_M, data, sizeof(data));
 	}
 
-	void getAcc(uint16_t acc[3])
+	void getAcc(int16_t acc[3])
 	{
 	    uint8_t block[6];
 	    i2cbus_.query(acc_addr_, OUT_X_L_A, block, sizeof(block));
@@ -86,7 +86,7 @@ public:
 	    acc[2] = (int16_t)(block[4] | block[5] << 8) >> 4;
 	}
 
-	void getMag(uint16_t mag[3])
+	void getMag(int16_t mag[3])
 	{
 	    uint8_t block[6];
 	    i2cbus_.query(mag_addr_, OUT_X_H_M, block, sizeof(block));
@@ -153,8 +153,8 @@ private:
 		TEMP_OUT_H_M=0x31,
 		TEMP_OUT_L_M
 	};
-	unsigned char mag_addr_;
-	unsigned char acc_addr_;
+	uint8_t mag_addr_;
+	uint8_t acc_addr_;
 	i2c& i2cbus_;
 };
 

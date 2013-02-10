@@ -8,6 +8,7 @@
 #ifndef I2C_BARE_METAL_H_
 #define I2C_BARE_METAL_H_
 
+#include <stdint.h>
 
 /**
  * The i2c class encapsulates interactions on an i2c bus.
@@ -29,7 +30,7 @@ public:
 	 * @param bus
 	 * @return a i2c object address
 	 */
-	static i2c& setup(unsigned short bus) {
+	static i2c& setup(uint16_t bus) {
 		switch (bus)
 		{
 		case 0: return setup0();
@@ -58,7 +59,7 @@ public:
 	/**
 	 * Return the status bits of this i2c bus device
 	 */
-	unsigned int get_status() const
+	uint32_t get_status() const
 	{
 		return bar_[STATUS_REG];
 	}
@@ -66,7 +67,7 @@ public:
 	/**
 	 * Return the control bits of this i2c bus device
 	 */
-	unsigned int get_control() const
+	uint32_t get_control() const
 	{
 		return bar_[CNTRL_REG];
 	}
@@ -79,17 +80,17 @@ public:
 	 * @param data_addr
 	 * @param data_size
 	 */
-	unsigned command(unsigned char slaveaddr,
-			unsigned char cmd,
-			const unsigned char* data_addr=0,
-			unsigned data_size=0)
+	uint32_t command(uint8_t slaveaddr,
+			uint8_t cmd,
+			const uint8_t* data_addr=0,
+			uint32_t data_size=0)
 	{
 		reset_txfer_done();
 		set_slave_address(slaveaddr);
 		set_data_len(1 + data_size);
 		initiate_write();
 		write_byte(cmd);
-		unsigned bytes_sent=1;
+		uint32_t bytes_sent=1;
 		while (data_size>0)
 		{
 			if (write_byte(*data_addr))
@@ -112,12 +113,12 @@ public:
 	 * @param slave_register
 	 * @return reply
 	 */
-	unsigned char query(unsigned char slaveaddr,
-			unsigned char slave_register)
+	uint8_t query(uint8_t slaveaddr,
+			uint8_t slave_register)
 	{
 		command(slaveaddr, slave_register);
 		initiate_read();
-		unsigned char b;
+		uint8_t b;
 		while (!read_byte(b)); // loop until success
 		clear_fifo();
 		// TODO error conditions?
@@ -134,16 +135,16 @@ public:
 	 * @param buffer_size
 	 * @return number of bytes read
 	 */
-	unsigned query(unsigned char slaveaddr,
-			unsigned char slave_register,
-			unsigned char* buffer,
-			unsigned buffer_size)
+	uint32_t query(uint8_t slaveaddr,
+			uint8_t slave_register,
+			uint8_t* buffer,
+			uint32_t buffer_size)
 	{
 		enum { READ_MULTIPLE=0x080 };
 		command(slaveaddr, slave_register | READ_MULTIPLE);
 		set_data_len(buffer_size);
 		initiate_read();
-		unsigned bytes_read=0;
+		uint32_t bytes_read=0;
 		while (buffer_size > 0)
 		{
 			if (read_byte(*buffer))
@@ -209,7 +210,7 @@ private:
 	 * Construct an i2c bus using
 	 * a base address register
 	 */
-	explicit i2c(unsigned int *bar)
+	explicit i2c(uint32_t *bar)
 	: bar_ (bar)
 	{
 		init();
@@ -219,9 +220,9 @@ private:
 	 * Return the base address register for
 	 * the bus.
 	 */
-	unsigned int get_bar() const
+	uint32_t get_bar() const
 	{
-		return (unsigned int)bar_;
+		return (uint32_t)bar_;
 	}
 
 	/**
@@ -274,7 +275,7 @@ private:
 	 * Push a byte on the FIFO
 	 * @param byte
 	 */
-	void push_byte_on_fifo(unsigned char byte)
+	void push_byte_on_fifo(uint8_t byte)
 	{
 		bar_[FIFO_REG] = byte;
 	}
@@ -282,7 +283,7 @@ private:
 	/**
 	 * Pop a byte from the FIFO
 	 */
-	unsigned char pop_byte_from_fifo() const
+	uint8_t pop_byte_from_fifo() const
 	{
 		return bar_[FIFO_REG];
 	}
@@ -292,7 +293,7 @@ private:
 	 * @param byte
 	 * @return true if a byte was read
 	 */
-	bool read_byte(unsigned char& byte) const
+	bool read_byte(uint8_t& byte) const
 	{
 		if (rx_data_avail())
 		{
@@ -311,7 +312,7 @@ private:
 	 * @param byte
 	 * @return true if successful
 	 */
-	bool write_byte(unsigned char byte)
+	bool write_byte(uint8_t byte)
 	{
 		if (tx_room_avail())
 		{
@@ -355,7 +356,7 @@ private:
 	 * Set the slave address for the i2c bus device
 	 * @param slaveaddr
 	 */
-	void set_slave_address(unsigned char slaveaddr)
+	void set_slave_address(uint8_t slaveaddr)
 	{
 		bar_[SLAVE_ADDR_REG] = slaveaddr;
 	}
@@ -365,7 +366,7 @@ private:
 	 * i2c transfer
 	 * @param len
 	 */
-	void set_data_len(unsigned len)
+	void set_data_len(uint32_t len)
 	{
 		bar_[DLEN_REG]=len;
 	}
@@ -391,7 +392,7 @@ private:
 	 * set for this i2c bus device
 	 * @return the slave address
 	 */
-	unsigned char get_slave_address() const {
+	uint8_t get_slave_address() const {
 		return bar_[SLAVE_ADDR_REG];
 	}
 
@@ -399,7 +400,7 @@ private:
 	 * Set the clock divider for the i2c bus device clock
 	 * @param div (defaults to 0x5DC [100 kHz])
 	 */
-	void set_clk_divider(unsigned short div=0x5DC) const {
+	void set_clk_divider(uint16_t div=0x5DC) const {
 		bar_[CLOCK_DIV_REG] = div;
 	}
 
@@ -407,7 +408,7 @@ private:
 	 * Set the delay for the i2c bus device.
 	 * @param delay (defaults to 0x0000 0030 0000 0030
 	 */
-	void set_delay(unsigned int delay=(0x030 << 16) + 0x030) const {
+	void set_delay(uint32_t delay=(0x030 << 16) + 0x030) const {
 		bar_[DATA_DELAY_REG] = delay;
 	}
 
@@ -415,11 +416,11 @@ private:
 	 * Set clkt for the i2c bus device.
 	 * @param clkt (defauts to 0x040)
 	 */
-	void set_clkt(unsigned char clkt=0x040) const {
+	void set_clkt(uint8_t clkt=0x040) const {
 		bar_[CLKT] = clkt;
 	}
 
-	volatile unsigned int* bar_;
+	volatile uint32_t* bar_;
 
 	i2c(const i2c&); // no copy
 	i2c& operator=(const i2c&); // no assign
@@ -428,7 +429,7 @@ private:
 	 * Setup the i2c bus 0 and initialize it to disabled.
 	 */
 	static i2c& setup0() {
-		static i2c i2c0(reinterpret_cast<unsigned int*>(BSC0_BAR));
+		static i2c i2c0(reinterpret_cast<uint32_t*>(BSC0_BAR));
 		i2c0.init();
 		return i2c0;
 	}
@@ -436,7 +437,7 @@ private:
 	 * Setup the i2c bus 1 and initialize it to disabled.
 	 */
 	static i2c& setup1() {
-		static i2c i2c1(reinterpret_cast<unsigned int*>(BSC1_BAR));
+		static i2c i2c1(reinterpret_cast<uint32_t*>(BSC1_BAR));
 		i2c1.init();
 		return i2c1;
 	}
@@ -444,7 +445,7 @@ private:
 	 * Setup the i2c bus 2 and initialize it to disabled.
 	 */
 	static i2c& setup2() {
-		static i2c i2c2(reinterpret_cast<unsigned int*>(BSC2_BAR));  // Not available on RPi
+		static i2c i2c2(reinterpret_cast<uint32_t*>(BSC2_BAR));  // Not available on RPi
 		i2c2.init();  // Not available on RPi
 		return i2c2;
 	}

@@ -9,6 +9,7 @@
 #define MCP23008_H_
 
 #include "i2c.h"
+#include <stdint.h>
 
 class mcp23008
 {
@@ -31,14 +32,14 @@ public:
 		OFF=0
 	};
 
-	mcp23008(unsigned char address, i2c& i2cbus) : addr_(address), i2cbus_(i2cbus) {}
+	mcp23008(uint8_t address, i2c& i2cbus) : addr_(address), i2cbus_(i2cbus) {}
 
 	unsigned char get_iodir() {
 		return i2cbus_.query(addr_, IODIR);
 	}
 
-	void set_iodir(unsigned char pins, bool direction) {
-		unsigned char iodir = get_iodir();
+	void set_iodir(uint8_t pins, bool direction) {
+		uint8_t iodir = get_iodir();
 		if (direction == INPUT)
 		{
     		 iodir |= pins;
@@ -54,8 +55,8 @@ public:
 		return i2cbus_.query(addr_, IPOL);
 	}
 
-	void set_input_polarity(unsigned char pins, bool direction) {
-		unsigned char iodir = get_iodir();
+	void set_input_polarity(uint8_t pins, bool direction) {
+		uint8_t iodir = get_iodir();
 		if (direction == INVERSE_LOGIC)
 		{
     		 iodir |= pins;
@@ -67,12 +68,12 @@ public:
 		i2cbus_.command(addr_, IPOL, &iodir, 1);
 	}
 
-	unsigned char get_gpio() {
+	uint8_t get_gpio() {
 		return i2cbus_.query(addr_, GPIO);
 	}
 
-	void set_gpio(unsigned char pins, bool value) {
-		unsigned char gpio = get_gpio();
+	void set_gpio(uint8_t pins, bool value) {
+		uint8_t gpio = get_gpio();
 		if (value == ON)
 		{
 			gpio |= pins;
@@ -84,12 +85,12 @@ public:
 		i2cbus_.command(addr_, GPIO, &gpio, 1);
 	}
 
-	unsigned char get_olat() {
+	uint8_t get_olat() {
 		return i2cbus_.query(addr_, OLAT);
 	}
 
-	void set_olat(unsigned char pins, bool value) {
-		unsigned char gpio = get_gpio();
+	void set_olat(uint8_t pins, bool value) {
+		uint8_t gpio = get_gpio();
 		if (value == ON)
 		{
 			gpio |= pins;
@@ -116,7 +117,7 @@ private:
 		OLAT=0x0A
 	};
 
-	unsigned char addr_;
+	uint8_t addr_;
 	i2c& i2cbus_;
 
 	mcp23008(const mcp23008&); // no copy

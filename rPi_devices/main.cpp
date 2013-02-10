@@ -81,7 +81,7 @@ int main()
 		++it;
 		short temp; unsigned char status; short xa; short ya; short za;
 		gyro.measurements(temp, status, xa, ya, za);
-		uint16_t accels[3] = {};
+		int16_t accels[3] = {};
 		accel.getAcc(accels);
 		uint16_t mags[3] = {};
 		accel.getMag(mags);

@@ -19,6 +19,7 @@
 #include <unistd.h>
 #include <iostream>
 #include <string>
+#include <stdint.h>
 using namespace std;
 
 class i2c {
@@ -28,7 +29,7 @@ public:
 	 * @param bus
 	 * @return a i2c object address
 	 */
-	static i2c& setup(unsigned short bus) {
+	static i2c& setup(uint16_t bus) {
 		switch (bus)
 		{
 		case 0: return setup0();
@@ -46,13 +47,13 @@ public:
 	 * @param data_addr
 	 * @param data_size
 	 */
-	unsigned command(unsigned char slaveaddr,
-			unsigned char cmd,
-			const unsigned char* data_addr=0,
-			unsigned data_size=0)
+	unsigned command(uint8_t slaveaddr,
+			uint8_t cmd,
+			const uint8_t* data_addr=0,
+			uint32_t data_size=0)
 	{
 		set_slave(slaveaddr);
-		unsigned char* buffer = new unsigned char[1 + data_size];
+		uint8_t* buffer = new uint8_t[1 + data_size];
 		buffer[0] = cmd;
 		memcpy(&buffer[1], data_addr, data_size);
 		if ((write(fd_, &cmd, 1+data_size)) != 1+data_size) {
@@ -70,10 +71,10 @@ public:
 	 * @param slave_register
 	 * @return reply
 	 */
-	unsigned char query(unsigned char slaveaddr,
-			unsigned char slave_register)
+	uint8_t query(uint8_t slaveaddr,
+			uint8_t slave_register)
 	{
-		unsigned char buffer;
+		uint8_t buffer;
 		if (query(slaveaddr, slave_register, &buffer, 1) == 1)
 		{
 			return buffer;
@@ -94,10 +95,10 @@ public:
 	 * @param buffer_size
 	 * @return number of bytes read
 	 */
-	unsigned query(unsigned char slaveaddr,
-			unsigned char slave_register,
-			unsigned char* buffer,
-			unsigned buffer_size)
+	unsigned query(uint8_t slaveaddr,
+			uint8_t slave_register,
+			uint8_t* buffer,
+			uint32_t buffer_size)
 	{
 		set_slave(slaveaddr);
 		if ((write(fd_, &slave_register, 1)) != 1) { // Send register we want to read from
@@ -153,7 +154,7 @@ private:
 		}
 	}
 
-	int fd_;
+	int32_t fd_;
 
 	i2c(const i2c&); // no copy
 	i2c& operator=(const i2c&); // no assign
