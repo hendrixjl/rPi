@@ -83,7 +83,7 @@ int main()
 		gyro.measurements(temp, status, xa, ya, za);
 		int16_t accels[3] = {};
 		accel.getAcc(accels);
-		uint16_t mags[3] = {};
+		int16_t mags[3] = {};
 		accel.getMag(mags);
 		cout << "Gyro: " << temp << " " << xa << " " << ya << " " << za
 				<< " accel: " << accels[0] << " " << accels[1] << " " << accels[2]
