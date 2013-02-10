@@ -3,7 +3,9 @@ RM := rm -rf
 
 LIBS := 
 
-CPP := g++ -std=c++0x # arm-none-eabi-g++
+CPP := g++ # arm-none-eabi-g++
+
+CPPOPTS := -std=c++0x -O0 -g3 -Wall -fmessage-length=0
 
 AR := ar # arm-none-eabi-ar
 
@@ -27,7 +29,7 @@ rPi_devices_test: $(OBJS)
 %.o: ../%.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross G++ Compiler'
-	$(CPP) -O0 -g3 -Wall -c -fmessage-length=0 -o "$@" "$<"
+	$(CPP) $(CPPOPTS)  -o "$@" -c "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

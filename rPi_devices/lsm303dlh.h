@@ -8,11 +8,7 @@
 #ifndef LSM303DLH_H_
 #define LSM303DLH_H_
 
-#ifdef __BARE_METAL__
 #include "i2c.h"
-#else
-#include "i2c_linux.h"
-#endif
 
 class lsm303dlh
 {
