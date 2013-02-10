@@ -1,6 +1,8 @@
 
 RM := rm -rf
 
+TARGET := rPi_devices_test
+
 LIBS := 
 
 CPP := g++ # arm-none-eabi-g++
@@ -16,10 +18,10 @@ OBJS += \
 ./main.o 
 
 # All Target
-all: rPi_devices_test
+all: $(TARGET)
 
 # Tool invocations
-rPi_devices_test: $(OBJS) 
+$(TARGET): $(OBJS) 
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross GCC'
 	$(CPP)  -o "rPi_devices_test" $(OBJS) $(LIBS)
@@ -35,7 +37,7 @@ rPi_devices_test: $(OBJS)
 
 # Other Targets
 clean:
-	-$(RM) *.o librPi_devices_test
+	-$(RM) *.o $(TARGET)
 	-@echo ' '
 
 .PHONY: all clean dependents
