@@ -28,7 +28,7 @@ $(TARGET): $(OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-%.o: ../%.cpp
+%.o: %.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross G++ Compiler'
 	$(CPP) $(CPPOPTS)  -o "$@" -c "$<"
