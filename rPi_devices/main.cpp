@@ -77,7 +77,7 @@ int main()
 	auto it = commands.begin();
 	while (it != commands.end())
 	{
-		usleep(500);
+		sleep(1);
 		gpio.set_olat(it->dir, it->state);
 		++it;
 		short temp; unsigned char status; short xa; short ya; short za;

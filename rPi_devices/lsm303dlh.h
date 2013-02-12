@@ -61,10 +61,10 @@ public:
 			SIXTEEN_G = 3 << 4,
 			HIGH_RESOLUTION_OUTPUT = 8
 		};
-		uint8_t data[] = {ONE_HZ | XYZEN};
-		i2cbus_.command(acc_addr_, CTRL_REG1_A, data, sizeof(data));
-		data[0] = EIGHT_G | HIGH_RESOLUTION_OUTPUT;
-		i2cbus_.command(acc_addr_, CTRL_REG4_A, data, sizeof(data));
+		uint8_t data = {ONE_HZ | XYZEN};
+		i2cbus_.command(acc_addr_, CTRL_REG1_A, &data, 1);
+		data = EIGHT_G | HIGH_RESOLUTION_OUTPUT;
+		i2cbus_.command(acc_addr_, CTRL_REG4_A, &data, 1);
 		// Enable Magnetometer
 		enum {
 			CONTINUOUS_CONVERSION_MODE = 0,
@@ -72,8 +72,8 @@ public:
 			SLEEP_MODE1 = 2,
 			SLEEP_MODE2 = 3
 		};
-		data[0] = CONTINUOUS_CONVERSION_MODE;
-		i2cbus_.command(mag_addr_, MR_REG_M, data, sizeof(data));
+		data = CONTINUOUS_CONVERSION_MODE;
+		i2cbus_.command(mag_addr_, MR_REG_M, &data, 1);
 	}
 
 	void getAcc(int16_t acc[3])
