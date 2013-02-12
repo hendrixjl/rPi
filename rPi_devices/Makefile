@@ -1,4 +1,3 @@
-
 RM := rm -rf
 
 TARGET := rPi_devices_test
@@ -11,11 +10,9 @@ CPPOPTS := -std=c++0x -O0 -g3 -Wall -fmessage-length=0
 
 AR := ar # arm-none-eabi-ar
 
-CPP_SRCS += \
-../main.cpp 
+CPP_SRCS += $(shell list *.cpp) 
 
-OBJS += \
-./main.o 
+OBJS += $(patsubst %.cpp, %.o, $(CPPSRCS))
 
 # All Target
 all: $(TARGET)
