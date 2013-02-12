@@ -46,6 +46,8 @@ public:
 
 	void enable(uint8_t bits = XYZEN) {
 		i2cbus_.command(addr_, CNTRL_REG1, &bits, 1);
+		uint8_t data[] = { 0x20 };
+		i2cbus_.command(addr_, CNTRL_REG4, data, sizeof(data));
 	}
 
 	unsigned int get_temp() {
