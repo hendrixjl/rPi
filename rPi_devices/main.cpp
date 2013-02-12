@@ -16,6 +16,7 @@ int main()
 	gyro.enable();
 
 	lsm303dlh accel(LSM303_M, LSM303_A, i2c1);
+	accel.enable();
 
 	mcp23008 gpio(MCP23008, i2c1);
 

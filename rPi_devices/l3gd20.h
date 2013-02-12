@@ -69,6 +69,20 @@ public:
 		return rst;
 	}
 
+	bool getAngles(int16_t a[3])
+	{
+		bool rst = false;
+		enum { BYTES_IN_MEASUREMENT=6 };
+		uint8_t buffer[BYTES_IN_MEASUREMENT];
+		if (i2cbus_.query(addr_, OUT_X_L, buffer, BYTES_IN_MEASUREMENT))
+		{
+			a[0] = buffer[0] + buffer[1]*0x0100;
+			a[1] = buffer[2] + buffer[3]*0x0100;
+			a[2] = buffer[4] + buffer[5]*0x0100;
+		}
+		return rst;
+	}
+
 	uint8_t get_ctrl1() {
 		return i2cbus_.query(addr_, CNTRL_REG1);
 	}
