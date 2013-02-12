@@ -4,7 +4,11 @@ TARGET := rPi_devices_test
 
 LIBS := 
 
-CPP := g++ # arm-none-eabi-g++
+ifdef __BARE_METAL__
+PREFIX := arm-none-eabi-
+endif
+
+CPP := $(PREFIX)g++
 
 CPPOPTS := -std=c++0x -O0 -g3 -Wall -fmessage-length=0
 
