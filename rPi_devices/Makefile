@@ -14,7 +14,7 @@ CPPOPTS := -std=c++0x -O0 -g3 -Wall -fmessage-length=0
 
 AR := ar # arm-none-eabi-ar
 
-CPP_SRCS += $(shell list *.cpp) 
+CPP_SRCS += $(shell ls *.cpp) 
 
 OBJS += $(patsubst %.cpp, %.o, $(CPP_SRCS))
 
