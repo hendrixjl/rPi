@@ -16,7 +16,7 @@ AR := ar # arm-none-eabi-ar
 
 CPP_SRCS += $(shell list *.cpp) 
 
-OBJS += $(patsubst %.cpp, %.o, $(CPPSRCS))
+OBJS += $(patsubst %.cpp, %.o, $(CPP_SRCS))
 
 # All Target
 all: $(TARGET)
