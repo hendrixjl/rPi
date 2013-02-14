@@ -1,0 +1,12 @@
+
+MEMORY
+{
+    ram : ORIGIN = 0x8000, LENGTH = 0x10000
+}
+
+SECTIONS
+{
+    .text : { bootstrap.o } > ram
+    .text : { *(.text*) } > ram
+    .bss : { *(.bss*) } > ram
+}
