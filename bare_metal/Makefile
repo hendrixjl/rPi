@@ -1,6 +1,5 @@
 RM := rm -rf
 
-TARGET := crawler
 
 LIBS := 
 
@@ -9,16 +8,17 @@ PREFIX := arm-none-eabi-
 endif
 
 CPP := $(PREFIX)g++
+CC := $(PREFIX)gcc
+AS := $(PREFIX)g++
+AR := $(PREFIX)ar
 
 CPPOPTS := -std=c++0x -O0 -g3 -Wall -fmessage-length=0
 
-AR := ar # arm-none-eabi-ar
-
-CPP_SRCS += $(shell ls *.cpp) 
-
 DIRS := bsp bare_metal 
 
-OBJS += $(patsubst %.cpp, %.o, $(CPP_SRCS))
+OBJS += $(patsubst %.cpp, %.o, $(shell ls *.cpp))
+OBJS += $(patsubst %.c, %.o, $(shell ls *.c))
+OBJS += $(patsubst %.S, %.o, $(shell ls *.S))
 
 # All Target
 all: $(TARGET)
@@ -38,15 +38,23 @@ $(TARGET): $(DIRS) $(OBJS)
 	@echo 'Finished building: $<'
 	@echo ' '
 
+%.o: %.c
+	@echo 'Building file: $<'
+	@echo 'Invoking: Cross G++ Compiler'
+	$(CC) $(COPTS)  -o "$@" -c "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+%.o: %.S
+	@echo 'Building file: $<'
+	@echo 'Invoking: Cross G++ Compiler'
+	$(AS) $(AOPTS)  -o "$@" -c "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
 # Other Targets
 clean:
-	-$(RM) *.o $(TARGET)
+	-$(RM) *.o 
 	-@echo ' '
-
-bare_metal:
-	cd "$@"; make
-
-bsp:
-	cd "$@"; make
 
 .PHONY: all clean dependents
