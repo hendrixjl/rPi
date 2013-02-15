@@ -4,7 +4,7 @@ TARGET := crawler
 
 LIBS := 
 
-INCLUDES = bare_metal bsp external_devices
+INCLUDES = -Ibare_metal -Ibsp -Iexternal_devices
 
 DIRS := bsp bare_metal 
 
