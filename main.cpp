@@ -23,6 +23,7 @@ int main()
 	enum { FORWARD=mcp23008::PIN7, BACK=mcp23008::PIN6, RIGHT=mcp23008::PIN4, LEFT=mcp23008::PIN2 };
 
 	gpio.set_iodir(FORWARD | BACK | RIGHT | LEFT, mcp23008::OUTPUT);
+	cout << "io dir=" << hex << unsigned(gpio.get_iodir()) << dec << endl;
 
 	gpio.set_input_polarity(FORWARD | BACK | RIGHT | LEFT, mcp23008::NORMAL_LOGIC);
 
@@ -97,5 +98,6 @@ int main()
 	}
 
 	gpio.set_iodir(FORWARD | BACK | RIGHT | LEFT, mcp23008::INPUT);
+	cout << "io dir=" << hex << unsigned(gpio.get_iodir()) << dec << endl;
 
 }
