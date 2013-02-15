@@ -51,8 +51,12 @@ public:
 		i2cbus_.command(addr_, IODIR, &iodir, 1);
 	}
 
-	unsigned char get_input_polarity() {
+	uint8_t get_input_polarity() {
 		return i2cbus_.query(addr_, IPOL);
+	}
+
+	uint8_t get_conf() {
+		return i2cbus_.query(addr_, IOCON);
 	}
 
 	void set_input_polarity(uint8_t pins, bool direction) {

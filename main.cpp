@@ -26,6 +26,8 @@ int main()
 
 	gpio.set_input_polarity(FORWARD | BACK | RIGHT | LEFT, mcp23008::NORMAL_LOGIC);
 
+	cout << "ioconf=" << hex << unsigned(gpio.get_conf()) << endl;
+
 	typedef unsigned char direction_t;
 	typedef unsigned char direction_state_t;
 	struct command_t {
