@@ -20,7 +20,7 @@ all: $(TARGET)
 $(TARGET): DI $(OBJS) 
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross GCC'
-	$(CPP)  $(INCLUDES) -o $(TARGET) $(OBJS) $(LIBS)
+	$(LD)  -o $(TARGET) $(OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
