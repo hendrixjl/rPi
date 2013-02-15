@@ -29,7 +29,9 @@ public:
 		NORMAL_LOGIC=0,
 		INVERSE_LOGIC=1,
 		ON=1,
-		OFF=0
+		OFF=0,
+		ACTIVE_HIGH_OUTPUT_IOCON=2,
+		OPEN_DRAIN_OUTPUT_IOCON=4
 	};
 
 	mcp23008(uint8_t address, i2c& i2cbus) : addr_(address), i2cbus_(i2cbus) {}
@@ -57,6 +59,26 @@ public:
 
 	uint8_t get_conf() {
 		return i2cbus_.query(addr_, IOCON);
+	}
+
+	void set_active_high_output() {
+		uint8_t b = get_conf() | ACTIVE_HIGH_OUTPUT_IOCON;
+		i2cbus_.command(addr_, IOCON, &b, 1);
+	}
+
+	void set_active_low_output() {
+		uint8_t b = get_conf() & 0xff - ACTIVE_HIGH_OUTPUT_IOCON;
+		i2cbus_.command(addr_, IOCON, &b, 1);
+	}
+
+	void set_open_drain_output() {
+		uint8_t b = get_conf() | OPEN_DRAIN_OUTPUT_IOCON;
+		i2cbus_.command(addr_, IOCON, &b, 1);
+	}
+
+	void set_active_driver_output() {
+		uint8_t b = get_conf() & 0xff - OPEN_DRAIN_OUTPUT_IOCON;
+		i2cbus_.command(addr_, IOCON, &b, 1);
 	}
 
 	void set_input_polarity(uint8_t pins, bool direction) {
