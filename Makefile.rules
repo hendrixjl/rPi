@@ -1,0 +1,35 @@
+
+ifdef __BARE_METAL__
+PREFIX := arm-none-eabi-
+endif
+
+
+RM := rm -rf
+
+CPP := $(PREFIX)g++
+CC := $(PREFIX)gcc
+AS := $(PREFIX)as
+AR := $(PREFIX)ar
+
+CPPOPTS := -std=c++0x -O0 -Wall -fmessage-length=0
+
+%.o: %.cpp
+	@echo 'Building file: $<'
+	@echo 'Invoking: Cross G++ Compiler'
+	$(CPP) $(CPPOPTS)  -o "$@" -c "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+%.o: %.c
+	@echo 'Building file: $<'
+	@echo 'Invoking: Cross G++ Compiler'
+	$(CC) $(COPTS)  -o "$@" -c "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+%.o: %.S
+	@echo 'Building file: $<'
+	@echo 'Invoking: Cross G++ Compiler'
+	$(AS) $(AOPTS)  -o "$@" -c "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
