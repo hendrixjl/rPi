@@ -9,8 +9,9 @@ INCLUDES = bare_metal bsp external_devices
 DIRS := bsp bare_metal 
 
 OBJS += $(patsubst %.cpp, %.o, $(shell ls *.cpp))
-OBJS += $(patsubst %.c, %.o, $(shell ls *.c))
-OBJS += $(patsubst %.S, %.o, $(shell ls *.S))
+#OBJS += $(patsubst %.c, %.o, $(shell ls *.c))
+#OBJS += $(patsubst %.S, %.o, $(shell ls *.S))
+
 
 # All Target
 all: $(TARGET)
