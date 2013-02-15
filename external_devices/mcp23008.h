@@ -71,16 +71,25 @@ public:
 		i2cbus_.command(addr_, IOCON, &b, 1);
 	}
 
-	void set_open_drain_output() {
+	/**
+	 * Sets the interrupt pin to open drain
+	 */
+	void set_open_drain_int() {
 		uint8_t b = get_conf() | OPEN_DRAIN_OUTPUT_IOCON;
 		i2cbus_.command(addr_, IOCON, &b, 1);
 	}
 
-	void set_active_driver_output() {
+	/**
+	 * Sets the interrupt pin to active driver
+	 */
+	void set_active_driver_int() {
 		uint8_t b = get_conf() & (0xff - OPEN_DRAIN_OUTPUT_IOCON);
 		i2cbus_.command(addr_, IOCON, &b, 1);
 	}
 
+	/**
+	 * Sets the interrupt pin input polarity
+	 */
 	void set_input_polarity(uint8_t pins, bool direction) {
 		uint8_t iodir = get_iodir();
 		if (direction == INVERSE_LOGIC)

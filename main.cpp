@@ -26,9 +26,6 @@ int main()
 
 	gpio.set_input_polarity(FORWARD | BACK | RIGHT | LEFT, mcp23008::NORMAL_LOGIC);
 
-	gpio.set_active_driver_output();
-	gpio.set_active_high_output();
-
 	cout << "ioconf=" << hex << unsigned(gpio.get_conf()) << dec << endl;
 
 	typedef unsigned char direction_t;
@@ -99,5 +96,6 @@ int main()
 				<< endl;
 	}
 
-	gpio.set_open_drain_output();
+	gpio.set_iodir(FORWARD | BACK | RIGHT | LEFT, mcp23008::INPUT);
+
 }
