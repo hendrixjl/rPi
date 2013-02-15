@@ -67,7 +67,7 @@ public:
 	}
 
 	void set_active_low_output() {
-		uint8_t b = get_conf() & 0xff - ACTIVE_HIGH_OUTPUT_IOCON;
+		uint8_t b = get_conf() & (0xff - ACTIVE_HIGH_OUTPUT_IOCON);
 		i2cbus_.command(addr_, IOCON, &b, 1);
 	}
 
@@ -77,7 +77,7 @@ public:
 	}
 
 	void set_active_driver_output() {
-		uint8_t b = get_conf() & 0xff - OPEN_DRAIN_OUTPUT_IOCON;
+		uint8_t b = get_conf() & (0xff - OPEN_DRAIN_OUTPUT_IOCON);
 		i2cbus_.command(addr_, IOCON, &b, 1);
 	}
 
