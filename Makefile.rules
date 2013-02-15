@@ -16,20 +16,20 @@ CPPOPTS := -std=c++0x -O0 -Wall -fmessage-length=0
 %.o: %.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross G++ Compiler'
-	$(CPP) $(CPPOPTS)  -o "$@" -c "$<"
+	$(CPP) $(CPPOPTS) $(INCLUDES) -o "$@" -c "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
 %.o: %.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross G++ Compiler'
-	$(CC) $(COPTS)  -o "$@" -c "$<"
+	$(CC) $(COPTS) $(INCLUDES)  -o "$@" -c "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
 %.o: %.S
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross G++ Compiler'
-	$(AS) $(AOPTS)  -o "$@" -c "$<"
+	$(AS) $(AOPTS) $(INCLUDES)  -o "$@" -c "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
