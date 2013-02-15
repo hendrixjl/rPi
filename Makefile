@@ -26,6 +26,9 @@ $(TARGET): DI $(OBJS)
 
 # Other Targets
 clean:
+	for d in $(DIRS); do \
+	cd $$d; $(RM) *.o; \
+	done
 	-$(RM) *.o $(TARGET)
 	-@echo ' '
 
@@ -33,11 +36,5 @@ DI:
 	for d in $(DIRS); do \
 	cd $$d; make; \
 	done
-
-bare_metal:
-	cd "$@"; make
-
-bsp:
-	cd "$@"; make
 
 .PHONY: all clean dependents
