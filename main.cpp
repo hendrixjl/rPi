@@ -29,6 +29,8 @@ int main()
 
 	cout << "ioconf=" << hex << unsigned(gpio.get_conf()) << dec << endl;
 
+	gpio.set_olat(FORWARD | BACK | RIGHT | LEFT, mcp23008::OFF);
+
 	typedef unsigned char direction_t;
 	typedef unsigned char direction_state_t;
 	struct command_t {
@@ -100,4 +102,5 @@ int main()
 	gpio.set_iodir(FORWARD | BACK | RIGHT | LEFT, mcp23008::INPUT);
 	cout << "io dir=" << hex << unsigned(gpio.get_iodir()) << dec << endl;
 
+	gpio.set_olat(FORWARD | BACK | RIGHT | LEFT, mcp23008::OFF);
 }

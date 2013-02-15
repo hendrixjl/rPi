@@ -61,12 +61,18 @@ public:
 		return i2cbus_.query(addr_, IOCON);
 	}
 
-	void set_active_high_output() {
+	/**
+	 * Sets the interrupt pin to active high
+	 */
+	void set_active_high_int() {
 		uint8_t b = get_conf() | ACTIVE_HIGH_OUTPUT_IOCON;
 		i2cbus_.command(addr_, IOCON, &b, 1);
 	}
 
-	void set_active_low_output() {
+	/**
+	 * Sets the interrupt pin to active low
+	 */
+	void set_active_low_int() {
 		uint8_t b = get_conf() & (0xff - ACTIVE_HIGH_OUTPUT_IOCON);
 		i2cbus_.command(addr_, IOCON, &b, 1);
 	}
@@ -87,9 +93,6 @@ public:
 		i2cbus_.command(addr_, IOCON, &b, 1);
 	}
 
-	/**
-	 * Sets the interrupt pin input polarity
-	 */
 	void set_input_polarity(uint8_t pins, bool direction) {
 		uint8_t iodir = get_iodir();
 		if (direction == INVERSE_LOGIC)
