@@ -17,10 +17,10 @@ OBJS += $(patsubst %.cpp, %.o, $(shell ls *.cpp))
 all: $(TARGET)
 
 # Tool invocations
-$(TARGET): $(DIRS) $(OBJS) 
+$(TARGET): DI $(OBJS) 
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross GCC'
-	$(CPP)  -o "rPi_devices_test" $(OBJS) $(LIBS)
+	$(CPP)  $(INCLUDES) -o $(TARGET) $(OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -28,6 +28,11 @@ $(TARGET): $(DIRS) $(OBJS)
 clean:
 	-$(RM) *.o $(TARGET)
 	-@echo ' '
+
+DI:
+	for d in $(DIRS); do \
+	cd $(d); make; \
+	done
 
 bare_metal:
 	cd "$@"; make
