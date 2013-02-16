@@ -9,7 +9,7 @@ using namespace std;
 void dump(mcp23008& gpio)
 {
 	cout << "mcp23008 regs: ";
-	for (auto it=gpio.get_registers().cbegin(); it!=gpio.get_registers().cend(), ++it)
+	for (auto it=gpio.get_registers().cbegin(); it!=gpio.get_registers().cend(); ++it)
 	{
 		cout << " " << hex << *it;
 	}
