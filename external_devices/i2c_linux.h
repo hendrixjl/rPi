@@ -64,7 +64,7 @@ public:
 			std::cout << std::hex << unsigned(b) << " ";
 		}
 		std::cout << std::dec << std::endl;
-		if ((write(fd_, buffer, buffer.size())) != buffer.size()) {
+		if ((write(fd_, &buffer[0], buffer.size())) != buffer.size()) {
 			std::cerr << "Error writing to i2c slave" << std::endl;
 			return 0;
 		}
