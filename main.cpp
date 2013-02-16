@@ -11,7 +11,7 @@ void dump(mcp23008& gpio)
 	cout << "mcp23008 regs: ";
 	const auto& v = gpio.get_registers();
 	cout << "(" << v.size() << ")" << endl;
-	for (auto it=v.cbegin(); it!=v.cend(); ++it)
+	for (auto it: v)
 	{
 		cout << " " << hex << *it;
 	}
