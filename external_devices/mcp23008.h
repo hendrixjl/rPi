@@ -57,11 +57,8 @@ public:
 		}
 		else
 		{
-			auto bits = ~pins;
-			std::cout << "~pins=" << std::hex << unsigned(bits) << std::dec << std::endl;
 			iodir &= ~pins;
 		}
-		std::cout << "sending " << std::hex << unsigned(iodir) << std::dec << std::endl;
 		i2cbus_.command(addr_, IODIR, &iodir, 1);
 	}
 

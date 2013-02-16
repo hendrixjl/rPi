@@ -58,12 +58,6 @@ public:
 		{
 			buffer.insert(buffer.begin()+1, data_addr, data_addr+data_size);
 		}
-		std::cout << "i2c write: ";
-		for (auto b : buffer)
-		{
-			std::cout << std::hex << unsigned(b) << " ";
-		}
-		std::cout << std::dec << std::endl;
 		if ((write(fd_, &buffer[0], buffer.size())) != buffer.size()) {
 			std::cerr << "Error writing to i2c slave" << std::endl;
 			return 0;
