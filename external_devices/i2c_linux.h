@@ -56,7 +56,7 @@ public:
 		std::vector<uint8_t> buffer{cmd};
 		if (data_size>0)
 		{
-			buffer.insert(1, data_addr, data_addr+data_size);
+			buffer.insert(buffer.begin()+1, data_addr, data_addr+data_size);
 		}
 		std::cout << "i2c write: ";
 		for (auto b : buffer)
@@ -141,7 +141,7 @@ private:
 	 * Construct an i2c bus using
 	 * a base address register
 	 */
-	i2c(const string& filename)
+	i2c(const std::string& filename)
 	: fd_ ()
 	{
 		if ((fd_ = open(filename.c_str(), O_RDWR)) < 0) {
