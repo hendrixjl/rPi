@@ -10,7 +10,7 @@ CPP := $(PREFIX)g++
 CC := $(PREFIX)gcc
 AS := $(PREFIX)as
 AR := $(PREFIX)ar
-LD := $(PREFIX)ld
+LD := $(PREFIX)g++ #ld
 
 CPPOPTS := -std=c++0x -O0 -Wall -fmessage-length=0
 

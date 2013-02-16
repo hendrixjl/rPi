@@ -10,6 +10,7 @@
 
 #include "i2c.h"
 #include <stdint.h>
+#include <vector>
 
 class mcp23008
 {
@@ -35,6 +36,12 @@ public:
 	};
 
 	mcp23008(uint8_t address, i2c& i2cbus) : addr_(address), i2cbus_(i2cbus) {}
+
+	std::vector<uint8_t> get_registers() {
+		static const int NUM_ELEMENTS = REGISTERS_END-1;
+		std::vector<uint8_t> regs(NUM_ELEMENTS, 0);
+		return i2cbus_.query(addr_, IODIR, &regs[0], NUM_ELEMENTS);
+	}
 
 	unsigned char get_iodir() {
 		return i2cbus_.query(addr_, IODIR);
@@ -141,7 +148,7 @@ public:
 	}
 
 private:
-	enum registers_1 {
+	enum registers_t {
 		IODIR=0x00,
 		IPOL=0x01,
 		GPINTEN=0x02,
@@ -152,7 +159,8 @@ private:
 		INTF=0x07,
 		INTCAP=0x08,
 		GPIO=0x09,
-		OLAT=0x0A
+		OLAT=0x0A,
+		REGISTERS_END
 	};
 
 	uint8_t addr_;
