@@ -34,23 +34,23 @@ int main()
 
 	dump(gpio);
 
-	enum { FORWARD=mcp23008::PIN7, BACK=mcp23008::PIN6, RIGHT=mcp23008::PIN4, LEFT=mcp23008::PIN2 };
-
-	gpio.set_iodir(FORWARD | BACK | RIGHT | LEFT, mcp23008::OUTPUT);
-	cout << "io dir=" << hex << unsigned(gpio.get_iodir()) << dec << endl;
-
-	dump(gpio);
-
-	gpio.set_input_polarity(FORWARD | BACK | RIGHT | LEFT, mcp23008::NORMAL_LOGIC);
-
-	cout << "ioconf=" << hex << unsigned(gpio.get_conf()) << dec << endl;
-
-	dump(gpio);
-
-	gpio.set_olat(FORWARD | BACK | RIGHT | LEFT, mcp23008::OFF);
-
-	dump(gpio);
-
+//	enum { FORWARD=mcp23008::PIN7, BACK=mcp23008::PIN6, RIGHT=mcp23008::PIN4, LEFT=mcp23008::PIN2 };
+//
+//	gpio.set_iodir(FORWARD | BACK | RIGHT | LEFT, mcp23008::OUTPUT);
+//	cout << "io dir=" << hex << unsigned(gpio.get_iodir()) << dec << endl;
+//
+//	dump(gpio);
+//
+//	gpio.set_input_polarity(FORWARD | BACK | RIGHT | LEFT, mcp23008::NORMAL_LOGIC);
+//
+//	cout << "ioconf=" << hex << unsigned(gpio.get_conf()) << dec << endl;
+//
+//	dump(gpio);
+//
+//	gpio.set_olat(FORWARD | BACK | RIGHT | LEFT, mcp23008::OFF);
+//
+//	dump(gpio);
+//
 //	typedef unsigned char direction_t;
 //	typedef unsigned char direction_state_t;
 //	struct command_t {
@@ -118,14 +118,14 @@ int main()
 //				<< " mags: " << mags[0] << " " << mags[1] << " " << mags[2]
 //				<< endl;
 //	}
-
-	gpio.set_iodir(FORWARD | BACK | RIGHT | LEFT, mcp23008::INPUT);
-	cout << "io dir=" << hex << unsigned(gpio.get_iodir()) << dec << endl;
-
-	dump(gpio);
-
-	gpio.set_olat(FORWARD | BACK | RIGHT | LEFT, mcp23008::OFF);
-
-	dump(gpio);
+//
+//	gpio.set_iodir(FORWARD | BACK | RIGHT | LEFT, mcp23008::INPUT);
+//	cout << "io dir=" << hex << unsigned(gpio.get_iodir()) << dec << endl;
+//
+//	dump(gpio);
+//
+//	gpio.set_olat(FORWARD | BACK | RIGHT | LEFT, mcp23008::OFF);
+//
+//	dump(gpio);
 
 }
