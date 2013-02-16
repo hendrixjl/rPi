@@ -41,7 +41,8 @@ public:
 		static const uint32_t NUM_ELEMENTS = REGISTERS_END-1;
 		std::vector<uint8_t> regs(NUM_ELEMENTS, 0);
 		uint8_t *a = &regs[0];
-		return i2cbus_.query(addr_, IODIR, a, NUM_ELEMENTS);
+		i2cbus_.query(addr_, IODIR, a, NUM_ELEMENTS);
+		return regs;
 	}
 
 	unsigned char get_iodir() {
