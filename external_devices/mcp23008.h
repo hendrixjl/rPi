@@ -38,7 +38,7 @@ public:
 	mcp23008(uint8_t address, i2c& i2cbus) : addr_(address), i2cbus_(i2cbus) {}
 
 	std::vector<uint8_t> get_registers() {
-		static const int NUM_ELEMENTS = REGISTERS_END-1;
+		static const uint32_t NUM_ELEMENTS = REGISTERS_END-1;
 		std::vector<uint8_t> regs(NUM_ELEMENTS, 0);
 		return i2cbus_.query(addr_, IODIR, &regs[0], NUM_ELEMENTS);
 	}
