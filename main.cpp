@@ -13,7 +13,7 @@ void dump(mcp23008& gpio)
 	cout << "(" << v.size() << ")" << endl;
 	for (auto it: v)
 	{
-		cout << " " << hex << *it;
+		cout << " " << hex << unsigned(it);
 	}
 	cout << dec << endl;
 }
