@@ -32,7 +32,7 @@ int main()
 
 	mcp23008 gpio(MCP23008, i2c1);
 
-	enum { FORWARD=mcp23008::PIN7, BACK=mcp23008::PIN6, RIGHT=mcp23008::PIN4, LEFT=mcp23008::PIN1 };
+	enum { FORWARD=mcp23008::PIN3, BACK=mcp23008::PIN2, RIGHT=mcp23008::PIN1, LEFT=mcp23008::PIN0 };
 
 	cout << "pins = " << unsigned(FORWARD | BACK | RIGHT | LEFT) << endl;
 	gpio.set_iodir(FORWARD | BACK | RIGHT | LEFT, mcp23008::OUTPUT);
