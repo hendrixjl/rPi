@@ -20,7 +20,7 @@
 #include <iostream>
 #include <string>
 #include <stdint.h>
-using namespace std;
+#include <vector>
 
 class i2c {
 public:
@@ -53,11 +53,13 @@ public:
 			uint32_t data_size=0)
 	{
 		set_slave(slaveaddr);
-		uint8_t* buffer = new uint8_t[1 + data_size];
-		buffer[0] = cmd;
-		memcpy(&buffer[1], data_addr, data_size);
-		if ((write(fd_, &cmd, 1+data_size)) != 1+data_size) {
-			cerr << "Error writing to i2c slave" << endl;
+		std::vector<uint8_t> buffer{cmd};
+		if (data_size>0)
+		{
+			buffer.insert(1, data_addr, data_addr+data_size);
+		}
+		if ((write(fd_, buffer, buffer.size())) != buffer.size()) {
+			std::cerr << "Error writing to i2c slave" << std::endl;
 			return 0;
 		}
 		delete buffer;
@@ -102,12 +104,12 @@ public:
 	{
 		set_slave(slaveaddr);
 		if ((write(fd_, &slave_register, 1)) != 1) { // Send register we want to read from
-			cerr << "Error writing to i2c slave" << endl;
+			std::cerr << "Error writing to i2c slave" << std::endl;
 			return 0;
 		}
 
 		if (read(fd_, buffer, buffer_size) != int(buffer_size)) {		// Read back data into buf[]
-			cerr << "Unable to read from slave" << endl;
+			std::cerr << "Unable to read from slave" << std::endl;
 			return 0;
 		}
 		return buffer_size;
@@ -139,7 +141,7 @@ private:
 	{
 		if ((fd_ = open(filename.c_str(), O_RDWR)) < 0) {
 			// Open port for reading and writing
-			cerr << "Failed to open i2c port" << endl;
+			std::cerr << "Failed to open i2c port" << std::endl;
 			exit(1);
 		}
 	}
@@ -149,7 +151,7 @@ private:
 	{
 		if (ioctl(fd_, I2C_SLAVE, address) < 0) {
 			// Set the port options and set the address of the device we wish to speak to
-			cerr << "Unable to get bus access to talk to slave" << endl;
+			std::cerr << "Unable to get bus access to talk to slave" << std::endl;
 			exit(1);
 		}
 	}
