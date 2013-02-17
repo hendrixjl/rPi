@@ -54,9 +54,11 @@ int main()
 		command_t{FORWARD, mcp23008::ON, "FORWARD"},
 		command_t{FORWARD,mcp23008::OFF, "STOP"},
 		command_t{FORWARD | RIGHT,mcp23008::ON, "FORWARD RIGHT"},
-		command_t{ RIGHT,mcp23008::OFF, "FORWARD"},
+		command_t{ RIGHT, mcp23008::OFF, "FORWARD"},
 		command_t{FORWARD | LEFT,mcp23008::ON, "FORWARD LEFT"},
 		command_t{FORWARD | LEFT,mcp23008::OFF, "STOP"},
+		command_t{BACK, mcp23008::ON, "BACK"},
+		command_t{BACK, mcp23008::OFF, "STOP"},
 	};
 
 	auto it = commands.begin();
@@ -78,6 +80,6 @@ int main()
 //				<< endl;
 	}
 
-	gpio.set_olat(FORWARD | BACK | RIGHT | LEFT, mcp23008::OFF);
+	gpio.set_olat(mcp23008::PIN_ALL, mcp23008::OFF);
 	gpio.set_iodir(mcp23008::PIN_ALL, mcp23008::INPUT);
 }
