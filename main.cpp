@@ -53,12 +53,12 @@ int main()
 	vector<command_t> commands{
 		command_t{FORWARD, mcp23008::ON, "FORWARD"},
 		command_t{FORWARD,mcp23008::OFF, "STOP"},
-		command_t{FORWARD | RIGHT,mcp23008::ON, "FORWARD RIGHT"},
-		command_t{ RIGHT, mcp23008::OFF, "FORWARD"},
-		command_t{FORWARD | LEFT,mcp23008::ON, "FORWARD LEFT"},
-		command_t{FORWARD | LEFT,mcp23008::OFF, "STOP"},
-		command_t{BACK, mcp23008::ON, "BACK"},
-		command_t{BACK, mcp23008::OFF, "STOP"},
+		command_t{BACK, mcp23008::ON, "BACKWARD"},
+		command_t{BACK,mcp23008::OFF, "STOP"},
+		command_t{RIGHT, mcp23008::ON, "RIGHT"},
+		command_t{RIGHT,mcp23008::OFF, "STOP"},
+		command_t{LEFT, mcp23008::ON, "LEFT"},
+		command_t{LEFT,mcp23008::OFF, "STOP"},
 	};
 
 	auto it = commands.begin();
@@ -66,7 +66,7 @@ int main()
 	{
 		sleep(1);
 		gpio.set_olat(it->dir, it->state);
-		cout << "dir: " << it->msg << endl;
+		cout << "dir: " << it->msg << " " << unsigned(it->dir) << endl;
 		++it;
 //		short temp; unsigned char status; short xa; short ya; short za;
 //		gyro.measurements(temp, status, xa, ya, za);
