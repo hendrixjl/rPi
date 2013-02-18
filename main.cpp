@@ -88,6 +88,7 @@ int main()
 //				<< endl;
 	}
 
+	sleep(1);
 	gpio.set_olat(mcp23008::PIN_ALL, mcp23008::OFF);
 	gpio.set_iodir(mcp23008::PIN_ALL, mcp23008::INPUT);
 }
