@@ -34,46 +34,37 @@ int main()
 
 	enum {
 		FORWARD_BACK_ENABLE=mcp23008::PIN0,
-		FORWARD_BACK=mcp23008::PIN1,
-		ENABLE=mcp23008::ON,
-		DISABLE=mcp23008::OFF,
-		FORWARD=mcp23008::ON,
-		BACKWARD=mcp23008::OFF
+		FORWARD_BACK_DISABLE=0,
+		FORWARD=mcp23008::PIN1,
+		BACKWARD=mcp23008::PIN2,
 	};
 
-	cout << "pins = " << unsigned(FORWARD_BACK_ENABLE | FORWARD_BACK ) << endl;
-	gpio.set_iodir(FORWARD_BACK_ENABLE | FORWARD_BACK , mcp23008::OUTPUT);
+	cout << "pins = " << unsigned(FORWARD_BACK_ENABLE | FORWARD | BACKWARD ) << endl;
+	gpio.set_iodir(FORWARD_BACK_ENABLE | FORWARD | BACKWARD , mcp23008::OUTPUT);
 	cout << "io dir=" << hex << unsigned(gpio.get_iodir()) << dec << endl;
 
-	gpio.set_input_polarity(FORWARD_BACK_ENABLE | FORWARD_BACK, mcp23008::NORMAL_LOGIC);
+	gpio.set_input_polarity(FORWARD_BACK_ENABLE | FORWARD | BACKWARD, mcp23008::NORMAL_LOGIC);
 
-	gpio.set_olat(FORWARD_BACK_ENABLE | FORWARD_BACK, mcp23008::OFF);
+	gpio.set_olat(FORWARD_BACK_ENABLE | FORWARD | BACKWARD, mcp23008::OFF);
 
-	typedef unsigned char direction_t;
-	typedef unsigned char direction_state_t;
-	typedef unsigned char enable_t;
-	typedef unsigned char enable_state_t;
 	struct command_t {
-		enable_t enable_bit;
-		enable_state_t enable_state;
-		direction_t dir_bit;
-		direction_state_t dirstate;
+		uint8_t olat;
 		string msg;
 	};
 
 	vector<command_t> commands{
-		command_t{FORWARD_BACK_ENABLE,ENABLE, FORWARD_BACK, FORWARD, "FORWARD"},
-		command_t{FORWARD_BACK_ENABLE,DISABLE, FORWARD_BACK, FORWARD, "STOP"},
-		command_t{FORWARD_BACK_ENABLE,ENABLE, FORWARD_BACK, BACKWARD, "BACKWARD"},
-		command_t{FORWARD_BACK_ENABLE,DISABLE, FORWARD_BACK, BACKWARD, "STOP"},
+		command_t{FORWARD_BACK_ENABLE + FORWARD, "FORWARD"},
+		command_t{FORWARD_BACK_DISABLE + FORWARD, "STOP"},
+		command_t{FORWARD_BACK_ENABLE + BACKWARD, "BACKWARD"},
+		command_t{FORWARD_BACK_DISABLE + BACKWARD, "STOP"},
 	};
 
 	auto it = commands.begin();
 	while (it != commands.end())
 	{
 		sleep(1);
-		gpio.set_olat(it->enable_bit, it->enable_state);
-		gpio.set_olat(it->dir_bit, it->dirstate);
+		gpio.set_olat(it->olat);
+		gpio.set_olat(it->olat);
 		cout << "dir: " << it->msg << " " << endl;
 		++it;
 //		short temp; unsigned char status; short xa; short ya; short za;

@@ -89,6 +89,10 @@ public:
 		return i2cbus_.query(addr_, OLAT);
 	}
 
+	void set_olat(uint8_t value) {
+		i2cbus_.command(addr_, OLAT, &value, 1);
+	}
+
 	void set_olat(uint8_t pins, bool value) {
 		uint8_t gpio = get_gpio();
 		if (value == ON)
