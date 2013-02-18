@@ -136,6 +136,20 @@ public:
 		return i2cbus_.query(addr_, OLAT);
 	}
 
+	/**
+	 * Set the olat register to the given value
+	 * @param olat - the new state for olat
+	 */
+	void set_olat(uint8_t olat) {
+		i2cbus_.command(addr_, OLAT, &olat, 1);
+	}
+
+	/**
+	 * Modify olat for the input pins. All the given pins
+	 * will assume the new state. Other pins will be left unmodified
+	 * @param pins - The pins to modify
+	 * @param value - on or off
+	 */
 	void set_olat(uint8_t pins, bool value) {
 		uint8_t gpio = get_gpio();
 		if (value == ON)
