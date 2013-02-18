@@ -32,41 +32,49 @@ int main()
 
 	mcp23008 gpio(MCP23008, i2c1);
 
-	enum { FORWARD=mcp23008::PIN3, BACK=mcp23008::PIN2, RIGHT=mcp23008::PIN1, LEFT=mcp23008::PIN0 };
+	enum {
+		FORWARD_BACK_ENABLE=mcp23008::PIN0,
+		FORWARD_BACK=mcp23008::PIN1,
+		ENABLE=mcp23008::ON,
+		DISABLE=mcp23008::OFF,
+		FORWARD=mcp23008::ON,
+		BACKWARD=mcp23008::OFF
+	};
 
-	cout << "pins = " << unsigned(FORWARD | BACK | RIGHT | LEFT) << endl;
-	gpio.set_iodir(FORWARD | BACK | RIGHT | LEFT, mcp23008::OUTPUT);
+	cout << "pins = " << unsigned(FORWARD_BACK_ENABLE | FORWARD_BACK ) << endl;
+	gpio.set_iodir(FORWARD_BACK_ENABLE | FORWARD_BACK , mcp23008::OUTPUT);
 	cout << "io dir=" << hex << unsigned(gpio.get_iodir()) << dec << endl;
 
-	gpio.set_input_polarity(FORWARD | BACK | RIGHT | LEFT, mcp23008::NORMAL_LOGIC);
+	gpio.set_input_polarity(FORWARD_BACK_ENABLE | FORWARD_BACK, mcp23008::NORMAL_LOGIC);
 
-	gpio.set_olat(FORWARD | BACK | RIGHT | LEFT, mcp23008::OFF);
+	gpio.set_olat(FORWARD_BACK_ENABLE | FORWARD_BACK, mcp23008::OFF);
 
 	typedef unsigned char direction_t;
 	typedef unsigned char direction_state_t;
+	typedef unsigned char enable_t;
+	typedef unsigned char enable_state_t;
 	struct command_t {
-		direction_t dir;
-		direction_state_t state;
+		enable_t enable_bit;
+		enable_state_t enable_state;
+		direction_t dir_bit;
+		direction_state_t dirstate;
 		string msg;
 	};
 
 	vector<command_t> commands{
-		command_t{FORWARD, mcp23008::ON, "FORWARD"},
-		command_t{FORWARD,mcp23008::OFF, "STOP"},
-		command_t{BACK, mcp23008::ON, "BACKWARD"},
-		command_t{BACK,mcp23008::OFF, "STOP"},
-		command_t{RIGHT, mcp23008::ON, "RIGHT"},
-		command_t{RIGHT,mcp23008::OFF, "STOP"},
-		command_t{LEFT, mcp23008::ON, "LEFT"},
-		command_t{LEFT,mcp23008::OFF, "STOP"},
+		command_t{FORWARD_BACK_ENABLE,ENABLE, FORWARD_BACK, FORWARD, "FORWARD"},
+		command_t{FORWARD_BACK_ENABLE,DISABLE, FORWARD_BACK, FORWARD, "FORWARD"},
+		command_t{FORWARD_BACK_ENABLE,ENABLE, FORWARD_BACK, BACKWARD, "FORWARD"},
+		command_t{FORWARD_BACK_ENABLE,DISABLE, FORWARD_BACK, BACKWARD, "FORWARD"},
 	};
 
 	auto it = commands.begin();
 	while (it != commands.end())
 	{
 		sleep(1);
-		gpio.set_olat(it->dir, it->state);
-		cout << "dir: " << it->msg << " " << unsigned(it->dir) << endl;
+		gpio.set_olat(it->enable_bit, it->enable_state);
+		gpio.set_olat(it->dir_bit, it->dirstate);
+		cout << "dir: " << it->msg << " " << endl;
 		++it;
 //		short temp; unsigned char status; short xa; short ya; short za;
 //		gyro.measurements(temp, status, xa, ya, za);
