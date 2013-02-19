@@ -8,6 +8,8 @@
 #ifndef I2C_H_
 #define I2C_H_
 
+#include "bar.h"
+
 /**
  * The i2c class encapsulates interactions on an i2c bus.
  * Usage:
@@ -17,11 +19,6 @@
  */
 
 class i2c {
-	enum {
-		BSC0_BAR = 0x20205000,
-		BSC1_BAR = 0x20804000,
-		BSC2_BAR = 0x20805000  // Not available on RPi
-	};
 public:
 	/**
 	 * Setup the i2c bus and initialize it to disabled.
