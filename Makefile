@@ -6,7 +6,7 @@ LIBS :=
 
 INCLUDES = -Ibare_metal -Ibsp -Iexternal_devices
 
-DIRS := #bsp bare_metal 
+DIRS := bsp #bare_metal 
 
 OBJS += $(patsubst %.cpp, %.o, $(shell ls *.cpp))
 #OBJS += $(patsubst %.c, %.o, $(shell ls *.c))
