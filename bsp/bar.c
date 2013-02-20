@@ -1,8 +1,9 @@
+#include "bar.h"
 
 enum bar_t {
         eIRQ_BAR =       0x2000B200,
         eARM_TIMER_BAR = 0x2000B400,
-        eGPIO_BAR =      0x20200000
+        eGPIO_BAR =      0x20200000,
         eBSC0_BAR =   0x20205000,
         eBSC1_BAR = 	0x20804000, // available?
         eBSC2_BAR = 	0x20805000, // Not available on RPi
