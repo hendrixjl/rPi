@@ -12,20 +12,20 @@ AS := $(PREFIX)as
 AR := $(PREFIX)ar
 LD := $(PREFIX)g++ #ld
 
-CPPOPTS := -std=c++0x -O0 -Wall -fmessage-length=0
-COPTS := -std=c99 -O0 -Wall -fmessage-length=0
+CPPFLAGS += -std=c++0x -O0 -Wall -fmessage-length=0
+CFLAGS += -std=c99 -O0 -Wall -fmessage-length=0
 
 %.o: %.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross G++ Compiler'
-	$(CPP) $(CPPOPTS) $(INCLUDES) -o "$@" -c "$<"
+	$(CPP) $(CPPFLAGS) $(INCLUDES) -o "$@" -c "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
 %.o: %.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross G++ Compiler'
-	$(CC) $(COPTS) $(INCLUDES)  -o "$@" -c "$<"
+	$(CC) $(CFLAGS) $(INCLUDES)  -o "$@" -c "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
