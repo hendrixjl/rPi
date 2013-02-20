@@ -205,7 +205,7 @@ private:
 	 * Construct an i2c bus using
 	 * a base address register
 	 */
-	explicit i2c(unsigned int *bar)
+	explicit i2c(volatile unsigned int *bar)
 	: bar_ (bar)
 	{
 		init();
