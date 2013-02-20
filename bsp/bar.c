@@ -71,6 +71,7 @@ volatile unsigned *mapRegisterMemory(int base)
 	
     if ((long)map < 0) {
         printf("mmap error %d\n", (int)map);
+        perror("description:");
         exit (-1);
     }
 
