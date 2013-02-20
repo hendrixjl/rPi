@@ -46,6 +46,9 @@ volatile unsigned *mapRegisterMemory(int base)
 	
     /* mmap register */
     // Allocate MAP block
+    static const unsigned PAGE_SIZE = 4*1024;
+	static const unsigned BLOCK_SIZE = 4*1024;
+
     if ((mem = malloc(BLOCK_SIZE + (PAGE_SIZE-1))) == NULL) {
         printf("allocation error \n");
         exit (-1);
