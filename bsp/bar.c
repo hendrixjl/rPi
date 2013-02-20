@@ -81,13 +81,21 @@ volatile unsigned *mapRegisterMemory(int base)
 
 void map_virtual_memory() // for linux
 {
+	printf("%s:%d - \n", __func__, __LINE__);
     IRQ_BAR = mapRegisterMemory(eIRQ_BAR);
+	printf("%s:%d - \n", __func__, __LINE__);
     ARM_TIMER_BAR = mapRegisterMemory(eARM_TIMER_BAR);
+	printf("%s:%d - \n", __func__, __LINE__);
     GPIO_BAR = mapRegisterMemory(eGPIO_BAR);
+	printf("%s:%d - \n", __func__, __LINE__);
     BSC0_BAR = mapRegisterMemory(eBSC0_BAR);
+	printf("%s:%d - \n", __func__, __LINE__);
     BSC1_BAR = mapRegisterMemory(eBSC1_BAR);
+	printf("%s:%d - \n", __func__, __LINE__);
     BSC2_BAR = mapRegisterMemory(eBSC2_BAR);
+	printf("%s:%d - \n", __func__, __LINE__);
     PWM_BAR = mapRegisterMemory(ePWM_BAR);
+	printf("%s:%d - \n", __func__, __LINE__);
 }
 #endif
 
