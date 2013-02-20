@@ -23,6 +23,7 @@ void straight_assign() // for bare metal
 
 #ifndef __BARE_METAL__
 
+#include <fcntl.h>
 #include <sys/mman.h>
 #include <sys/types.h>
 #include <sys/stat.h>
