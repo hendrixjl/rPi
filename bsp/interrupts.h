@@ -8,8 +8,6 @@
 #ifndef INTERRUPTS_H_
 #define INTERRUPTS_H_
 
-#include "bsp.h"
-
 typedef enum {
 	IRQ_NONE = 0,
 	IRQ_ARM_TIMER = 0x000001,
