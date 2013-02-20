@@ -2,7 +2,7 @@ include Makefile.rules
 
 TARGET := crawler
 
-LIBS := -Lbsp -lbar
+LIBS := -Lbsp -lbsp
 
 INCLUDES = -Ibare_metal -Ibsp -Iexternal_devices
 
