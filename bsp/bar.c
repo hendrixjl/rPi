@@ -1,6 +1,7 @@
 #include "bar.h"
 
 enum bar_t {
+		eBASE = 0x2000B000,
         eIRQ_BAR =       0x2000B200,
         eARM_TIMER_BAR = 0x2000B400,
         eGPIO_BAR =      0x20200000,
@@ -83,9 +84,12 @@ volatile unsigned *mapRegisterMemory(int base)
 void map_virtual_memory() // for linux
 {
 	printf("%s:%d - \n", __func__, __LINE__);
-    IRQ_BAR = mapRegisterMemory(eIRQ_BAR);
-	printf("%s:%d - \n", __func__, __LINE__);
-    ARM_TIMER_BAR = mapRegisterMemory(eARM_TIMER_BAR);
+	volatile unsigned *b = mapRegisterMemory(eBASE);
+	IRQ_BAR = b + 200/4;
+//    IRQ_BAR = mapRegisterMemory(eIRQ_BAR);
+//	printf("%s:%d - \n", __func__, __LINE__);
+	ARM_TIMER_BAR = b + 400/4;
+//    ARM_TIMER_BAR = mapRegisterMemory(eARM_TIMER_BAR);
 	printf("%s:%d - \n", __func__, __LINE__);
     GPIO_BAR = mapRegisterMemory(eGPIO_BAR);
 	printf("%s:%d - \n", __func__, __LINE__);
