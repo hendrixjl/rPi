@@ -13,6 +13,7 @@ AR := $(PREFIX)ar
 LD := $(PREFIX)g++ #ld
 
 CPPOPTS := -std=c++0x -O0 -Wall -fmessage-length=0
+COPTS := -std=c99 -O0 -Wall -fmessage-length=0
 
 %.o: %.cpp
 	@echo 'Building file: $<'
