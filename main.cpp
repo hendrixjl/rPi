@@ -25,6 +25,8 @@ int main()
 
 	i2c& i2c1(i2c::setup(1));
 
+	cout << "i2c1.bar()=" << hex << i2c1.get_bar() << dec << endl;
+
 	l3gd20 gyro(L3GD20,i2c1);
 	gyro.enable();
 
