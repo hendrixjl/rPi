@@ -62,7 +62,7 @@ volatile unsigned *mapRegisterMemory(int base)
 	
     // Now map it
     map = (char *)mmap(
-                (caddr_t)mem,
+                mem,
                 BLOCK_SIZE,
                 PROT_READ|PROT_WRITE,
                 MAP_SHARED|MAP_FIXED,

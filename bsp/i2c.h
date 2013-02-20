@@ -424,7 +424,7 @@ private:
 	 * Setup the i2c bus 0 and initialize it to disabled.
 	 */
 	static i2c& setup0() {
-		static i2c i2c0(reinterpret_cast<unsigned int*>(BSC0_BAR));
+		static i2c i2c0(BSC0_BAR);
 		i2c0.init();
 		return i2c0;
 	}
@@ -432,7 +432,7 @@ private:
 	 * Setup the i2c bus 1 and initialize it to disabled.
 	 */
 	static i2c& setup1() {
-		static i2c i2c1(reinterpret_cast<unsigned int*>(BSC1_BAR));
+		static i2c i2c1(BSC1_BAR);
 		i2c1.init();
 		return i2c1;
 	}
@@ -440,7 +440,7 @@ private:
 	 * Setup the i2c bus 2 and initialize it to disabled.
 	 */
 	static i2c& setup2() {
-		static i2c i2c2(reinterpret_cast<unsigned int*>(BSC2_BAR));  // Not available on RPi
+		static i2c i2c2(BSC2_BAR);  // Not available on RPi
 		i2c2.init();  // Not available on RPi
 		return i2c2;
 	}
