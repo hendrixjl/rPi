@@ -20,6 +20,7 @@ void dump(mcp23008& gpio)
 
 int main()
 {
+	init_bars();
 	enum {LSM303_A=0x19, LSM303_M=0x1E, L3GD20=0x6B, MCP23008=0x20 };
 
 	i2c& i2c1(i2c::setup(1));

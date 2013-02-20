@@ -9,15 +9,15 @@
 #include "bar.h"
 
 enum {
-	ARM_TIMER_LOD = ARM_TIMER_BAR + 0x0000,
-	ARM_TIMER_VAL = ARM_TIMER_BAR + 0x0004,
-	ARM_TIMER_CTL = ARM_TIMER_BAR + 0x0008,
-	ARM_TIMER_CLI = ARM_TIMER_BAR + 0x000C,
-	ARM_TIMER_RIS = ARM_TIMER_BAR + 0x0010,
-	ARM_TIMER_MIS = ARM_TIMER_BAR + 0x0014,
-	ARM_TIMER_RLD = ARM_TIMER_BAR + 0x0018,
-	ARM_TIMER_DIV = ARM_TIMER_BAR + 0x001C,
-	ARM_TIMER_CNT = ARM_TIMER_BAR + 0x0020
+	ARM_TIMER_LOD = 0, // ARM_TIMER_BAR + 0x0000,
+	ARM_TIMER_VAL = 1, // ARM_TIMER_BAR + 0x0004,
+	ARM_TIMER_CTL = 2, // ARM_TIMER_BAR + 0x0008,
+	ARM_TIMER_CLI = 3, // ARM_TIMER_BAR + 0x000C,
+	ARM_TIMER_RIS = 4, // ARM_TIMER_BAR + 0x0010,
+	ARM_TIMER_MIS = 5, // ARM_TIMER_BAR + 0x0014,
+	ARM_TIMER_RLD = 6, // ARM_TIMER_BAR + 0x0018,
+	ARM_TIMER_DIV = 7, // ARM_TIMER_BAR + 0x001C,
+	ARM_TIMER_CNT = 8  // ARM_TIMER_BAR + 0x0020
 };
 
 
@@ -49,7 +49,7 @@ unsigned int set_timer_ctrl(
 			+ (enable << TIMER_ENABLE_BIT)
 			+ (irq_enable << TIMER_INT_ENABLE_BIT) + (prescale << TIMER_PRESCALE_BIT)
 			+ (timer_size << TIMER_SIZE_BIT);
-	*(unsigned int*) ARM_TIMER_CTL = temp;
+	ARM_TIMER_BAR[ARM_TIMER_CTL] = temp;
 	return temp;
 }
 
@@ -58,7 +58,7 @@ unsigned int get_timer_ctrl(
 		unsigned int* irq_enable,
 		unsigned int* prescale,
 		unsigned int* timer_size) {
-	unsigned int temp = *(unsigned int*) ARM_TIMER_CTL;
+	unsigned int temp = ARM_TIMER_BAR[ARM_TIMER_CTL];
 	*enable = ((temp & (1 << TIMER_ENABLE_BIT)) > 0);
 	*irq_enable = ((temp & (1 << TIMER_INT_ENABLE_BIT)) > 0);
 	enum {
@@ -67,32 +67,32 @@ unsigned int get_timer_ctrl(
 	*prescale = (temp >> TIMER_PRESCALE_BIT) & TIMER_PRESCALE_MASK;
 	*timer_size =
 			(temp & (1 << TIMER_SIZE_BIT)) ? TWENTY_THREE_BITS : SIXTEEN_BITS;
-	return *(unsigned int*) ARM_TIMER_CTL;
+	return ARM_TIMER_BAR[ARM_TIMER_CTL];
 }
 
 unsigned int load_timer(unsigned int i) {
-	*(unsigned int*) ARM_TIMER_LOD = i;
-	return *(unsigned int*) ARM_TIMER_LOD;
+	ARM_TIMER_BAR[ARM_TIMER_LOD] = i;
+	return ARM_TIMER_BAR[ARM_TIMER_LOD];
 }
 
 void set_timer_reload(unsigned int i) {
-	*(unsigned int*) ARM_TIMER_RLD = i;
+	ARM_TIMER_BAR[ARM_TIMER_RLD] = i;
 }
 
 void set_timer_divider(unsigned int i) {
-	*(unsigned int*) ARM_TIMER_DIV = i;
+	ARM_TIMER_BAR[ARM_TIMER_DIV] = i;
 }
 
 unsigned int arm_timer_val() {
-	return *(unsigned int*) ARM_TIMER_VAL;
+	return ARM_TIMER_BAR[ARM_TIMER_VAL];
 }
 
 unsigned int arm_free_timer_val() {
-	return *(unsigned int*) ARM_TIMER_CNT;
+	return ARM_TIMER_BAR[ARM_TIMER_CNT];
 }
 
 void arm_timer_clear_irq() {
-	*(unsigned int*) ARM_TIMER_CLI = 0;
+	ARM_TIMER_BAR[ARM_TIMER_CLI] = 0;
 }
 
 void arm_timer_setup(unsigned int timer_load, unsigned int timer_reload,
@@ -144,9 +144,9 @@ void arm_timer_irq_disable() {
 }
 
 int arm_timer_irq_pending_raw() {
-	return *(unsigned int*) ARM_TIMER_RIS;
+	return ARM_TIMER_BAR[ARM_TIMER_RIS];
 }
 
 int arm_timer_irq_pending() {
-	return *(unsigned int*) ARM_TIMER_MIS;
+	return ARM_TIMER_BAR[ARM_TIMER_MIS];
 }
