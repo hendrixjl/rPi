@@ -217,129 +217,80 @@ bool i2c::write_byte(unsigned char byte)
     }
 }
 
-/**
-* What is the state of an i2c transfer
-* @return true if the DONE bit is set
-*/
-bool txfer_done() const
+bool i2c::txfer_done() const
 {
-return (bar_[STATUS_REG] & DONE);
+    return (bar_[STATUS_REG] & DONE);
 }
 
-/**
-* Reset the transfer bit on the i2c bus device
-*/
-void reset_txfer_done() const
+void i2c::reset_txfer_done() const
 {
-bar_[STATUS_REG] |= DONE;
+    bar_[STATUS_REG] |= DONE;
 }
 
-/**
-* Busy wait for the done bit to be set for the
-* i2c bus device
-*/
-void wait_for_done()
+void i2c::wait_for_done()
 {
-while (!txfer_done());
-reset_txfer_done();
+    while (!txfer_done());
+    reset_txfer_done();
 }
 
-/**
-* Set the slave address for the i2c bus device
-* @param slaveaddr
-*/
-void set_slave_address(unsigned char slaveaddr)
+void i2c::set_slave_address(unsigned char slaveaddr)
 {
-bar_[SLAVE_ADDR_REG] = slaveaddr;
+    bar_[SLAVE_ADDR_REG] = slaveaddr;
 }
 
-/**
-* Set the data length of an upcoming
-* i2c transfer
-* @param len
-*/
-void set_data_len(unsigned len)
+void i2c::set_data_len(unsigned len)
 {
-bar_[DLEN_REG]=len;
+    bar_[DLEN_REG]=len;
 }
 
-/**
-* Initiate a write to an i2c slave device.
-*/
-void initiate_write()
+void i2c::initiate_write()
 {
-bar_[CNTRL_REG] = (bar_[CNTRL_REG] & ~READ) | ST | CLEAR;
+    bar_[CNTRL_REG] = (bar_[CNTRL_REG] & ~READ) | ST | CLEAR;
 }
 
-/**
-* Initiate a read from an i2c slave device
-*/
-void initiate_read()
+void i2c::initiate_read()
 {
-bar_[CNTRL_REG] |= (ST | CLEAR | READ);
+    bar_[CNTRL_REG] |= (ST | CLEAR | READ);
 }
 
-/**
-* Return the slave address currently
-* set for this i2c bus device
-* @return the slave address
-*/
-unsigned char get_slave_address() const {
-return bar_[SLAVE_ADDR_REG];
+unsigned char i2c::get_slave_address() const 
+{
+    return bar_[SLAVE_ADDR_REG];
 }
 
-/**
-* Set the clock divider for the i2c bus device clock
-* @param div (defaults to 0x5DC [100 kHz])
-*/
-void set_clk_divider(unsigned short div=0x5DC) const {
-bar_[CLOCK_DIV_REG] = div;
+void i2c::set_clk_divider(unsigned short div=0x5DC) const 
+{
+    bar_[CLOCK_DIV_REG] = div;
 }
 
-/**
-* Set the delay for the i2c bus device.
-* @param delay (defaults to 0x0000 0030 0000 0030
-*/
-void set_delay(unsigned int delay=(0x030 << 16) + 0x030) const {
-bar_[DATA_DELAY_REG] = delay;
+void i2c::set_delay(unsigned int delay=(0x030 << 16) + 0x030) const 
+{
+    bar_[DATA_DELAY_REG] = delay;
 }
 
-/**
-* Set clkt for the i2c bus device.
-* @param clkt (defauts to 0x040)
-*/
-void set_clkt(unsigned char clkt=0x040) const {
-bar_[CLKT] = clkt;
+void i2c::set_clkt(unsigned char clkt=0x040) const 
+{
+    bar_[CLKT] = clkt;
 }
 
-volatile unsigned int* bar_;
-
-i2c(const i2c&); // no copy
-i2c& operator=(const i2c&); // no assign
-
-/**
-* Setup the i2c bus 0 and initialize it to disabled.
-*/
-static i2c& setup0() {
-static i2c i2c0(BSC0_BAR);
-i2c0.init();
-return i2c0;
-}
-/**
-* Setup the i2c bus 1 and initialize it to disabled.
-*/
-static i2c& setup1() {
-static i2c i2c1(BSC1_BAR);
-i2c1.init();
-return i2c1;
-}
-/**
-* Setup the i2c bus 2 and initialize it to disabled.
-*/
-static i2c& setup2() {
-static i2c i2c2(BSC2_BAR); // Not available on RPi
-i2c2.init(); // Not available on RPi
-return i2c2;
+i2c& i2c::setup0()
+{
+    static i2c i2c0(BSC0_BAR);
+    i2c0.init();
+    return i2c0;
 }
 
-};
+i2c& i2c::setup1() 
+{
+    static i2c i2c1(BSC1_BAR);
+    i2c1.init();
+    return i2c1;
+}
+
+i2c& i2c::setup2() 
+{
+    static i2c i2c2(BSC2_BAR); // Not available on RPi
+    i2c2.init(); // Not available on RPi
+    return i2c2;
+}
+
