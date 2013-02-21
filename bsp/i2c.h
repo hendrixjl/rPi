@@ -154,6 +154,15 @@ public:
 		return bytes_read;
 	}
 
+	/**
+	 * Return the base address register for
+	 * the bus.
+	 */
+	unsigned int get_bar() const
+	{
+		return (unsigned int)bar_;
+	}
+
 private:
 
 	/**
@@ -209,15 +218,6 @@ private:
 	: bar_ (bar)
 	{
 		init();
-	}
-
-	/**
-	 * Return the base address register for
-	 * the bus.
-	 */
-	unsigned int get_bar() const
-	{
-		return (unsigned int)bar_;
 	}
 
 	/**

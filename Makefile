@@ -39,7 +39,7 @@ clean:
 
 DI:
 	for d in $(DIRS); do \
-	cd $$d; make CFLAGS=$(CFLAGS) CPPFLAGS=$(CPPFLAGS); \
+	cd $$d; make CFLAGS="$(CFLAGS)" CPPFLAGS="$(CPPFLAGS)"; \
 	done
 
 .PHONY: all clean dependents
