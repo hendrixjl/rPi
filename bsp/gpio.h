@@ -78,6 +78,11 @@ typedef enum  {
 	ALL_MASK=7
 } gpio_function_t;
 
+typedef enum {
+	PIN_LOW = 0,
+	PIN_HIGH = 1
+} pin_level_t;
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -88,6 +93,33 @@ void gpio_fsel(gpio_pin_t pin, gpio_function_t fun);
 void gpio_set0(gpio_pin_t pin);
 
 void gpio_clear0(gpio_pin_t pin);
+
+void gpio_set1(gpio_pin_t pin);
+
+void gpio_clear1(gpio_pin_t pin);
+
+pin_level_t gpio_get_level(gpio_pin_t pin);
+
+typedef enum {
+	FALLING_EDGE_DETECT,
+	RISING_EDGE_DETECT,
+	TRANSITION_DETECT,
+	HIGH_DETECT,
+	LOW_DETECT,
+	ASYNC_RISING_EDGE_DETECT,
+	ASYNC_FALLING_EDGE_DETECT
+} event_type_t;
+
+void gpio_set_event_detect(gpio_pin_t pin, event_type_t event_type);
+
+typedef enum {
+	DISABLE_PULL_UP_DOWN_CTRL,
+	ENABLE_PULL_DOWN_CTRL,
+	ENABLE_PULL_UP_CNTRL,
+	RESERVERVED_PULL_UP_DOWN_CTRL
+} gppud_t;
+
+void gpio_set_pud(gpio_pin_t pin, gppud_t);
 
 #ifdef __cplusplus
 }
