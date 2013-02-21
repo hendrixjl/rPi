@@ -54,7 +54,12 @@ typedef enum {
 	RESERVD //   = GPIO_BAR + 0x00B0
 } gpio_registers_t;
 
-void gpio_fsel(gpio_pin_t pin, gpio_function_t fun) {
+enum {
+	MAX_PINS_PER_WORD=32
+};
+
+void gpio_fsel(gpio_pin_t pin, gpio_function_t fun) 
+{
 	enum {
 		PINS_PER_WORD = 10,
 		BITS_PER_PIN = 3
@@ -67,10 +72,149 @@ void gpio_fsel(gpio_pin_t pin, gpio_function_t fun) {
     GPIO_BAR[word] = ra; // *(unsigned int*)word = ra;
 }
 
-void gpio_set0(gpio_pin_t pin) {
-	GPIO_BAR[GPSET0] = 1<<pin; // *(unsigned int*)GPSET0 = 1<<pin;
+void gpio_set0(gpio_pin_t pin) 
+{
+	if (pin > MAX_PINS_PER_WORD)
+	{
+		GPIO_BAR[GPSET0] = 1<<(pin-MAX_PINS_PER_WORD); // *(unsigned int*)GPSET0 = 1<<pin;
+	}
+	else
+	{
+		GPIO_BAR[GPSET0] = 1<<pin; // *(unsigned int*)GPSET0 = 1<<pin;
+	}
 }
 
-void gpio_clear0(gpio_pin_t pin) {
-	GPIO_BAR[GPCLR0] = 1<<pin;
+void gpio_clear0(gpio_pin_t pin) 
+{
+	if (pin > MAX_PINS_PER_WORD)
+	{
+		GPIO_BAR[GPCLR0] = 1<<(pin-MAX_PINS_PER_WORD);
+	}
+	else
+	{
+		GPIO_BAR[GPCLR0] = 1<<pin;
+	}
+}
+
+
+void gpio_set1(gpio_pin_t pin)
+{
+	if (pin > MAX_PINS_PER_WORD)
+	{
+		GPIO_BAR[GPSET1] = 1<<(pin-MAX_PINS_PER_WORD);
+	}
+	else
+	{
+		GPIO_BAR[GPSET1] = 1<<pin;
+	}
+}
+
+void gpio_clear1(gpio_pin_t pin)
+{
+	if (pin > MAX_PINS_PER_WORD)
+	{
+		GPIO_BAR[GPCLR1] = 1<<(pin-MAX_PINS_PER_WORD);
+	}
+	else
+	{
+		GPIO_BAR[GPCLR1] = 1<<pin;
+	}
+}
+
+pin_level_t gpio_get_level(gpio_pin_t pin)
+{
+	if (pin > MAX_PINS_PER_WORD)
+	{
+		return ((GPIO_BAR[GPLEV1] & (1<<(pin-MAX_PINS_PER_WORD))) != 0);
+	}
+	else
+	{
+		return ((GPIO_BAR[GPLEV0] & (1<<pin)) != 0);
+	}
+}
+
+bool gpio_event_detected(gpio_pin_t pin)
+{
+	int word = GPEDS0;
+	int pinInWord = pin;
+	if (pin > MAX_PINS_PER_WORD)
+	{
+		word = GPEDS1;
+		pinInWord = pin - MAX_PINS_PER_WORD;
+	}
+	return ((GPIO_BAR[word] & (1<<pinInWord)) != 0);
+}
+
+bool gpio_clear_event_detected(gpio_pin_t pin)
+{
+	int word = GPEDS0;
+	int pinInWord = pin;
+	if (pin > MAX_PINS_PER_WORD)
+	{
+		word = GPEDS1;
+		pinInWord = pin - MAX_PINS_PER_WORD;
+	}
+	GPIO_BAR[word] |= (1<<pinInWord);
+}
+
+void gpio_set_event_detect(gpio_pin_t pin, event_type_t event_type)
+{
+	int word = GPREN0;
+	int pinInWord = pin;
+	if (pin > MAX_PINS_PER_WORD)
+	{
+		word = GPREN1;
+		pinInWord = pin - MAX_PINS_PER_WORD;
+	}
+	switch (event_type)
+	{
+		case NO_DETECT:
+			GPIO_BAR[word] &= ~(1<<pinInWord);
+			GPIO_BAR[word+(GPFEN0-GPREN0)] &= ~(1<<pinInWord);
+			GPIO_BAR[word+(GPHEN0-GPREN0)] &= ~(1<<pinInWord);
+			GPIO_BAR[word+(GPLEN0-GPREN0)] &= ~(1<<pinInWord);
+			GPIO_BAR[word+(GPAREN0-GPREN0)] &= ~(1<<pinInWord);
+			GPIO_BAR[word+(GPAFEN0-GPREN0)] &= ~(1<<pinInWord);
+			break;
+		case RISING_EDGE_DETECT:
+			GPIO_BAR[word] |= (1<<pinInWord);
+			break;
+		case FALLING_EDGE_DETECT:
+			GPIO_BAR[word+(GPFEN0-GPREN0)] |= (1<<pinInWord);
+			break;
+		case TRANSITIION_DETECT:
+			GPIO_BAR[word] |= (1<<pinInWord);
+			GPIO_BAR[word+(GPFEN0-GPREN0)] |= (1<<pinInWord);
+			break;
+		case HIGH_DETECT:
+			GPIO_BAR[word+(GPHEN0-GPREN0)] |= (1<<pinInWord);
+			break;
+		case LOW_DETECT:
+			GPIO_BAR[word+(GLEN0-GPREN0)] |= (1<<pinInWord);
+			break;
+		case ASYNC_RISING_EDGE_DETECT:
+			GPIO_BAR[word+(GPAREN0-GPREN0)] |= (1<<pinInWord);
+			break;
+		case ASYNC_FALLING_EDGE_DETECT:
+			GPIO_BAR[word+(GPAFEN0-GPREN0)] |= (1<<pinInWord);
+			break;
+	}
+}
+
+void gpio_set_pud(gpio_pin_t pin, gppud_t pud)
+{
+	int word = GPPUDCLK0;
+	int pinInWord = pin;
+	if (pin > MAX_PINS_PER_WORD)
+	{
+		word = GPPUDCLK1;
+		pinInWord = pin - MAX_PINS_PER_WORD;
+	}
+	
+	GPIO_BAR[GPPUD] = pud;
+	// wait 150 cycles
+	GPIO_BAR[word] |= (1<<pin);
+	// wait 150 cycles
+	GPIO_BAR[GPPUD] = 0;
+	GPIO_BAR[word] = 0;
 }
