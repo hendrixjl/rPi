@@ -9,7 +9,7 @@
 #define I2C_H_
 
 #include "stdint.h"
-#include "bar.h"
+
 /**
  * The i2c class encapsulates interactions on an i2c bus.
  * Usage:
@@ -55,10 +55,10 @@ public:
 	 * @param data_addr
 	 * @param data_size
 	 */
-	uint32_t command(uint8_t slaveaddr,
+	size_t command(uint8_t slaveaddr,
 			uint8_t cmd,
 			const uint8_t* data_addr=0,
-			uint32_t data_size=0);
+			size_t data_size=0);
 
 	/**
 	 * Query a register on a slave device. Return
@@ -68,7 +68,7 @@ public:
 	 * @return reply
 	 */
 	uint8_t query(uint8_t slaveaddr,
-			uint8_t slave_register);
+		      uint8_t slave_register);
 
 
 	/**
@@ -80,10 +80,10 @@ public:
 	 * @param buffer_size
 	 * @return number of bytes read
 	 */
-	uint32_t query(uint8_t slaveaddr,
+	size_t query(uint8_t slaveaddr,
 			uint8_t slave_register,
 			uint8_t* buffer,
-			uint32_t buffer_size);
+			size_t buffer_size);
 
 	/**
 	 * Return the base address register for
@@ -181,7 +181,7 @@ private:
 	 * i2c transfer
 	 * @param len
 	 */
-	void set_data_len(uint32_t len);
+	void set_data_len(size_t len);
 
 	/**
 	 * Initiate a write to an i2c slave device.
