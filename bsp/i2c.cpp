@@ -44,7 +44,7 @@ enum status_bits_t {
     TA=1<<0
 };
 
-i2c& i2c::setup(unsigned short bus) 
+i2c& i2c::setup(uint16_t bus) 
 {
     switch (bus)
     {
@@ -65,20 +65,20 @@ void i2c::disable()
     bar_[CNTRL_REG] &= ~I2CEN;
 }
 
-unsigned int i2c::get_status() const
+uint32_t i2c::get_status() const
 {
     return bar_[STATUS_REG];
 }
 
-unsigned int i2c::get_control() const
+uint32_t i2c::get_control() const
 {
     return bar_[CNTRL_REG];
 }
 
-unsigned i2c::command(unsigned char slaveaddr,
-                      unsigned char cmd,
-                      const unsigned char* data_addr=0,
-                      unsigned data_size=0)
+size_t i2c::command(uint8_t slaveaddr,
+                    uint8_t cmd,
+                    const uint8_t* data_addr=0,
+                    size_t data_size=0)
 {
     reset_txfer_done();
     set_slave_address(slaveaddr);
@@ -101,8 +101,8 @@ unsigned i2c::command(unsigned char slaveaddr,
     return bytes_sent;
 }
 
-unsigned char i2c::query(unsigned char slaveaddr,
-                         unsigned char slave_register)
+uint8_t i2c::query(uint8_t slaveaddr,
+                         uint8_t slave_register)
 {
     command(slaveaddr, slave_register);
     initiate_read();
@@ -114,10 +114,10 @@ unsigned char i2c::query(unsigned char slaveaddr,
 }
 
 
-unsigned i2c::query(unsigned char slaveaddr,
-                    unsigned char slave_register,
-                    unsigned char* buffer,
-                    unsigned buffer_size)
+size_t i2c::query(uint8_t slaveaddr,
+                  uint8_t slave_register,
+                  uint8_t* buffer,
+                  size_t buffer_size)
 {
     enum { READ_MULTIPLE=0x080 };
     command(slaveaddr, slave_register | READ_MULTIPLE);
@@ -138,13 +138,13 @@ unsigned i2c::query(unsigned char slaveaddr,
     return bytes_read;
 }
 
-unsigned int i2c::get_bar() const
+uint32_t i2c::get_bar() const
 {
     return (unsigned int)bar_;
 }
 
 
-explicit i2c::i2c(volatile unsigned int *bar)
+explicit i2c::i2c(volatile uint32_t *bar)
 : bar_ (bar)
 {
     init();
@@ -180,17 +180,17 @@ bool i2c::tx_room_avail() const
     return bar_[STATUS_REG] & TXD;
 }
 
-void i2c::push_byte_on_fifo(unsigned char byte)
+void i2c::push_byte_on_fifo(uint8_t byte)
 {
     bar_[FIFO_REG] = byte;
 }
 
-unsigned char i2c::pop_byte_from_fifo() const
+uint8_t i2c::pop_byte_from_fifo() const
 {
     return bar_[FIFO_REG];
 }
 
-bool read_byte(unsigned char& byte) const
+bool read_byte(uint8_t& byte) const
 {
     if (rx_data_avail())
     {
@@ -204,7 +204,7 @@ bool read_byte(unsigned char& byte) const
     }
 }
 
-bool i2c::write_byte(unsigned char byte)
+bool i2c::write_byte(uint8_t byte)
 {
     if (tx_room_avail())
     {
@@ -233,12 +233,12 @@ void i2c::wait_for_done()
     reset_txfer_done();
 }
 
-void i2c::set_slave_address(unsigned char slaveaddr)
+void i2c::set_slave_address(uint8_t slaveaddr)
 {
     bar_[SLAVE_ADDR_REG] = slaveaddr;
 }
 
-void i2c::set_data_len(unsigned len)
+void i2c::set_data_len(size_t len)
 {
     bar_[DLEN_REG]=len;
 }
@@ -258,17 +258,17 @@ unsigned char i2c::get_slave_address() const
     return bar_[SLAVE_ADDR_REG];
 }
 
-void i2c::set_clk_divider(unsigned short div=0x5DC) const 
+void i2c::set_clk_divider(uint16_t div) const 
 {
     bar_[CLOCK_DIV_REG] = div;
 }
 
-void i2c::set_delay(unsigned int delay=(0x030 << 16) + 0x030) const 
+void i2c::set_delay(uint16_t delay) const 
 {
     bar_[DATA_DELAY_REG] = delay;
 }
 
-void i2c::set_clkt(unsigned char clkt=0x040) const 
+void i2c::set_clkt(uint8_t clkt) const 
 {
     bar_[CLKT] = clkt;
 }
