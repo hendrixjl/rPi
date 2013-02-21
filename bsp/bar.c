@@ -91,6 +91,7 @@ void map_virtual_memory() // for linux
     GPIO_BAR = mapRegisterMemory(eGPIO_BAR);
     BSC0_BAR = mapRegisterMemory(eBSC0_BAR);
     BSC1_BAR = mapRegisterMemory(eBSC1_BAR);
+    printf("eBSC1_BAR=%08x\n", (unsigned)eBSC1_BAR);
     printf("BSC1_BAR=%08x\n", (unsigned)BSC1_BAR);
     BSC2_BAR = mapRegisterMemory(eBSC2_BAR);
     PWM_BAR = mapRegisterMemory(ePWM_BAR);
