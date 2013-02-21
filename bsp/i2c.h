@@ -8,6 +8,7 @@
 #ifndef I2C_H_
 #define I2C_H_
 
+#include "stdint.h"
 #include "bar.h"
 /**
  * The i2c class encapsulates interactions on an i2c bus.
@@ -24,7 +25,7 @@ public:
 	 * @param bus
 	 * @return a i2c object address
 	 */
-	static i2c& setup(unsigned short bus);
+	static i2c& setup(uint16_t bus);
 
 	/**
 	 * Enable this i2c bus
@@ -39,12 +40,12 @@ public:
 	/**
 	 * Return the status bits of this i2c bus device
 	 */
-	unsigned int get_status() const;
+	uint32_t get_status() const;
 
 	/**
 	 * Return the control bits of this i2c bus device
 	 */
-	unsigned int get_control() const;
+	uint32_t get_control() const;
 
 	/**
 	 * Send a command to a slave device
@@ -54,10 +55,10 @@ public:
 	 * @param data_addr
 	 * @param data_size
 	 */
-	unsigned command(unsigned char slaveaddr,
-			unsigned char cmd,
-			const unsigned char* data_addr=0,
-			unsigned data_size=0);
+	uint32_t command(uint8_t slaveaddr,
+			uint8_t cmd,
+			const uint8_t* data_addr=0,
+			uint32_t data_size=0);
 
 	/**
 	 * Query a register on a slave device. Return
@@ -66,8 +67,8 @@ public:
 	 * @param slave_register
 	 * @return reply
 	 */
-	unsigned char query(unsigned char slaveaddr,
-			unsigned char slave_register);
+	uint8_t query(uint8_t slaveaddr,
+			uint8_t slave_register);
 
 
 	/**
@@ -79,16 +80,16 @@ public:
 	 * @param buffer_size
 	 * @return number of bytes read
 	 */
-	unsigned query(unsigned char slaveaddr,
-			unsigned char slave_register,
-			unsigned char* buffer,
-			unsigned buffer_size);
+	uint32_t query(uint8_t slaveaddr,
+			uint8_t slave_register,
+			uint8_t* buffer,
+			uint32_t buffer_size);
 
 	/**
 	 * Return the base address register for
 	 * the bus.
 	 */
-	unsigned int get_bar() const;
+	uint32_t get_bar() const;
 
 private:
 
@@ -97,7 +98,7 @@ private:
 	 * Construct an i2c bus using
 	 * a base address register
 	 */
-	explicit i2c(volatile unsigned int *bar);
+	explicit i2c(volatile uint32_t *bar);
 
 	/**
 	 * Initialize the bus, clear the slave
@@ -131,26 +132,26 @@ private:
 	 * Push a byte on the FIFO
 	 * @param byte
 	 */
-	void push_byte_on_fifo(unsigned char byte);
+	void push_byte_on_fifo(uint8_t byte);
 
 	/**
 	 * Pop a byte from the FIFO
 	 */
-	unsigned char pop_byte_from_fifo() const;
+	uint8_t pop_byte_from_fifo() const;
 
 	/**
 	 * Read a data byte from an i2c slave
 	 * @param byte
 	 * @return true if a byte was read
 	 */
-	bool read_byte(unsigned char& byte) const;
+	bool read_byte(uint8_t& byte) const;
 
 	/**
 	 * Write a byte to an already-address i2c slave
 	 * @param byte
 	 * @return true if successful
 	 */
-	bool write_byte(unsigned char byte);
+	bool write_byte(uint8_t byte);
 
 	/**
 	 * What is the state of an i2c transfer
@@ -173,14 +174,14 @@ private:
 	 * Set the slave address for the i2c bus device
 	 * @param slaveaddr
 	 */
-	void set_slave_address(unsigned char slaveaddr);
+	void set_slave_address(uint8_t slaveaddr);
 
 	/**
 	 * Set the data length of an upcoming
 	 * i2c transfer
 	 * @param len
 	 */
-	void set_data_len(unsigned len);
+	void set_data_len(uint32_t len);
 
 	/**
 	 * Initiate a write to an i2c slave device.
@@ -197,25 +198,25 @@ private:
 	 * set for this i2c bus device
 	 * @return the slave address
 	 */
-	unsigned char get_slave_address() const;
+	uint8_t get_slave_address() const;
 
 	/**
 	 * Set the clock divider for the i2c bus device clock
 	 * @param div (defaults to 0x5DC [100 kHz])
 	 */
-	void set_clk_divider(unsigned short div=0x5DC) const;
+	void set_clk_divider(uint16_t div=0x5DC) const;
 
 	/**
 	 * Set the delay for the i2c bus device.
 	 * @param delay (defaults to 0x0000 0030 0000 0030
 	 */
-	void set_delay(unsigned int delay=(0x030 << 16) + 0x030) const;
+	void set_delay(uint16_t delay=(0x030 << 16) + 0x030) const;
 
 	/**
 	 * Set clkt for the i2c bus device.
 	 * @param clkt (defauts to 0x040)
 	 */
-	void set_clkt(unsigned char clkt=0x040) const;
+	void set_clkt(uint8_t clkt=0x040) const;
 
 	i2c(const i2c&); // no copy
 	i2c& operator=(const i2c&); // no assign
