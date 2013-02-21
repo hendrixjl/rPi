@@ -9,7 +9,6 @@
 #define I2C_H_
 
 #include "bar.h"
-#include <stdio.h>
 /**
  * The i2c class encapsulates interactions on an i2c bus.
  * Usage:
@@ -40,7 +39,6 @@ public:
 	 */
 	void enable()
 	{
-		printf("bar_[CNTRL_REG]=%08x\n",(unsigned)&bar_[CNTRL_REG]);
 		bar_[CNTRL_REG] |= I2CEN;
 	}
 

@@ -24,8 +24,6 @@ int main()
 	enum {LSM303_A=0x19, LSM303_M=0x1E, L3GD20=0x6B, MCP23008=0x20 };
 
 	i2c& i2c1(i2c::setup(1));
-
-	cout << "i2c1.bar()=" << hex << i2c1.get_bar() << dec << endl;
 	i2c1.enable();
 
 	l3gd20 gyro(L3GD20,i2c1);
