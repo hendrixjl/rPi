@@ -8,6 +8,7 @@
 #ifndef GPIO_H_
 #define GPIO_H_
 
+#include <stdbool.h>
 
 typedef enum  {
 	PIN_00=0,
@@ -101,6 +102,7 @@ void gpio_clear1(gpio_pin_t pin);
 pin_level_t gpio_get_level(gpio_pin_t pin);
 
 typedef enum {
+	NO_DETECT,
 	FALLING_EDGE_DETECT,
 	RISING_EDGE_DETECT,
 	TRANSITION_DETECT,
@@ -111,6 +113,10 @@ typedef enum {
 } event_type_t;
 
 void gpio_set_event_detect(gpio_pin_t pin, event_type_t event_type);
+
+bool gpio_event_detected(gpio_pin_t pin);
+
+void gpio_clear_event_detected(gpio_pin_t pin);
 
 typedef enum {
 	DISABLE_PULL_UP_DOWN_CTRL,

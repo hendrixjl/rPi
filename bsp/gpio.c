@@ -9,6 +9,7 @@
 #include "bar.h"
 #include <stdint.h>
 
+
 typedef enum {
 	GPFSEL0, //   = GPIO_BAR,
 	GPFSEL1, //   = GPIO_BAR + 0x0004,
@@ -74,7 +75,7 @@ void gpio_fsel(gpio_pin_t pin, gpio_function_t fun)
 
 void gpio_set0(gpio_pin_t pin) 
 {
-	if (pin > MAX_PINS_PER_WORD)
+	if (pin > (uint32_t)MAX_PINS_PER_WORD)
 	{
 		GPIO_BAR[GPSET0] = 1<<(pin-MAX_PINS_PER_WORD); // *(unsigned int*)GPSET0 = 1<<pin;
 	}
@@ -86,7 +87,7 @@ void gpio_set0(gpio_pin_t pin)
 
 void gpio_clear0(gpio_pin_t pin) 
 {
-	if (pin > MAX_PINS_PER_WORD)
+	if (pin > (uint32_t)MAX_PINS_PER_WORD)
 	{
 		GPIO_BAR[GPCLR0] = 1<<(pin-MAX_PINS_PER_WORD);
 	}
@@ -99,7 +100,7 @@ void gpio_clear0(gpio_pin_t pin)
 
 void gpio_set1(gpio_pin_t pin)
 {
-	if (pin > MAX_PINS_PER_WORD)
+	if (pin > (uint32_t)MAX_PINS_PER_WORD)
 	{
 		GPIO_BAR[GPSET1] = 1<<(pin-MAX_PINS_PER_WORD);
 	}
@@ -111,7 +112,7 @@ void gpio_set1(gpio_pin_t pin)
 
 void gpio_clear1(gpio_pin_t pin)
 {
-	if (pin > MAX_PINS_PER_WORD)
+	if (pin > (uint32_t)MAX_PINS_PER_WORD)
 	{
 		GPIO_BAR[GPCLR1] = 1<<(pin-MAX_PINS_PER_WORD);
 	}
@@ -123,7 +124,7 @@ void gpio_clear1(gpio_pin_t pin)
 
 pin_level_t gpio_get_level(gpio_pin_t pin)
 {
-	if (pin > MAX_PINS_PER_WORD)
+	if (pin > (uint32_t)MAX_PINS_PER_WORD)
 	{
 		return ((GPIO_BAR[GPLEV1] & (1<<(pin-MAX_PINS_PER_WORD))) != 0);
 	}
@@ -145,7 +146,7 @@ bool gpio_event_detected(gpio_pin_t pin)
 	return ((GPIO_BAR[word] & (1<<pinInWord)) != 0);
 }
 
-bool gpio_clear_event_detected(gpio_pin_t pin)
+void gpio_clear_event_detected(gpio_pin_t pin)
 {
 	int word = GPEDS0;
 	int pinInWord = pin;
@@ -182,7 +183,7 @@ void gpio_set_event_detect(gpio_pin_t pin, event_type_t event_type)
 		case FALLING_EDGE_DETECT:
 			GPIO_BAR[word+(GPFEN0-GPREN0)] |= (1<<pinInWord);
 			break;
-		case TRANSITIION_DETECT:
+		case TRANSITION_DETECT:
 			GPIO_BAR[word] |= (1<<pinInWord);
 			GPIO_BAR[word+(GPFEN0-GPREN0)] |= (1<<pinInWord);
 			break;
@@ -190,7 +191,7 @@ void gpio_set_event_detect(gpio_pin_t pin, event_type_t event_type)
 			GPIO_BAR[word+(GPHEN0-GPREN0)] |= (1<<pinInWord);
 			break;
 		case LOW_DETECT:
-			GPIO_BAR[word+(GLEN0-GPREN0)] |= (1<<pinInWord);
+			GPIO_BAR[word+(GPLEN0-GPREN0)] |= (1<<pinInWord);
 			break;
 		case ASYNC_RISING_EDGE_DETECT:
 			GPIO_BAR[word+(GPAREN0-GPREN0)] |= (1<<pinInWord);
