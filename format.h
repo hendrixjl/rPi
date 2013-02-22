@@ -8,6 +8,10 @@ extern "C"
 {
 #endif
 
+enum {
+  RECOMMENDED_BUFFER_SIZE=33 // will fit binary
+};
+
 /**
  * Convert an unsigned integer to string.
  * @param buffer - the data buffer to store the string in
@@ -36,6 +40,15 @@ int int_to_string(char* buffer, size_t blen, int n);
 int unsigned_to_xstring(char* buffer, size_t blen, unsigned n);
 
 /**
+ * Convert an unsigned integer to a binary string.
+ * @param buffer - the data buffer to store the string in
+ * @param blen - the available space in the buffer
+ * @param n - the number to convert
+ * @return The number of characters used. -1 if error.
+ */
+int unsigned_to_bstring(char* buffer, size_t blen, unsigned n);
+
+/**
  * Convert decimal string to unsigned integer
  * @param n - Pointer to the resulting unsigned
  * @param buffer - The string holding the number
@@ -51,6 +64,14 @@ int string_to_unsigned(unsigned* n, const char* buffer);
  */
 int xstring_to_unsigned(unsigned* n, const char* buffer);
 
+/**
+ * Convert a binary string to unsigned integer.
+ * @param n - Pointer to the resulting unsigned
+ * @param buffer - The string holding the number
+ * @return The number of characters used. -1 if error.
+ */
+int bstring_to_unsigned(unsigned* n, const char* buffer);
+
 
 /**
  * Convert decimal string to integer
@@ -58,7 +79,7 @@ int xstring_to_unsigned(unsigned* n, const char* buffer);
  * @param buffer - The string holding the number
  * @return The number of characters used. -1 if error.
  */
-int string_to_unsigned(int* n, const char* buffer);
+int string_to_int(int* n, const char* buffer);
 
 #ifdef __cplusplus
 }
