@@ -144,7 +144,7 @@ uint32_t i2c::get_bar() const
 }
 
 
-explicit i2c::i2c(volatile uint32_t *bar)
+i2c::i2c(volatile uint32_t *bar)
 : bar_ (bar)
 {
     init();
