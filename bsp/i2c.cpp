@@ -85,7 +85,7 @@ size_t i2c::command(uint8_t slaveaddr,
     set_data_len(1 + data_size);
     initiate_write();
     write_byte(cmd);
-    unsigned bytes_sent=1;
+    size_t bytes_sent=1;
     while (data_size>0)
     {
         if (write_byte(*data_addr))
@@ -106,7 +106,7 @@ uint8_t i2c::query(uint8_t slaveaddr,
 {
     command(slaveaddr, slave_register);
     initiate_read();
-    unsigned char b;
+    uint8_t b;
     while (!read_byte(b)); // loop until success
     clear_fifo();
     // TODO error conditions?
@@ -123,7 +123,7 @@ size_t i2c::query(uint8_t slaveaddr,
     command(slaveaddr, slave_register | READ_MULTIPLE);
     set_data_len(buffer_size);
     initiate_read();
-    unsigned bytes_read=0;
+    size_t bytes_read=0;
     while (buffer_size > 0)
     {
         if (read_byte(*buffer))
@@ -253,7 +253,7 @@ void i2c::initiate_read()
     bar_[CNTRL_REG] |= (ST | CLEAR | READ);
 }
 
-unsigned char i2c::get_slave_address() const 
+uint8_t i2c::get_slave_address() const
 {
     return bar_[SLAVE_ADDR_REG];
 }
