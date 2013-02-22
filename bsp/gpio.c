@@ -138,7 +138,7 @@ bool gpio_event_detected(gpio_pin_t pin)
 {
 	int word = GPEDS0;
 	int pinInWord = pin;
-	if (pin > MAX_PINS_PER_WORD)
+	if (pin > (unsigned)MAX_PINS_PER_WORD)
 	{
 		word = GPEDS1;
 		pinInWord = pin - MAX_PINS_PER_WORD;
@@ -150,7 +150,7 @@ void gpio_clear_event_detected(gpio_pin_t pin)
 {
 	int word = GPEDS0;
 	int pinInWord = pin;
-	if (pin > MAX_PINS_PER_WORD)
+	if (pin > (unsigned)MAX_PINS_PER_WORD)
 	{
 		word = GPEDS1;
 		pinInWord = pin - MAX_PINS_PER_WORD;
@@ -162,7 +162,7 @@ void gpio_set_event_detect(gpio_pin_t pin, event_type_t event_type)
 {
 	int word = GPREN0;
 	int pinInWord = pin;
-	if (pin > MAX_PINS_PER_WORD)
+	if (pin > (unsigned)MAX_PINS_PER_WORD)
 	{
 		word = GPREN1;
 		pinInWord = pin - MAX_PINS_PER_WORD;
@@ -206,7 +206,7 @@ void gpio_set_pud(gpio_pin_t pin, gppud_t pud)
 {
 	int word = GPPUDCLK0;
 	int pinInWord = pin;
-	if (pin > MAX_PINS_PER_WORD)
+	if (pin > (unsigned)MAX_PINS_PER_WORD)
 	{
 		word = GPPUDCLK1;
 		pinInWord = pin - MAX_PINS_PER_WORD;
@@ -214,7 +214,7 @@ void gpio_set_pud(gpio_pin_t pin, gppud_t pud)
 	
 	GPIO_BAR[GPPUD] = pud;
 	// wait 150 cycles
-	GPIO_BAR[word] |= (1<<pin);
+	GPIO_BAR[word] |= (1<<pinInWord);
 	// wait 150 cycles
 	GPIO_BAR[GPPUD] = 0;
 	GPIO_BAR[word] = 0;
