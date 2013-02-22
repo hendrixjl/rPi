@@ -8,6 +8,8 @@
 #ifndef BAR_H_
 #define BAR_H_
 
+#include <stdint.h>
+
 extern volatile uint32_t* IRQ_BAR;
 extern volatile uint32_t* ARM_TIMER_BAR;
 extern volatile uint32_t* GPIO_BAR;
