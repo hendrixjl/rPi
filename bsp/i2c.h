@@ -8,7 +8,8 @@
 #ifndef I2C_H_
 #define I2C_H_
 
-#include "stdint.h"
+#include <stdint.h>
+#include <stddef.h>
 
 /**
  * The i2c class encapsulates interactions on an i2c bus.
@@ -92,7 +93,7 @@ public:
 	uint32_t get_bar() const;
 
 private:
-
+	volatile uint32_t* bar_;
 
 	/**
 	 * Construct an i2c bus using

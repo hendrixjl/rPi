@@ -140,7 +140,7 @@ size_t i2c::query(uint8_t slaveaddr,
 
 uint32_t i2c::get_bar() const
 {
-    return (unsigned int)bar_;
+    return (uint32_t)bar_;
 }
 
 
@@ -190,7 +190,7 @@ uint8_t i2c::pop_byte_from_fifo() const
     return bar_[FIFO_REG];
 }
 
-bool read_byte(uint8_t& byte) const
+bool i2c::read_byte(uint8_t& byte) const
 {
     if (rx_data_avail())
     {
