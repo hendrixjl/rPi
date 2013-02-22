@@ -202,6 +202,12 @@ void gpio_set_event_detect(gpio_pin_t pin, event_type_t event_type)
 	}
 }
 
+
+static void busy(unsigned int n)
+{
+	for(volatile unsigned i=0; i<n; i++);
+}
+
 void gpio_set_pud(gpio_pin_t pin, gppud_t pud)
 {
 	int word = GPPUDCLK0;
@@ -213,9 +219,10 @@ void gpio_set_pud(gpio_pin_t pin, gppud_t pud)
 	}
 	
 	GPIO_BAR[GPPUD] = pud;
-	// wait 150 cycles
+	enum { WAIT_150_CYCLES = 15 };
+	busy(WAIT_150_CYCLES);
 	GPIO_BAR[word] |= (1<<pinInWord);
-	// wait 150 cycles
+	busy(WAIT_150_CYCLES);
 	GPIO_BAR[GPPUD] = 0;
 	GPIO_BAR[word] = 0;
 }
