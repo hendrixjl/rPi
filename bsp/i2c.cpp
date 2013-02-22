@@ -77,8 +77,8 @@ uint32_t i2c::get_control() const
 
 size_t i2c::command(uint8_t slaveaddr,
                     uint8_t cmd,
-                    const uint8_t* data_addr=0,
-                    size_t data_size=0)
+                    const uint8_t* data_addr,
+                    size_t data_size)
 {
     reset_txfer_done();
     set_slave_address(slaveaddr);
