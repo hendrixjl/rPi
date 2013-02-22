@@ -8,13 +8,13 @@
 #ifndef BAR_H_
 #define BAR_H_
 
-extern volatile unsigned* IRQ_BAR;
-extern volatile unsigned* ARM_TIMER_BAR;
-extern volatile unsigned* GPIO_BAR;
-extern volatile unsigned* BSC0_BAR;
-extern volatile unsigned* BSC1_BAR;
-extern volatile unsigned* BSC2_BAR;
-extern volatile unsigned* PWM_BAR;
+extern volatile uint32_t* IRQ_BAR;
+extern volatile uint32_t* ARM_TIMER_BAR;
+extern volatile uint32_t* GPIO_BAR;
+extern volatile uint32_t* BSC0_BAR;
+extern volatile uint32_t* BSC1_BAR;
+extern volatile uint32_t* BSC2_BAR;
+extern volatile uint32_t* PWM_BAR;
 
 #ifdef __cplusplus
 extern "C"

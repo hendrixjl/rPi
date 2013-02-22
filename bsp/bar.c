@@ -1,5 +1,13 @@
 #include "bar.h"
 
+volatile uint32_t* IRQ_BAR;
+volatile uint32_t* ARM_TIMER_BAR;
+volatile uint32_t* GPIO_BAR;
+volatile uint32_t* BSC0_BAR;
+volatile uint32_t* BSC1_BAR;
+volatile uint32_t* BSC2_BAR;
+volatile uint32_t* PWM_BAR;
+
 enum bar_t {
 		eBASE = 0x2000B000,
         eIRQ_BAR =       0x2000B200,
