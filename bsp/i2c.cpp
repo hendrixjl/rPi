@@ -263,7 +263,7 @@ void i2c::set_clk_divider(uint16_t div) const
     bar_[CLOCK_DIV_REG] = div;
 }
 
-void i2c::set_delay(uint16_t delay) const 
+void i2c::set_delay(uint32_t delay) const
 {
     bar_[DATA_DELAY_REG] = delay;
 }

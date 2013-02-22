@@ -211,7 +211,7 @@ private:
 	 * Set the delay for the i2c bus device.
 	 * @param delay (defaults to 0x0000 0030 0000 0030
 	 */
-	void set_delay(uint16_t delay=(0x030 << 16) + 0x030) const;
+	void set_delay(uint32_t delay=0x0300030) const;
 
 	/**
 	 * Set clkt for the i2c bus device.
