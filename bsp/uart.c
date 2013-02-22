@@ -30,7 +30,7 @@ typedef enum {
 
 void uart_init ( void )
 {
-    UART_BAR[AUX_ENABLES] = 1;
+	uart_disable();
     UART_BAR[AUX_MU_IER_REG] = 0;
     UART_BAR[AUX_MU_CNTL_REG] = 0;
     UART_BAR[AUX_MU_LCR_REG] = 3;
@@ -40,11 +40,21 @@ void uart_init ( void )
     UART_BAR[AUX_MU_BAUD_REG] = 270;
 
     gpio_fsel(PIN_14, ALT5);
-    gpio_fsel(PIN_15, ALT5);
     gpio_set_pud(PIN14, DISABLE_PULL_UP_DOWN_CTRL);
+    gpio_fsel(PIN_15, ALT5);
     gpio_set_pud(PIN15, DISABLE_PULL_UP_DOWN_CTRL);
 
     UART_BAR[AUX_MU_CNTL_REG] = 3;
+}
+
+void uart_enable(void)
+{
+    UART_BAR[AUX_ENABLES] |= 1;
+}
+
+void uart_disable(void)
+{
+	UART_BAR[AUX_ENABLES] &= ~1;
 }
 
 int uart_getc(char* b)
