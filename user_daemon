@@ -1,0 +1,54 @@
+#!/bin/sh
+#
+# user_daemon     This shell script takes care of starting and stopping
+#               the <myservice>
+#
+# chkconfig: - 90 10
+# description: description of your service
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+
+# Do preliminary checks here, if any
+#### START of preliminary checks #########
+
+
+##### END of preliminary checks #######
+
+
+# Handle manual control parameters like start, stop, status, restart, etc.
+
+case "$1" in
+  start)
+    # Start daemons.
+
+    echo -n $"Starting <crawler> daemon: "
+    echo
+    daemon /home/pi/git/rPi/crawler
+    echo
+    ;;
+
+  stop)
+    # Stop daemons.
+    echo -n $"Shutting down <crawler>: "
+    killproc <myservice>
+    echo
+
+    # Do clean-up works here like removing pid files from /var/run, etc.
+    ;;
+  status)
+    status <crawler>
+
+    ;;
+  restart)
+    $0 stop
+    $0 start
+    ;;
+
+  *)
+    echo $"Usage: $0 {start|stop|status|restart}"
+    exit 1
+esac
+
+exit 0
