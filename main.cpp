@@ -22,11 +22,13 @@ void dump(mcp23008& gpio)
 
 void pause_till_signal()
 {
-	gpio_set_fsel(PIN_23, INTPUT);
-	gpio_set_pud(PIN_23, ENABLE_PULL_UP_CNTRL);
-	gpio_set_event_detect(PIN_23, FALLING_EDGE_DETECT);
-	gpio_clear_event_detected(PIN_23);
-	while (!gpio_event_detected(PIN_23));
+	cout << "Waiting for signal" << endl;
+	gpio_set_fsel(PIN_25, INTPUT);
+	gpio_set_pud(PIN_25, ENABLE_PULL_UP_CNTRL);
+	while (gpio_get_level(PIN_25) == PIN_HIGH);
+//	gpio_set_event_detect(PIN_25, FALLING_EDGE_DETECT);
+//	gpio_clear_event_detected(PIN_25);
+//	while (!gpio_event_detected(PIN_25));
 	cout << "Signal!" << endl;
 }
 
@@ -35,7 +37,7 @@ int main()
 	init_bars();
 	enum {LSM303_A=0x19, LSM303_M=0x1E, L3GD20=0x6B, MCP23008=0x20 };
 
-	//pause_till_signal();
+	pause_till_signal();
 	cout << "PIN 0 function=" << (unsigned)gpio_get_fsel(PIN_00) << endl;
 	cout << "PIN 1 function=" << (unsigned)gpio_get_fsel(PIN_01) << endl;
 	cout << "PIN 14 function=" << (unsigned)gpio_get_fsel(PIN_14) << endl;
