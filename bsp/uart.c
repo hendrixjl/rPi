@@ -72,7 +72,7 @@ int uart_get(char* buffer, size_t len)
 	int cnt=0;
 	for (size_t i=0; i<len; ++i)
 	{
-		if (uart_getc(buffer[i]) == -1)
+		if (uart_getc(&buffer[i]) == -1)
 		{
 			cnt=-1;
 			break;
