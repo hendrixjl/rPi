@@ -193,9 +193,11 @@ void gpio_set_event_detect(gpio_pin_t pin, event_type_t event_type)
 			GPIO_BAR[word] |= (1<<pinInWord);
 			break;
 		case FALLING_EDGE_DETECT:
+			printf("%s:%d - \n", __FILE__, __LINE__);
+			printf("GPIO_BAR[word+(GPFEN0-GPREN0)]=%08X\n", GPIO_BAR[word+(GPFEN0-GPREN0)]);
+			printf("(1<<pinInWord)=%08X\n", (1<<pinInWord));
 			GPIO_BAR[word+(GPFEN0-GPREN0)] |= (1<<pinInWord);
-			printf("%s:%d - GPIO_BAR[GPFEN0]=%08X. pin=%d [or with %08X] state=%d\n",
-					__FILE__, __LINE__, GPIO_BAR[word+(GPFEN0-GPREN0)], pinInWord, 1<<pinInWord, GPIO_BAR[GPFEN0]);
+			printf("GPIO_BAR[word+(GPFEN0-GPREN0)]=%08X\n", GPIO_BAR[word+(GPFEN0-GPREN0)]);
 			printf("idx=%d   GPFEN0=%d  word=%d\n", word+GPFEN0-GPREN0, GPFEN0, word);
 			break;
 		case TRANSITION_DETECT:
