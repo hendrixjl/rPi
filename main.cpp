@@ -26,7 +26,7 @@ void pause_till_signal()
 	gpio_set_pud(PIN_23, ENABLE_PULL_UP_CNTRL);
 	gpio_set_event_detect(PIN_23, FALLING_EDGE_DETECT);
 	gpio_clear_event_detected(PIN_23);
-	while (gpio_event_detected(PIN_23));
+	while (!gpio_event_detected(PIN_23));
 	cout << "Signal!" << endl;
 }
 
