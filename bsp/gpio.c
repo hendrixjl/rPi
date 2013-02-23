@@ -62,7 +62,6 @@ enum {
 
 gpio_function_t gpio_get_fsel(gpio_pin_t pin)
 {
-	printf("pin=%d, fun=%d\n", pin);
 	enum {
 		PINS_PER_WORD = 10,
 		BITS_PER_PIN = 3
