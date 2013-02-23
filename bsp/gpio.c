@@ -72,6 +72,7 @@ void gpio_fsel(gpio_pin_t pin, gpio_function_t fun)
     ra &= ~(ALL_MASK<<((pin%PINS_PER_WORD)*BITS_PER_PIN));
     ra |= OUTPUT<<((pin%PINS_PER_WORD)*BITS_PER_PIN);
     GPIO_BAR[word] = ra; // *(unsigned int*)word = ra;
+	printf("%s:%d - GPIO_BAR=%08X. GPIO_BAR[GPFSEL0]=%08X.  state=%08X\n", __FILE__, __LINE__, (unsigned)GPIO_BAR, (unsigned)&GPIO_BAR[word], GPIO_BAR[word]);
 }
 
 void gpio_set0(gpio_pin_t pin) 
@@ -185,7 +186,7 @@ void gpio_set_event_detect(gpio_pin_t pin, event_type_t event_type)
 			break;
 		case FALLING_EDGE_DETECT:
 			GPIO_BAR[word+(GPFEN0-GPREN0)] |= (1<<pinInWord);
-			printf("%s:%d - GPIO_BAR=%08X. GPIO_BAR[GPFEN0]=%08X.  pin=%d\n", __FILE__, __LINE__, (unsigned)GPIO_BAR, (unsigned)&GPIO_BAR[word+(GPFEN0-GPREN0)], pinInWord);
+			printf("%s:%d - GPIO_BAR=%08X. GPIO_BAR[GPFEN0]=%08X.  pin=%d state=%d\n", __FILE__, __LINE__, (unsigned)GPIO_BAR, (unsigned)&GPIO_BAR[word+(GPFEN0-GPREN0)], pinInWord, GPIO_BAR[GPFEN0]);
 			break;
 		case TRANSITION_DETECT:
 			GPIO_BAR[word] |= (1<<pinInWord);
