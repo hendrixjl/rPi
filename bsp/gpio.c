@@ -9,6 +9,7 @@
 #include "bar.h"
 #include <stdint.h>
 
+#include <stdio.h>
 
 typedef enum {
 	GPFSEL0, //   = GPIO_BAR,
@@ -143,6 +144,7 @@ bool gpio_event_detected(gpio_pin_t pin)
 		word = GPEDS1;
 		pinInWord = pin - MAX_PINS_PER_WORD;
 	}
+	printf("here. GPIO_BAR[GPEDS0]=%08X.  state=%08X", &GPIO_BAR[word], GPIO_BAR[word]);
 	return ((GPIO_BAR[word] & (1<<pinInWord)) != 0);
 }
 
@@ -155,6 +157,7 @@ void gpio_clear_event_detected(gpio_pin_t pin)
 		word = GPEDS1;
 		pinInWord = pin - MAX_PINS_PER_WORD;
 	}
+	printf("here. GPIO_BAR[GPEDS0]=%08X.  pin=%d", &GPIO_BAR[word], pinInWord);
 	GPIO_BAR[word] |= (1<<pinInWord);
 }
 
@@ -182,6 +185,7 @@ void gpio_set_event_detect(gpio_pin_t pin, event_type_t event_type)
 			break;
 		case FALLING_EDGE_DETECT:
 			GPIO_BAR[word+(GPFEN0-GPREN0)] |= (1<<pinInWord);
+			printf("here. GPIO_BAR[GPFEN0]=%08X.  pin=%d", &GPIO_BAR[word+(GPFEN0-GPREN0)], pinInWord);
 			break;
 		case TRANSITION_DETECT:
 			GPIO_BAR[word] |= (1<<pinInWord);
