@@ -2,6 +2,7 @@
 #include "lsm303dlh.h"
 #include "mcp23008.h"
 #include "bar.h"
+#include "gpio.h"
 
 #include <iostream>
 #include <vector>
@@ -19,10 +20,21 @@ void dump(mcp23008& gpio)
 	cout << dec << endl;
 }
 
+void pause_till_signal()
+{
+	gpio_fsel(PIN_23, INTPUT);
+	gpio_set_pud(PIN_23, ENABLE_PULL_UP_CNTRL);
+//	gpio_set_event_detect(PIN_23, FALLING_EDGE_DETECT);
+	while (gpio_get_level(PIN_23) == PIN_HIGH);
+	cout << "Signal!" << endl;
+}
+
 int main()
 {
 	init_bars();
 	enum {LSM303_A=0x19, LSM303_M=0x1E, L3GD20=0x6B, MCP23008=0x20 };
+
+	pause_till_signal();
 
 	i2c& i2c1(i2c::setup(1));
 	i2c1.enable();
