@@ -39,6 +39,9 @@ int main()
 	cout << "PIN 0 function=" << (unsigned)gpio_get_fsel(PIN_00) << endl;
 	cout << "PIN 1 function=" << (unsigned)gpio_get_fsel(PIN_01) << endl;
 	cout << "PIN 14 function=" << (unsigned)gpio_get_fsel(PIN_14) << endl;
+	cout << "PIN 23 function=" << (unsigned)gpio_get_fsel(PIN_23) << endl;
+	cout << "PIN 24 function=" << (unsigned)gpio_get_fsel(PIN_24) << endl;
+	cout << "PIN 25 function=" << (unsigned)gpio_get_fsel(PIN_25) << endl;
 
 	i2c& i2c1(i2c::setup(1));
 	i2c1.enable();
