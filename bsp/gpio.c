@@ -60,7 +60,20 @@ enum {
 	MAX_PINS_PER_WORD=32
 };
 
-void gpio_fsel(gpio_pin_t pin, gpio_function_t fun) 
+gpio_function_t gpio_get_fsel(gpio_pin_t pin, gpio_function_t fun)
+{
+	printf("pin=%d, fun=%d\n", pin, fun);
+	enum {
+		PINS_PER_WORD = 10,
+		BITS_PER_PIN = 3
+	};
+	uint32_t word = GPFSEL0 + pin/PINS_PER_WORD;
+	uint32_t mask = GPIO_BAR[word] & (ALL_MASK<<((pin%PINS_PER_WORD)*BITS_PER_PIN));
+    printf("mask=%08X\n", mask);
+    return mask >> ((pin%PINS_PER_WORD)*BITS_PER_PIN);
+}
+
+void gpio_set_fsel(gpio_pin_t pin, gpio_function_t fun)
 {
 	printf("pin=%d, fun=%d\n", pin, fun);
 	enum {

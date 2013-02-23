@@ -89,7 +89,8 @@ typedef enum {
 extern "C" {
 #endif
 
-void gpio_fsel(gpio_pin_t pin, gpio_function_t fun);
+void gpio_set_fsel(gpio_pin_t pin, gpio_function_t fun);
+gpio_function_t gpio_get_fsel(gpio_pin_t pin);
 
 void gpio_set0(gpio_pin_t pin);
 
