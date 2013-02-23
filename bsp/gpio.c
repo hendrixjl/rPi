@@ -70,6 +70,7 @@ void gpio_fsel(gpio_pin_t pin, gpio_function_t fun)
 //	unsigned int *word = (unsigned int*)(GPFSEL0) + pin/PINS_PER_WORD;
 	unsigned int ra = GPIO_BAR[word]; // *word;
     ra &= ~(ALL_MASK<<((pin%PINS_PER_WORD)*BITS_PER_PIN));
+    printf("mask=%08X\n", ra);
     ra |= OUTPUT<<((pin%PINS_PER_WORD)*BITS_PER_PIN);
     printf("ra=%08X\n", ra);
     GPIO_BAR[word] = ra; // *(unsigned int*)word = ra;
