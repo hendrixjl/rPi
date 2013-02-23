@@ -68,7 +68,6 @@ gpio_function_t gpio_get_fsel(gpio_pin_t pin)
 	};
 	uint32_t word = GPFSEL0 + pin/PINS_PER_WORD;
 	uint32_t mask = GPIO_BAR[word] & (ALL_MASK<<((pin%PINS_PER_WORD)*BITS_PER_PIN));
-    printf("mask=%08X\n", mask);
     return mask >> ((pin%PINS_PER_WORD)*BITS_PER_PIN);
 }
 
