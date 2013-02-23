@@ -71,6 +71,7 @@ void gpio_fsel(gpio_pin_t pin, gpio_function_t fun)
 	unsigned int ra = GPIO_BAR[word]; // *word;
     ra &= ~(ALL_MASK<<((pin%PINS_PER_WORD)*BITS_PER_PIN));
     ra |= OUTPUT<<((pin%PINS_PER_WORD)*BITS_PER_PIN);
+    printf("ra=%08X\n", ra);
     GPIO_BAR[word] = ra; // *(unsigned int*)word = ra;
 	printf("%s:%d - GPIO_BAR=%08X. GPIO_BAR[GPFSEL0]=%08X.  state=%08X\n", __FILE__, __LINE__, (unsigned)GPIO_BAR, (unsigned)&GPIO_BAR[word], GPIO_BAR[word]);
 }
@@ -145,7 +146,7 @@ bool gpio_event_detected(gpio_pin_t pin)
 		word = GPEDS1;
 		pinInWord = pin - MAX_PINS_PER_WORD;
 	}
-	printf("%s:%d - GPIO_BAR=%08X. GPIO_BAR[GPEDS0]=%08X.  state=%08X\n", __FILE__, __LINE__, (unsigned)GPIO_BAR, (unsigned)&GPIO_BAR[word], GPIO_BAR[word]);
+//	printf("%s:%d - GPIO_BAR=%08X. GPIO_BAR[GPEDS0]=%08X.  state=%08X\n", __FILE__, __LINE__, (unsigned)GPIO_BAR, (unsigned)&GPIO_BAR[word], GPIO_BAR[word]);
 	return ((GPIO_BAR[word] & (1<<pinInWord)) != 0);
 }
 
@@ -158,7 +159,7 @@ void gpio_clear_event_detected(gpio_pin_t pin)
 		word = GPEDS1;
 		pinInWord = pin - MAX_PINS_PER_WORD;
 	}
-	printf("%s:%d - GPIO_BAR=%08X. GPIO_BAR[GPEDS0]=%08X.  pin=%d\n", __FILE__, __LINE__, (unsigned)GPIO_BAR, (unsigned)&GPIO_BAR[word], pinInWord);
+//	printf("%s:%d - GPIO_BAR=%08X. GPIO_BAR[GPEDS0]=%08X.  pin=%d\n", __FILE__, __LINE__, (unsigned)GPIO_BAR, (unsigned)&GPIO_BAR[word], pinInWord);
 	GPIO_BAR[word] |= (1<<pinInWord);
 }
 
