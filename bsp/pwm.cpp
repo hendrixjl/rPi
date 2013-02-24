@@ -7,8 +7,7 @@
 #include "pwm.h"
 #include "bar.h"
 #include "gpio.h"
-
-#include <unistd.h>
+#include "timeUtils.h"
 
 enum {
 	PWM_CTL=0,
@@ -55,7 +54,9 @@ void initHardware()
 
 	// stop clock and waiting for busy flag doesn't work, so kill clock
 	CLOCK_BAR[PWMClK_CNTL] = 0x5A000000 | (1 << 5); //*(clk + PWMCLK_CNTL) = 0x5A000000 | (1 << 5);
-	usleep(10);
+	// needs some time
+	enum { WAIT_150_CYCLES = 150 };
+	busyloop(WAIT_150_CYCLES);
 
 	// set frequency
 	// DIVI is the integer part of the divisor
@@ -75,7 +76,8 @@ void initHardware()
 	PWM_BAR[PWM_CTL] = 0; // *(pwm + PWM_CTL) = 0;
 
 	// needs some time until the PWM module gets disabled, without the delay the PWM module crashs
-	usleep(10);
+	enum { WAIT_150_CYCLES = 150 };
+	busyloop(WAIT_150_CYCLES);
 
 	// filled with 0 for 20 milliseconds = 320 bits
 	PWM_BAR[PWM_RNG1] = 320; // *(pwm + PWM_RNG1) = 320;

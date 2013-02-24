@@ -153,7 +153,6 @@ bool gpio_event_detected(gpio_pin_t pin)
 		word = GPEDS1;
 		pinInWord = pin - MAX_PINS_PER_WORD;
 	}
-//	printf("%s:%d - GPIO_BAR=%08X. GPIO_BAR[GPEDS0]=%08X.  state=%08X\n", __FILE__, __LINE__, (unsigned)GPIO_BAR, (unsigned)&GPIO_BAR[word], GPIO_BAR[word]);
 	return ((GPIO_BAR[word] & (1<<pinInWord)) != 0);
 }
 
@@ -166,7 +165,6 @@ void gpio_clear_event_detected(gpio_pin_t pin)
 		word = GPEDS1;
 		pinInWord = pin - MAX_PINS_PER_WORD;
 	}
-//	printf("%s:%d - GPIO_BAR=%08X. GPIO_BAR[GPEDS0]=%08X.  pin=%d\n", __FILE__, __LINE__, (unsigned)GPIO_BAR, (unsigned)&GPIO_BAR[word], pinInWord);
 	GPIO_BAR[word] |= (1<<pinInWord);
 }
 
@@ -214,11 +212,6 @@ void gpio_set_event_detect(gpio_pin_t pin, event_type_t event_type)
 	}
 }
 
-
-static void busy(unsigned int n)
-{
-	for(volatile unsigned i=0; i<n; i++);
-}
 
 void gpio_set_pud(gpio_pin_t pin, gppud_t pud)
 {
