@@ -17,6 +17,7 @@ extern volatile uint32_t* BSC0_BAR;
 extern volatile uint32_t* BSC1_BAR;
 extern volatile uint32_t* BSC2_BAR;
 extern volatile uint32_t* PWM_BAR;
+extern volatile uint32_t* CLOCK_BAR;
 
 #ifdef __cplusplus
 extern "C"

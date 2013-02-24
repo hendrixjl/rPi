@@ -7,6 +7,7 @@ volatile uint32_t* BSC0_BAR;
 volatile uint32_t* BSC1_BAR;
 volatile uint32_t* BSC2_BAR;
 volatile uint32_t* PWM_BAR;
+volatile uint32_t* CLOCK_BAR;
 
 enum bar_t {
 		eBASE = 0x2000B000,
@@ -16,7 +17,8 @@ enum bar_t {
         eBSC0_BAR =   0x20205000,
         eBSC1_BAR = 	0x20804000, // available?
         eBSC2_BAR = 	0x20805000, // Not available on RPi
-        ePWM_BAR =	0x2020C000
+        ePWM_BAR =		0x2020C000,
+        eCLOCK_BAR = 	0x20101000
 };
 
 void straight_assign() // for bare metal
@@ -28,6 +30,7 @@ void straight_assign() // for bare metal
     BSC1_BAR = (volatile unsigned*) eBSC1_BAR;
     BSC2_BAR = (volatile unsigned*) eBSC2_BAR;
     PWM_BAR = (volatile unsigned*) ePWM_BAR;
+    CLOCK_BAR = (volatile unsigned*) eCLOCK_BAR;
 }
 
 #ifndef __BARE_METAL__
@@ -99,6 +102,7 @@ void map_virtual_memory() // for linux
     BSC1_BAR = mapRegisterMemory(eBSC1_BAR);
     BSC2_BAR = mapRegisterMemory(eBSC2_BAR);
     PWM_BAR = mapRegisterMemory(ePWM_BAR);
+    ClOCK_BAR = mapRegisterMemory(eCLOCK_BAR);
 }
 #endif
 

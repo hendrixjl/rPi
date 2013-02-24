@@ -37,13 +37,9 @@ int main()
 	init_bars();
 	enum {LSM303_A=0x19, LSM303_M=0x1E, L3GD20=0x6B, MCP23008=0x20 };
 
+	gpio_set_fsel(PIN_18, ALT1);
+
 	pause_till_signal();
-	cout << "PIN 0 function=" << (unsigned)gpio_get_fsel(PIN_00) << endl;
-	cout << "PIN 1 function=" << (unsigned)gpio_get_fsel(PIN_01) << endl;
-	cout << "PIN 14 function=" << (unsigned)gpio_get_fsel(PIN_14) << endl;
-	cout << "PIN 23 function=" << (unsigned)gpio_get_fsel(PIN_23) << endl;
-	cout << "PIN 24 function=" << (unsigned)gpio_get_fsel(PIN_24) << endl;
-	cout << "PIN 25 function=" << (unsigned)gpio_get_fsel(PIN_25) << endl;
 
 	i2c& i2c1(i2c::setup(1));
 	i2c1.enable();
