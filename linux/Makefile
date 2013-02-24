@@ -6,7 +6,7 @@ OBJS = $(patsubst %.cpp, %.o, $(shell ls *.cpp))
 #OBJS += $(patsubst %.S, %.o, $(shell ls *.S))
 
 
-TARGET = libexternal_devices.a
+TARGET = liblinux.a
 
 all : $(TARGET)
 

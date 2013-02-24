@@ -2,7 +2,7 @@ include Makefile.rules
 
 TARGET := crawler
 
-LIBS := -Lbsp -lbsp
+LIBS := -Lbsp -lbsp -lutils
 
 INCLUDES = -Ibare_metal -Ibsp -Iexternal_devices
 
@@ -10,10 +10,13 @@ DIRS := bsp
 
 ifdef __BARE_METAL__
 DIRS += bare_metal 
+LIBS += -Lbare_metal
+else
+DIRS += linux
 endif
 
 
-OBJS += $(patsubst %.cpp, %.o, $(shell ls *.cpp))
+#OBJS += $(patsubst %.cpp, %.o, $(shell ls *.cpp))
 #OBJS += $(patsubst %.c, %.o, $(shell ls *.c))
 #OBJS += $(patsubst %.S, %.o, $(shell ls *.S))
 
