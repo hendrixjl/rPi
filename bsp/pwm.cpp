@@ -8,6 +8,8 @@
 #include "bar.h"
 #include "gpio.h"
 
+#include <unistd.h>
+
 enum {
 	PWM_CTL=0,
 	PWM_STA=1,  // 0x04
@@ -60,10 +62,10 @@ void initHardware()
 	// the fractional part (DIVF) drops clock cycles to get the output frequency, bad for servo motors
 	// 320 bits for one cycle of 20 milliseconds = 62.5 us per bit = 16 kHz
 	int idiv = (int) (19200000.0f / 16000.0f);
-	if (idiv < 1 || idiv > 0x1000) {
-		printf("idiv out of range: %x\n", idiv);
-		exit(-1);
-	}
+//	if (idiv < 1 || idiv > 0x1000) {
+//		printf("idiv out of range: %x\n", idiv);
+//		exit(-1);
+//	}
 	CLOCK_BAR[PWMCLK_DIV] = 0x5A000000 | (idiv<<12); //*(clk + PWMCLK_DIV)  = 0x5A000000 | (idiv<<12);
 
 	// source=osc and enable clock
