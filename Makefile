@@ -1,3 +1,6 @@
+
+TOPDIR := $PWD
+
 include Makefile.rules
 
 TARGET := crawler
@@ -42,7 +45,7 @@ clean:
 
 DI:
 	for d in $(DIRS); do \
-	cd $$d; make CFLAGS="$(CFLAGS)" CPPFLAGS="$(CPPFLAGS)"; \
+	cd $$d; make TOPDIR="$(TOPDIR)" CFLAGS="$(CFLAGS)" CPPFLAGS="$(CPPFLAGS)"; \
 	done
 
 .PHONY: all clean dependents

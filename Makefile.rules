@@ -12,6 +12,9 @@ AS := $(PREFIX)as
 AR := $(PREFIX)ar
 LD := $(PREFIX)g++ #ld
 
+
+INCLUDES := -I$(TOPDIR)/utils
+
 CPPFLAGS += -std=c++0x -O0 -Wall -fmessage-length=0
 CFLAGS += -std=c99 -O0 -Wall -fmessage-length=0
 
