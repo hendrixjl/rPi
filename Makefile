@@ -1,5 +1,5 @@
 
-TOPDIR := $PWD
+TOPDIR := $(PWD)
 
 include Makefile.rules
 
