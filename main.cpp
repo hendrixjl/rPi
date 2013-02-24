@@ -35,6 +35,8 @@ void pause_till_signal()
 int main()
 {
 	init_bars();
+	initHardware();
+
 	enum {LSM303_A=0x19, LSM303_M=0x1E, L3GD20=0x6B, MCP23008=0x20 };
 
 	gpio_set_fsel(PIN_18, ALT1);
@@ -69,20 +71,22 @@ int main()
 
 	struct command_t {
 		uint8_t olat;
+		int speed;
 		string msg;
 	};
 
 	vector<command_t> commands{
-		command_t{FORWARD_BACK_ENABLE + FORWARD, "FORWARD"},
-		command_t{FORWARD_BACK_DISABLE + FORWARD, "STOP"},
-		command_t{FORWARD_BACK_ENABLE + BACKWARD, "BACKWARD"},
-		command_t{FORWARD_BACK_DISABLE + BACKWARD, "STOP"},
+		command_t{FORWARD_BACK_ENABLE + FORWARD, 100, "FORWARD"},
+		command_t{FORWARD_BACK_DISABLE + FORWARD, 75, "STOP"},
+		command_t{FORWARD_BACK_ENABLE + BACKWARD, 50, "BACKWARD"},
+		command_t{FORWARD_BACK_DISABLE + BACKWARD, 25, "STOP"},
 	};
 
 	auto it = commands.begin();
 	while (it != commands.end())
 	{
 		sleep(1);
+		setServo(it->speed);
 		gpio.set_olat(it->olat);
 		gpio.set_olat(it->olat);
 		cout << "dir: " << it->msg << " " << endl;
