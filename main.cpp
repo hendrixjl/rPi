@@ -3,6 +3,7 @@
 #include "mcp23008.h"
 #include "bar.h"
 #include "gpio.h"
+#include "pwm.h"
 
 #include <iostream>
 #include <vector>
