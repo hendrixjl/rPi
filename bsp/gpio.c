@@ -226,7 +226,7 @@ void gpio_set_pud(gpio_pin_t pin, gppud_t pud)
 	enum { WAIT_150_CYCLES = 150 };
 	busyloop(WAIT_150_CYCLES);
 	GPIO_BAR[word] |= (1<<pinInWord);
-	busy(WAIT_150_CYCLES);
+	busyloop(WAIT_150_CYCLES);
 	GPIO_BAR[GPPUD] = 0;
 	GPIO_BAR[word] = 0;
 }
