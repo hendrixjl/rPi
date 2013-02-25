@@ -9,7 +9,7 @@ LIBS := -Lbsp -lbsp -Lutils -lutils
 
 INCLUDES = -Ibare_metal -Ibsp -Iexternal_devices -Iutils
 
-DIRS := bsp 
+DIRS := bsp utils
 
 ifdef __BARE_METAL__
 DIRS += bare_metal 
