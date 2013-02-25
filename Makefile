@@ -1,4 +1,3 @@
-
 TOPDIR := $(PWD)
 
 include Makefile.rules
@@ -38,14 +37,14 @@ $(TARGET): DI $(OBJS)
 # Other Targets
 clean:
 	for d in $(DIRS); do \
-	cd $$d; make clean; \
+	cd $$d; make clean; cd $(TOPDIR); \
 	done
 	-$(RM) *.o $(TARGET)
 	-@echo ' '
 
 DI:
 	for d in $(DIRS); do \
-	cd $$d; make TOPDIR="$(TOPDIR)" CFLAGS="$(CFLAGS)" CPPFLAGS="$(CPPFLAGS)"; \
+	cd $$d; make TOPDIR="$(TOPDIR)" CFLAGS="$(CFLAGS)" CPPFLAGS="$(CPPFLAGS)"; cd $(TOPDIR); \
 	done
 
 .PHONY: all clean dependents
