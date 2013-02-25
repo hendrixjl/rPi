@@ -5,7 +5,7 @@ include Makefile.rules
 
 TARGET := crawler
 
-LIBS := -Lbsp -lbsp -lutils
+LIBS := -Lbsp -lbsp -Lutils -lutils
 
 INCLUDES = -Ibare_metal -Ibsp -Iexternal_devices -Iutils
 
