@@ -76,7 +76,6 @@ void initHardware()
 	PWM_BAR[PWM_CTL] = 0; // *(pwm + PWM_CTL) = 0;
 
 	// needs some time until the PWM module gets disabled, without the delay the PWM module crashs
-	enum { WAIT_150_CYCLES = 150 };
 	busyloop(WAIT_150_CYCLES);
 
 	// filled with 0 for 20 milliseconds = 320 bits
