@@ -110,7 +110,7 @@ void map_virtual_memory() // for linux
 void init_bars()
 {
 
-#ifdef __BARE_METAL
+#ifdef __BARE_METAL__
     striaght_assign();
 #else
     map_virtual_memory();
