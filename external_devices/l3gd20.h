@@ -9,7 +9,7 @@
 #define L3GD20_H_
 
 #include "i2c.h"
-#include <stdint.h>
+#include "mytypes.h"
 
 //    Usage
 //    enum { LG3D20_ADDR=0x06B };
