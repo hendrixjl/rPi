@@ -15,6 +15,8 @@ extern "C"
 
 void busyloop(unsigned int n);
 
+void udelay(uint32_t microseconds);
+
 
 #ifdef __cplusplus
 }
