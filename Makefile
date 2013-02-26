@@ -15,8 +15,6 @@ endif
 
 LIBS += -Lbsp -lbsp -Lutils -lutils
 
-INCLUDES += -Ibare_metal -Ibsp -Iexternal_devices -Iutils
-
 DIRS := bsp utils
 
 
