@@ -7,6 +7,7 @@ TARGET := crawler
 ifdef __BARE_METAL__
 DIRS += bare_metal 
 LIBS += -Lbare_metal -lbare_metal
+LFLAGS += -nostartfiles -nodefaultlibs -nostdlib
 else
 DIRS += linux
 LIBS += -Llinux -llinux
@@ -31,7 +32,7 @@ all: $(TARGET)
 $(TARGET): DI $(OBJS) 
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross GCC'
-	$(LD)  -o $(TARGET) $(OBJS) $(LIBS)
+	$(LD)  -o $(TARGET) $(LFLAGS) $(OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
