@@ -1,7 +1,7 @@
 #include "uart.h"
 #include "bar.h"
 #include "gpio.h"
-#include <stdint.h>
+#include "mytypes.h"
 
 extern uint32_t* UART_BAR;
 
