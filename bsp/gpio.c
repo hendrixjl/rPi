@@ -8,7 +8,7 @@
 #include "gpio.h"
 #include "bar.h"
 #include "timeUtils.h"
-#include <stdint.h>
+#include "mytypes.h"
 
 typedef enum {
 	GPFSEL0, //   = GPIO_BAR,
