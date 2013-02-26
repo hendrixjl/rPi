@@ -7,7 +7,7 @@ TARGET := crawler
 ifdef __BARE_METAL__
 DIRS += bare_metal 
 LIBS += -Lbare_metal -lbare_metal
-LFLAGS += -nostartfiles -nodefaultlibs -nostdlib
+LFLAGS += -nostartfiles -nodefaultlibs -nostdlib -T bare_metal/memmap
 else
 DIRS += linux
 LIBS += -Llinux -llinux
