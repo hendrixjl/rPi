@@ -15,7 +15,7 @@ endif
 
 LIBS += -Lbsp -lbsp -Lutils -lutils
 
-DIRS := bsp utils
+DIRS += bsp utils
 
 
 #OBJS += $(patsubst %.cpp, %.o, $(shell ls *.cpp))
