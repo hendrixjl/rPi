@@ -12,9 +12,10 @@ DIRS := bsp utils
 
 ifdef __BARE_METAL__
 DIRS += bare_metal 
-LIBS += -Lbare_metal
+LIBS += -Lbare_metal -lbare_metal
 else
 DIRS += linux
+LIBS += -Llinux -llinux
 endif
 
 
