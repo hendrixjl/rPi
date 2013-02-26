@@ -9,8 +9,7 @@
 #define MCP23008_H_
 
 #include "i2c.h"
-#include <stdint.h>
-#include <vector>
+#include "mytypes.h"
 
 class mcp23008
 {
@@ -37,13 +36,13 @@ public:
 
 	mcp23008(uint8_t address, i2c& i2cbus) : addr_(address), i2cbus_(i2cbus) {}
 
-	std::vector<uint8_t> get_registers() {
-		static const uint32_t NUM_ELEMENTS = REGISTERS_END-1;
-		std::vector<uint8_t> regs(NUM_ELEMENTS, 0);
-		uint8_t *a = &regs[0];
-		i2cbus_.query(addr_, IODIR, a, NUM_ELEMENTS);
-		return regs;
-	}
+//	std::vector<uint8_t> get_registers() {
+//		static const uint32_t NUM_ELEMENTS = REGISTERS_END-1;
+//		std::vector<uint8_t> regs(NUM_ELEMENTS, 0);
+//		uint8_t *a = &regs[0];
+//		i2cbus_.query(addr_, IODIR, a, NUM_ELEMENTS);
+//		return regs;
+//	}
 
 	unsigned char get_iodir() {
 		return i2cbus_.query(addr_, IODIR);
