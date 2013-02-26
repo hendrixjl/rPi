@@ -113,7 +113,7 @@ void init_bars()
 {
 
 #ifdef __BARE_METAL__
-    striaght_assign();
+    straight_assign();
 #else
     map_virtual_memory();
 #endif
