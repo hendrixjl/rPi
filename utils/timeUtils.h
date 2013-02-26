@@ -8,12 +8,14 @@
 #ifndef TIMEUTILS_H_
 #define TIMEUTILS_H_
 
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-void busyloop(unsigned int n);
+void busyloop(uint32_t n);
 
 void udelay(uint32_t microseconds);
 
