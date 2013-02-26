@@ -1,7 +1,6 @@
 #include "format.h"
 
-#include <stdio.h>
-#include <assert.h>
+#include mytypes.h"
 
 char to_digit(const unsigned int i)
 {
@@ -42,7 +41,6 @@ unsigned count_digits(unsigned n, unsigned base)
 int unsigned_to_nstring(char* buffer, size_t blen, unsigned n, unsigned base)
 {
 	int cnt=0;
-	assert(blen != 0);
 	unsigned digits = count_digits(n, base);
 	if (digits > blen-1) return -1;
 	buffer[digits] = '\0';
@@ -65,7 +63,6 @@ int unsigned_to_string(char* buffer, size_t blen, unsigned n)
 int int_to_string(char* buffer, size_t blen, int n)
 {
 	enum { BASE = 10 };
-	assert(blen>0);
 	if (n < 0)
 	{
 		buffer[0] = '-';
