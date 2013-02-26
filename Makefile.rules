@@ -1,6 +1,6 @@
-
 ifdef __BARE_METAL__
 PREFIX := arm-none-eabi-
+DEFINES += -D__BARE_METAL__
 endif
 
 
@@ -21,14 +21,14 @@ CFLAGS += -std=c99 -O0 -Wall -fmessage-length=0
 %.o: %.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross G++ Compiler'
-	$(CPP) $(CPPFLAGS) $(INCLUDES) -o "$@" -c "$<"
+	$(CPP) $(CPPFLAGS) $(INCLUDES) $(DEFINES) -o "$@" -c "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
 %.o: %.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross G++ Compiler'
-	$(CC) $(CFLAGS) $(INCLUDES)  -o "$@" -c "$<"
+	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINES) -o "$@" -c "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
