@@ -1,9 +1,4 @@
-/*
- * stdout.cpp
- *
- *  Created on: Feb 25, 2013
- *      Author: jonathanhendrix
- */
+#include "uart.h"
 
 /**
 * Put a byte on the output.
