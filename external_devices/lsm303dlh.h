@@ -9,7 +9,7 @@
 #define LSM303DLH_H_
 
 #include "i2c.h"
-#include <stdint.h>
+#include "mytypes.h"
 
 class lsm303dlh
 {
