@@ -8,7 +8,7 @@
 #ifndef TIMEUTILS_H_
 #define TIMEUTILS_H_
 
-#include <stdint.h>
+#include "mytypes.h"
 
 #ifdef __cplusplus
 extern "C"
