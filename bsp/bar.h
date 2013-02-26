@@ -8,7 +8,7 @@
 #ifndef BAR_H_
 #define BAR_H_
 
-#include <stdint.h>
+#include "mytypes.h"
 
 extern volatile uint32_t* IRQ_BAR;
 extern volatile uint32_t* ARM_TIMER_BAR;
