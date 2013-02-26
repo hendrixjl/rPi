@@ -21,6 +21,8 @@ enum bar_t {
         eCLOCK_BAR = 	0x20101000
 };
 
+#ifdef __BARE_METAL__
+
 void straight_assign() // for bare metal
 {
     IRQ_BAR = (volatile unsigned*) eIRQ_BAR;
@@ -33,7 +35,7 @@ void straight_assign() // for bare metal
     CLOCK_BAR = (volatile unsigned*) eCLOCK_BAR;
 }
 
-#ifndef __BARE_METAL__
+#else
 
 #include <stdlib.h>
 #include <fcntl.h>
