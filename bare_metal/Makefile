@@ -5,7 +5,7 @@ RM := rm -rf
 LIBS := 
 
 
-#OBJS += $(patsubst %.cpp, %.o, $(shell ls *.cpp))
+OBJS += $(patsubst %.cpp, %.o, $(shell ls *.cpp))
 #OBJS += $(patsubst %.c, %.o, $(shell ls *.c))
 OBJS += $(patsubst %.S, %.o, $(shell ls *.S))
 
@@ -22,10 +22,3 @@ clean:
 	
 .PHONY: clean all
 
-
-# Other Targets
-clean:
-	-$(RM) *.o 
-	-@echo ' '
-
-.PHONY: all clean
