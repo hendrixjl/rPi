@@ -35,6 +35,7 @@ void straight_assign() // for bare metal
     BSC2_BAR = (volatile unsigned*) eBSC2_BAR;
     PWM_BAR = (volatile unsigned*) ePWM_BAR;
     CLOCK_BAR = (volatile unsigned*) eCLOCK_BAR;
+    UART_BAR = (volatile unsigned*) eUART_BAR;
 }
 
 #else
@@ -107,6 +108,7 @@ void map_virtual_memory() // for linux
     BSC2_BAR = mapRegisterMemory(eBSC2_BAR);
     PWM_BAR = mapRegisterMemory(ePWM_BAR);
     CLOCK_BAR = mapRegisterMemory(eCLOCK_BAR);
+    UART_BAR = mapReisterMemory(eUART_BAR);
 }
 #endif
 
