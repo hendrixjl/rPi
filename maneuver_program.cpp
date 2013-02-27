@@ -49,6 +49,7 @@ void maneuver_program()
 	mcp23008 gpio(MCP23008, i2c1);
 
 	enum {
+		END_OF_PROGRAM=-1,
 		FORWARD_BACK_ENABLE=mcp23008::PIN0,
 		FORWARD_BACK_DISABLE=0,
 		FORWARD=mcp23008::PIN1,
@@ -72,11 +73,11 @@ void maneuver_program()
 		command_t{FORWARD_BACK_DISABLE + FORWARD, 75, "STOP"},
 		command_t{FORWARD_BACK_ENABLE + BACKWARD, 50, "BACKWARD"},
 		command_t{FORWARD_BACK_DISABLE + BACKWARD, 25, "STOP"},
-		nullptr
+		command_t{END_OF_PROGRAM, 0, "End of Program"}
 	};
 
 	auto it = commands;
-	while (it != nullptr)
+	while (it->olat != END_OF_PROGRAM)
 	{
 		udelay(1000);
 		setServo(it->speed);
