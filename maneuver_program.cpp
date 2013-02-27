@@ -12,6 +12,7 @@
 #include "lsm303dlh.h"
 #include "mcp23008.h"
 #include "timeUtils.h"
+#include "pwm.h"
 
 void pause_till_signal()
 {
