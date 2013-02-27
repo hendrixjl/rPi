@@ -10,6 +10,8 @@ typedef int int32_t;
 typedef short int16_t;
 typedef char int8_t;
 
+typedef unsigned int size_t;
+
 #else
 
 #include <stdint.h>
