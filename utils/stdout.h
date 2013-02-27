@@ -8,6 +8,7 @@
 #ifndef STDOUT_H_
 #define STDOUT_H_
 
+#include "mytypes.h"
 
 
 /**
