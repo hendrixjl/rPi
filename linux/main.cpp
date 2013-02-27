@@ -1,9 +1,5 @@
-#include "l3gd20.h"
-#include "lsm303dlh.h"
-#include "mcp23008.h"
 #include "bar.h"
 #include "gpio.h"
-#include "pwm.h"
 #include "stdout.h"
 
 
