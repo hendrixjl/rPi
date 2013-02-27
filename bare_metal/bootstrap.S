@@ -52,7 +52,5 @@ reset:
     ;@mov r0,#0x53
     ;@msr cpsr_c, r0
 
-    b init_bars
-
     b kmain
 hang: b hang
