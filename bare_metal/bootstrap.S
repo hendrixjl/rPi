@@ -22,8 +22,8 @@ swi_handler:        .word hang
 prefetch_handler:   .word hang
 data_handler:       .word hang
 unused_handler:     .word hang
-irq_handler:        .word OS_CPU_ARM_ExceptIrqHndlr
-fiq_handler:        .word OS_CPU_ARM_ExceptFiqHndlr
+irq_handler:        .word hang ;@ OS_CPU_ARM_ExceptIrqHndlr
+fiq_handler:        .word hang ;@ OS_CPU_ARM_ExceptFiqHndlr
 
 reset:
     mov r0,#0x8000
