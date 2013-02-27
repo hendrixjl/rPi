@@ -8,6 +8,7 @@ volatile uint32_t* BSC1_BAR;
 volatile uint32_t* BSC2_BAR;
 volatile uint32_t* PWM_BAR;
 volatile uint32_t* CLOCK_BAR;
+volatile uint32_t* UART_BAR;
 
 enum bar_t {
 		eBASE = 0x2000B000,
@@ -18,7 +19,8 @@ enum bar_t {
         eBSC1_BAR = 	0x20804000, // available?
         eBSC2_BAR = 	0x20805000, // Not available on RPi
         ePWM_BAR =		0x2020C000,
-        eCLOCK_BAR = 	0x20101000
+        eCLOCK_BAR = 	0x20101000,
+        eUART_BAR = 0x20215000
 };
 
 #ifdef __BARE_METAL__
