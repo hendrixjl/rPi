@@ -4,24 +4,12 @@
 #include "bar.h"
 #include "gpio.h"
 #include "pwm.h"
+#include "stdout.h"
 
-using namespace std;
 
 extern void pause_till_signal();
 
 extern void maneuver_program();
-
-void dump(mcp23008& gpio)
-{
-	cout << "mcp23008 regs: ";
-	const auto& v = gpio.get_registers();
-	cout << "(" << v.size() << ")" << endl;
-	for (auto it: v)
-	{
-		cout << " " << hex << unsigned(it);
-	}
-	cout << dec << endl;
-}
 
 int main()
 {
@@ -30,10 +18,12 @@ int main()
 
 	gpio_set_fsel(PIN_18, ALT1);
 
-	cout << "Waiting for signal" << endl;
+	write("Waiting for signal");
+	writeln();
 	pause_till_signal();
-	cout << "Signal!" << endl;
-
+	write("Signal!");
+	writeln();
+	
 	maneuver_program();
 
 }
