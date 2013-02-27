@@ -18,7 +18,7 @@ LIBS += -Lbsp -lbsp -Lutils -lutils
 DIRS += bsp utils
 
 
-#OBJS += $(patsubst %.cpp, %.o, $(shell ls *.cpp))
+OBJS += $(patsubst %.cpp, %.o, $(shell ls *.cpp))
 #OBJS += $(patsubst %.c, %.o, $(shell ls *.c))
 #OBJS += $(patsubst %.S, %.o, $(shell ls *.S))
 
