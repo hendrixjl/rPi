@@ -3,7 +3,7 @@
 
 extern void maneuver_program();
 
-extern "C" int kmain()
+extern "C" int kmain();
 
 int kmain()
 {
