@@ -13,6 +13,7 @@ typedef char int8_t;
 #else
 
 #include <stdint.h>
+#include <stdlib.h>
 
 #endif
 
