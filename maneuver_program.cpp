@@ -32,7 +32,8 @@ void maneuver_program()
 	pause_till_signal();
 	write("Signal!");
 	writeln();
-
+	
+	initHardware(); // pwm
 	i2c& i2c1(i2c::setup(1));
 	i2c1.enable();
 
