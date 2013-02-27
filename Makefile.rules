@@ -8,6 +8,8 @@ AS := $(PREFIX)as
 AR := $(PREFIX)ar
 LD := $(PREFIX)ld
 
+CPPFLAGS += -fno-exceptions
+
 endif
 
 
