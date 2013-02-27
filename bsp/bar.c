@@ -108,7 +108,7 @@ void map_virtual_memory() // for linux
     BSC2_BAR = mapRegisterMemory(eBSC2_BAR);
     PWM_BAR = mapRegisterMemory(ePWM_BAR);
     CLOCK_BAR = mapRegisterMemory(eCLOCK_BAR);
-    UART_BAR = mapReisterMemory(eUART_BAR);
+    UART_BAR = mapRegisterMemory(eUART_BAR);
 }
 #endif
 
