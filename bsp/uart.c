@@ -3,8 +3,6 @@
 #include "gpio.h"
 #include "mytypes.h"
 
-extern uint32_t* UART_BAR;
-
 #define GPFSEL1 0x20200004
 #define GPSET0 0x2020001C
 #define GPCLR0 0x20200028
