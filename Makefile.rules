@@ -6,11 +6,11 @@ endif
 
 RM := rm -rf
 
-CPP := $(PREFIX)g++
-CC := $(PREFIX)gcc
+CPP ?= $(PREFIX)g++
+CC ?= $(PREFIX)gcc
 AS := $(PREFIX)as
 AR := $(PREFIX)ar
-LD := $(PREFIX)g++ #ld
+LD ?= $(PREFIX)g++ #ld
 
 
 INCLUDES := -I$(TOPDIR)/utils -I$(TOPDIR)/bsp -I$(TOPDIR)/external_devices
