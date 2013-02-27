@@ -25,6 +25,14 @@ void pause_till_signal()
 
 void maneuver_program()
 {
+	gpio_set_fsel(PIN_18, ALT1);
+
+	write("Waiting for signal");
+	writeln();
+	pause_till_signal();
+	write("Signal!");
+	writeln();
+
 	i2c& i2c1(i2c::setup(1));
 	i2c1.enable();
 
