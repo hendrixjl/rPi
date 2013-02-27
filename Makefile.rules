@@ -1,6 +1,13 @@
 ifdef __BARE_METAL__
+
 PREFIX := arm-none-eabi-
 DEFINES += -D__BARE_METAL__
+CPP := $(PREFIX)g++
+CC := $(PREFIX)gcc
+AS := $(PREFIX)as
+AR := $(PREFIX)ar
+LD := $(PREFIX)ld
+
 endif
 
 
