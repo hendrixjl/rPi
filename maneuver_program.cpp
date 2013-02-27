@@ -68,13 +68,14 @@ void maneuver_program()
 		const char* msg;
 	};
 
-	command_t commands[] = {
+	static const command_t commands[] = {
 		command_t{FORWARD_BACK_ENABLE + FORWARD, 100, "FORWARD"},
 		command_t{FORWARD_BACK_DISABLE + FORWARD, 75, "STOP"},
 		command_t{FORWARD_BACK_ENABLE + BACKWARD, 50, "BACKWARD"},
 		command_t{FORWARD_BACK_DISABLE + BACKWARD, 25, "STOP"},
 		command_t{END_OF_PROGRAM, 0, "End of Program"}
 	};
+
 
 	auto it = &commands[0];
 	while (it->olat != END_OF_PROGRAM)
