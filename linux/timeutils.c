@@ -5,11 +5,15 @@
  *      Author: jonathanhendrix
  */
 
-#include <unistd.h>
+#include <time.h>
 
 
 
 void udelay(uint32_t microseconds)
 {
-	usleep(microseconds);
+	struct timespec ts = {
+			(microseconds/1000),
+			(microseconds%1000)*1000
+	};
+	nanosleep(ts);
 }
