@@ -15,15 +15,6 @@ void udelay(uint32_t useconds)
 	busyloop(useconds * USECS_TO_CYCLES);
 }
 
-#else
-
-#include <unistd.h>
-
-void udelay(uint32_t useconds)
-{
-    usleep(useconds);	
-}
-
 #endif
 
 void busyloop(unsigned int n)
