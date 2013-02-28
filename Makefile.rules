@@ -25,7 +25,8 @@ LD ?= $(PREFIX)g++ #ld
 INCLUDES := -I$(TOPDIR)/utils -I$(TOPDIR)/bsp -I$(TOPDIR)/external_devices
 
 CPPFLAGS += -std=c++0x -O0 -Wall -fmessage-length=0
-CFLAGS += -std=c99 -O0 -Wall -fmessage-length=0
+#CFLAGS += -std=c99 -O0 -Wall -fmessage-length=0
+CFLAGS += -std=gnu99 -O0 -Wall -fmessage-length=0
 
 %.o: %.cpp
 	@echo 'Building file: $<'
