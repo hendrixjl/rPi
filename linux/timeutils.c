@@ -15,5 +15,6 @@ void udelay(uint32_t microseconds)
 			(microseconds/1000),
 			(microseconds%1000)*1000
 	};
-	nanosleep(ts);
+	struct timespec remaining = {};
+	nanosleep(&ts, &remaining);
 }
