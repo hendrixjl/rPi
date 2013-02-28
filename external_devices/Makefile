@@ -12,7 +12,7 @@ all : $(TARGET)
 
 
 $(TARGET) : $(OBJS)
-	ar rcs $(TARGET) $(OBJS)
+	$(AR) rcs $(TARGET) $(OBJS)
 
 clean:
 	-$(RM) *.o $(TARGET)
