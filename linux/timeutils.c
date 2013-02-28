@@ -6,6 +6,7 @@
  */
 
 #include <time.h>
+#include <sys/types.h> // C99 problem in gcc -std=C99
 #include "mytypes.h"
 
 
