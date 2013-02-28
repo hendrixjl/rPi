@@ -13,7 +13,12 @@ DIRS += linux
 LIBS += -Llinux -llinux
 endif
 
-LIBS += -Lbsp -lbsp -Lutils -lutils
+LIBS += -Lbsp -lbsp -Lutils -lutils -lbare_metal
+
+# Needed to resolve linking problems
+ifdef __BARE_METAL__
+LIBS += -lbare_metal
+endif
 
 DIRS += bsp utils
 
