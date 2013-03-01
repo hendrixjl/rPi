@@ -34,7 +34,7 @@ all: $(TARGET)
 # Tool invocations
 $(TARGET): DI $(OBJS) 
 	@echo 'Building target: $@'
-	@echo 'Invoking: Cross GCC'
+	@echo 'Invoking: Linker'
 	$(LD)  -o $(TARGET) $(LFLAGS) $(OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
