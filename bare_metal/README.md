@@ -1,4 +1,8 @@
 This is for the low level files that enable running bare metal.
+
+memmap - This is the linker memory map (used in the top directory) that guarantees
+         that bootstrap.o is the first to load at location 0x08000.
+
 bootstrap.S - Defines and sets up the interrupt vectors and branches to kmain.
 
 cpp_enables.S - Trivially defines __cxa_guard_acquire and __cxa_guard_release 
