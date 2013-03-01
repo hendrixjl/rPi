@@ -37,14 +37,14 @@ CFLAGS += -std=gnu99 -O0 -Wall -fmessage-length=0
 
 %.o: %.c
 	@echo 'Building file: $<'
-	@echo 'Invoking: Cross G++ Compiler'
+	@echo 'Invoking: Cross GCC Compiler'
 	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINES) -o "$@" -c "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
 %.o: %.S
 	@echo 'Building file: $<'
-	@echo 'Invoking: Cross G++ Compiler'
+	@echo 'Invoking: Cross Assembler'
 	$(AS) $(AOPTS) $(INCLUDES)  -o "$@" -c "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
