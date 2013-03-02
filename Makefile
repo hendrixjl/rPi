@@ -13,7 +13,7 @@ DIRS += linux
 LIBS += -Llinux -llinux
 endif
 
-LIBS += -Lbsp -lbsp -Lutils -lutils -Lexternal_devices -lexternal_devices
+LIBS += -Lbsp -lbsp -Lexternal_devices -lexternal_devices -Lutils -lutils 
 
 # Needed to resolve linking problems
 ifdef __BARE_METAL__
