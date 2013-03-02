@@ -13,14 +13,14 @@ DIRS += linux
 LIBS += -Llinux -llinux
 endif
 
-LIBS += -Lbsp -lbsp -Lutils -lutils
+LIBS += -Lbsp -lbsp -Lutils -lutils -Lexternal_devices -lexternal_devices
 
 # Needed to resolve linking problems
 ifdef __BARE_METAL__
 LIBS += -lbare_metal
 endif
 
-DIRS += bsp utils
+DIRS += bsp utils external_devices
 
 
 OBJS += $(patsubst %.cpp, %.o, $(shell ls *.cpp))

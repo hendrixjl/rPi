@@ -1,3 +1,5 @@
+// Adapted from code by David Welch (https://github.com/dwelch67/raspberrypi).
+
 #include "uart.h"
 #include "bar.h"
 #include "gpio.h"
