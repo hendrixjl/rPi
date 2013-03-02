@@ -1,11 +1,9 @@
 
 #include "crawler.h"
 #include "stdout.h"
+#include "format.h"
 #include "i2c.h"
 #include "pwm.h"
-
-
-
 
 namespace
 {
@@ -45,7 +43,11 @@ crawler::~crawler()
 
 void crawler::maneuver(const maneuver_t& maneuver)
 {
-    gpio_.set_olat(direction_to_olat(maneuver.direction) | turn_to_olat(maneuver.turn));
+	uint8_t v = direction_to_olat(maneuver.direction) | turn_to_olat(maneuver.turn);
+	static char buffer[RECOMMENDED_BUFFER_SIZE];
+	unsigned_to_bstring(buffer, RECOMMENDED_BUFFER_SIZE, (unsigned)v);
+	writeln(buffer);
+    gpio_.set_olat(v);
 //    setTurnServo(maneuver.turn_power);
 //    setDirectionServo(maneuver.direction_power);
 }
