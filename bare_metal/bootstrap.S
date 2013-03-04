@@ -5,7 +5,7 @@
 @      Author: jonathanhendrix
 @
 
-
+.section ".text.boot"
 
 _start:
     ldr pc,reset_handler

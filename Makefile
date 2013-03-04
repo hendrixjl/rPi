@@ -17,7 +17,7 @@ LIBS += -Lbsp -lbsp -Lexternal_devices -lexternal_devices -Lutils -lutils
 
 # Needed to resolve linking problems
 ifdef __BARE_METAL__
-LIBS += -lbare_metal
+LIBS += -lbare_metal -lgcc
 endif
 
 DIRS += bsp utils external_devices
