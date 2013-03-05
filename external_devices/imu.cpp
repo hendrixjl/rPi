@@ -14,11 +14,8 @@ imu::imu(i2c& ani2c)
   inclination_(0.0),
   roll_(0.0)
 {
-	l3gd20 gyro(L3GD20,i2c1);
-	gyro.enable();
-
-	lsm303dlh accel(LSM303_M, LSM303_A, i2c1);
-	accel.enable();
+	gyro_.enable();
+	accel_.enable();
 }
 
 imu::~imu()
