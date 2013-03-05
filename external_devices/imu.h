@@ -1,4 +1,3 @@
-
 #ifndef IMU_H_
 #define IMU_H_
 
@@ -34,7 +33,7 @@ public:
 
 private:
 	l3gd20 gyro_;
-	lsm303dlh acceleromter_;
+	lsm303dlh accelerometer_;
 	float heading_;
 	float inclination_;
 	float roll_;
