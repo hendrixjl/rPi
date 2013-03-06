@@ -2,7 +2,8 @@
 #define IMU_H_
 
 #include "l3gd20.h"
-#include "lsm303dlh.h"
+#include "lsm303dlh_accelerometer.h"
+#include "lsm303dlh_magnetometer.h"
 
 class i2c;
 
@@ -33,7 +34,8 @@ public:
 
 private:
 	l3gd20 gyro_;
-	lsm303dlh accelerometer_;
+	lsm303dlh_accelerometer accelerometer_;
+	lsm303dlh_magnetometer magnetometer_;
 	float heading_;
 	float inclination_;
 	float roll_;
