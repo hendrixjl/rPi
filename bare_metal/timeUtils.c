@@ -1,7 +1,7 @@
 #include "timeUtils.h"
 
 
-enum { USECS_TO_CYCLES=100 }; // just a guess
+enum { USECS_TO_CYCLES=1 }; // just a guess
 
 void udelay(uint32_t useconds)
 {
