@@ -5,37 +5,22 @@
  *      Author: jonathanhendrix
  */
 
-#ifndef LSM303DLH_H_
-#define LSM303DLH_H_
+#ifndef LSM303DLH_ACCELEROMETER_H_
+#define LSM303DLH_ACCELEROMETER_H_
 
 #include "i2c.h"
 #include "mytypes.h"
 
-class lsm303dlh
+class lsm303dlh_accelerometer
 {
 public:
-	lsm303dlh(uint8_t mag_address,
-			uint8_t acc_address,
+	lsm303dlh(uint8_t acc_address,
 			i2c& i2cbus)
-	: mag_addr_(mag_address),
-	  acc_addr_(acc_address),
+	: acc_addr_(acc_address),
 	  i2cbus_(i2cbus) {}
 
-	uint8_t mag_identify() {
-		return i2cbus_.query(mag_addr_, WHO_AM_I_A);
-	}
 	uint8_t accel_identify() {
 		return i2cbus_.query(acc_addr_, WHO_AM_I_A);
-	}
-
-	uint32_t get_temp()
-	{
-		uint8_t buff[2];
-		if (i2cbus_.query(mag_addr_, TEMP_OUT_H_M)==2)
-		{
-			return static_cast<uint32_t>(buff[0]);
-		}
-		return 0;
 	}
 
 	void enable()
@@ -65,15 +50,6 @@ public:
 		i2cbus_.command(acc_addr_, CTRL_REG1_A, &data, 1);
 		data = EIGHT_G | HIGH_RESOLUTION_OUTPUT;
 		i2cbus_.command(acc_addr_, CTRL_REG4_A, &data, 1);
-		// Enable Magnetometer
-		enum {
-			CONTINUOUS_CONVERSION_MODE = 0,
-			SINGLE_CONVERSION_MODE = 1,
-			SLEEP_MODE1 = 2,
-			SLEEP_MODE2 = 3
-		};
-		data = CONTINUOUS_CONVERSION_MODE;
-		i2cbus_.command(mag_addr_, MR_REG_M, &data, 1);
 	}
 
 	void getAcc(int16_t acc[3])
@@ -84,20 +60,6 @@ public:
 	    acc[0] = (int16_t)(block[0] | block[1] << 8) >> 4;
 	    acc[1] = (int16_t)(block[2] | block[3] << 8) >> 4;
 	    acc[2] = (int16_t)(block[4] | block[5] << 8) >> 4;
-	}
-
-	void getMag(int16_t mag[3])
-	{
-	    uint8_t block[6];
-	    i2cbus_.query(mag_addr_, OUT_X_H_M, block, sizeof(block));
-
-	    // DLM, DLHC: register address order is X,Z,Y with high bytes first
-	    mag[0] = (int16_t)(block[1] | block[0] << 8);
-	    mag[1] = (int16_t)(block[5] | block[4] << 8);
-	    mag[2] = (int16_t)(block[3] | block[2] << 8);
-
-	    // TODO: handle DLH properly here (switch two components?)
-
 	}
 
 private:
@@ -137,26 +99,10 @@ private:
 		TIME_LIMIT_A,
 		TIME_LATENCY_A,
 		TIME_WINDOW_A,
-		CRA_REG_M=0x00,
-		CRB_REG_M,
-		MR_REG_M,
-		OUT_X_H_M,
-		OUT_X_L_M,
-		OUT_Z_H_M,
-		OUT_Z_L_M,
-		OUT_Y_H_M,
-		OUT_Y_L_M,
-		SR_REG_M,
-		IRA_REG_M,
-		IRB_REG_M,
-		IRC_REG_M,
-		TEMP_OUT_H_M=0x31,
-		TEMP_OUT_L_M
 	};
-	uint8_t mag_addr_;
 	uint8_t acc_addr_;
 	i2c& i2cbus_;
 };
 
 
-#endif /* LSM303DLH_H_ */
+#endif 
