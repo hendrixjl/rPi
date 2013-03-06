@@ -1,5 +1,6 @@
 #include "imu.h"
 #include "stdout.h"
+#include "timeUtils.h"
 
 enum {
 	LSM303_A=0x19,
@@ -26,7 +27,7 @@ void imu::integrate()
 {
 	write(getTime()); write(',');
 	int16_t angles[3];
-	gyro_.measurements(angles);
+	gyro_.getAngles(angles);
 	write(angles[0]); write(',');
 	write(angles[1]); write(',');
 	write(angles[2]); write(',');
