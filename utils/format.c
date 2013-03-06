@@ -54,6 +54,23 @@ int unsigned_to_nstring(char* buffer, size_t blen, unsigned n, unsigned base)
 	return cnt;
 }
 
+int unsigned_to_nstring_zerofill(char* buffer, size_t blen, unsigned n, unsigned base)
+{
+	int cnt=0;
+	unsigned digits = count_digits(0xFFFFFFFF, base);
+	if (digits > blen-1) return -1;
+	buffer[digits] = '\0';
+	unsigned temp = n;
+
+	for (int cnt = 0; cnt < digits; ++cnt)
+	{
+    	buffer[digits-cnt-1]=to_digit(temp%base);
+    	temp /= base;
+	}
+
+	return cnt;
+}
+
 int unsigned_to_string(char* buffer, size_t blen, unsigned n)
 {
 	enum { BASE = 10 };
@@ -76,13 +93,13 @@ int int_to_string(char* buffer, size_t blen, int n)
 int unsigned_to_xstring(char* buffer, size_t blen, unsigned n)
 {
 	enum { BASE = 16 };
-	return unsigned_to_nstring(buffer, blen, n, BASE);
+	return unsigned_to_nstring_zerofill(buffer, blen, n, BASE);
 }
 
 int unsigned_to_bstring(char* buffer, size_t blen, unsigned n)
 {
 	enum { BASE = 2 };
-	return unsigned_to_nstring(buffer, blen, n, BASE);
+	return unsigned_to_nstring_zerofill(buffer, blen, n, BASE);
 }
 
 int string_to_nunsigned(unsigned* n, const char* buffer, unsigned base)
