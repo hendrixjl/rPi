@@ -10,7 +10,7 @@ LIBS += -Lbare_metal -lbare_metal
 LFLAGS += -nostartfiles -nodefaultlibs -nostdlib -T bare_metal/memmap
 else
 DIRS += linux
-LIBS += -Llinux -llinux
+LIBS += -Llinux -llinux -lrt
 endif
 
 LIBS += -Lbsp -lbsp -Lexternal_devices -lexternal_devices -Lutils -lutils 
