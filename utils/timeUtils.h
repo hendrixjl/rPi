@@ -19,6 +19,7 @@ void busyloop(uint32_t n);
 
 void udelay(uint32_t microseconds);
 
+uint64_t getTime();
 
 #ifdef __cplusplus
 }
