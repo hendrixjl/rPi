@@ -49,7 +49,7 @@ void maneuver_program()
 			crawler::maneuver_t{crawler::STOP_DIRECTION, 0, crawler::STOP_TURN, 0}
 	};
 
-	for (auto i=0U; i<sizeof(commands); ++i)
+	for (auto i=0U; i<sizeof(commands)/sizeof(crawler::maneuver_t); ++i)
 	{
 		mycrawler.maneuver(commands[i]);
 		udelay(1000);
