@@ -18,3 +18,14 @@ void udelay(uint32_t microseconds)
 	struct timespec remaining = {};
 	nanosleep(&ts, &remaining);
 }
+
+unsigned long long getTime()
+{
+	struct timespec tp;
+	clock_gettime(CLOCK_MONOTONIC, &tp);
+	enum {
+		MICROSECONDS_IN_SECOND=1000000U,
+		NANOSECONDS_IN_MICROSECOND=1000U
+	};
+	return tp.tv_sec*MICROSECONDS_IN_SECOND + tp.tv_nsec/NANOSECONDS_IN_MICROSECOND;
+}
