@@ -14,7 +14,7 @@
 class lsm303dlh_accelerometer
 {
 public:
-	lsm303dlh(uint8_t acc_address,
+	lsm303dlh_accelerometer(uint8_t acc_address,
 			i2c& i2cbus)
 	: acc_addr_(acc_address),
 	  i2cbus_(i2cbus) {}

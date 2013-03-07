@@ -4,10 +4,10 @@
 #include "i2c.h"
 #include "mytypes.h"
 
-class lsm303dlh
+class lsm303dlh_magnetometer
 {
 public:
-    lsm303dlh(uint8_t mag_address, i2c& i2cbus)
+    lsm303dlh_magnetometer(uint8_t mag_address, i2c& i2cbus)
     : mag_addr_(mag_address),
       i2cbus_(i2cbus) {}
 
@@ -33,7 +33,7 @@ public:
             SLEEP_MODE1 = 2,
             SLEEP_MODE2 = 3
         };
-        data = CONTINUOUS_CONVERSION_MODE;
+        uint8_t data = CONTINUOUS_CONVERSION_MODE;
         i2cbus_.command(mag_addr_, MR_REG_M, &data, 1);
     }
 
@@ -52,6 +52,7 @@ public:
 
 private:
     enum registers_t {
+		WHO_AM_I_A=0x0F,
         CRA_REG_M=0x00,
         CRB_REG_M,
         MR_REG_M,
@@ -69,7 +70,6 @@ private:
         TEMP_OUT_L_M
     };
     uint8_t mag_addr_;
-    uint8_t acc_addr_;
     i2c& i2cbus_;
 };
 
