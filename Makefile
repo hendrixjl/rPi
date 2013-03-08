@@ -23,9 +23,14 @@ endif
 DIRS += bsp utils external_devices
 
 
-OBJS += $(patsubst %.cpp, %.o, $(shell ls *.cpp))  bare_metal/bootstrap.o
+OBJS += $(patsubst %.cpp, %.o, $(shell ls *.cpp))
 #OBJS += $(patsubst %.c, %.o, $(shell ls *.c))
 #OBJS += $(patsubst %.S, %.o, $(shell ls *.S))
+
+# Force inclusion of bootstrap code
+ifdef __BARE_METAL__
+OBJS += bare_metal/bootstrap.o
+endif
 
 
 # All Target
