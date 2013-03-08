@@ -11,6 +11,8 @@ enum {
 
 unsigned time_ticks;
 
+extern "C" void c_irq_handler();
+
 void c_irq_handler()
 {
 	++time_ticks;
