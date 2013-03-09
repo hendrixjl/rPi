@@ -27,15 +27,15 @@ enum bar_t {
 
 void straight_assign() // for bare metal
 {
-    IRQ_BAR = (volatile unsigned*) eIRQ_BAR;
-    ARM_TIMER_BAR = (volatile unsigned*) eARM_TIMER_BAR;
-    GPIO_BAR = (volatile unsigned*) eGPIO_BAR;
-    BSC0_BAR = (volatile unsigned*) eBSC0_BAR;
-    BSC1_BAR = (volatile unsigned*) eBSC1_BAR;
-    BSC2_BAR = (volatile unsigned*) eBSC2_BAR;
-    PWM_BAR = (volatile unsigned*) ePWM_BAR;
-    CLOCK_BAR = (volatile unsigned*) eCLOCK_BAR;
-    UART_BAR = (volatile unsigned*) eUART_BAR;
+    IRQ_BAR = (volatile uint32_t*) eIRQ_BAR;
+    ARM_TIMER_BAR = (volatile uint32_t*) eARM_TIMER_BAR;
+    GPIO_BAR = (volatile uint32_t*) eGPIO_BAR;
+    BSC0_BAR = (volatile uint32_t*) eBSC0_BAR;
+    BSC1_BAR = (volatile uint32_t*) eBSC1_BAR;
+    BSC2_BAR = (volatile uint32_t*) eBSC2_BAR;
+    PWM_BAR = (volatile uint32_t*) ePWM_BAR;
+    CLOCK_BAR = (volatile uint32_t*) eCLOCK_BAR;
+    UART_BAR = (volatile uint32_t*) eUART_BAR;
 }
 
 #else
