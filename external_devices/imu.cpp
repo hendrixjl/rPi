@@ -47,3 +47,20 @@ void imu::integrate()
 	write(mags[1]); write(',');
 	writeln(mags[2]); write(',');
 }
+
+matrix rotationFromCompass(const vector& acceleration, const vector& magnetic_field)
+{
+    vector down = -acceleration;     // usually true
+    vector east = down.cross(magnetic_field); // actually it's magnetic east
+    vector north = east.cross(down);
+
+    east.normalize();
+    north.normalize();
+    down.normalize();
+
+    matrix r;
+    r.row(0) = north;
+    r.row(1) = east;
+    r.row(2) = down;
+    return r;
+}
