@@ -7,7 +7,7 @@
 #include "timeUtils.h"
 
 
-void busyloop(unsigned int n)
+void busyloop(uint32_t n)
 {
 	for(volatile unsigned i=0; i<n; i++);
 }
