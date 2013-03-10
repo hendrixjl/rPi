@@ -7,10 +7,6 @@
 
 #include "Core"
 #include "Geometry"
-typedef Eigen::Vector3f vector;
-typedef Eigen::Vector3i int_vector;
-typedef Eigen::Matrix3f matrix;
-typedef Eigen::Quaternionf quaternion;
 
 class i2c;
 
@@ -47,8 +43,25 @@ private:
 	float inclination_;
 	float roll_;
 
-	matrix rotationFromCompass(const vector& acceleration, const vector& magnetic_field);
+	Eigen::Matrix3f rotationFromCompass(const Eigen::Vector3f& acceleration, const Eigen::Vector3f& magnetic_field);
 
+	typedef void fuse_function(Eigen::Quaternionf& rotation, float dt, const Eigen::Vector3f& angular_velocity,
+	                  const Eigen::Vector3f& acceleration, const Eigen::Vector3f& magnetic_field);
+
+	void fuse_compass_only(Eigen::Quaternionf& rotation, float dt, const Eigen::Vector3f& angular_velocity,
+	  const Eigen::Vector3f& acceleration, const Eigen::Vector3f& magnetic_field);
+
+	// Uses the given angular velocity and time interval to calculate
+	// a rotation and applies that rotation to the given quaternion.
+	// w is angular velocity in radians per second.
+	// dt is the time.
+	void rotate(Eigen::Quaternionf& rotation, const Eigen::Vector3f& w, float dt);
+
+	void fuse_gyro_only(Eigen::Quaternionf& rotation, float dt, const Eigen::Vector3f& angular_velocity,
+	  const Eigen::Vector3f& acceleration, const Eigen::Vector3f& magnetic_field);
+
+	void fuse_default(Eigen::Quaternionf& rotation, float dt, const Eigen::Vector3f& angular_velocity,
+	  const Eigen::Vector3f& acceleration, const Eigen::Vector3f& magnetic_field);
 };
 
 #endif /* IMU_H_ */
