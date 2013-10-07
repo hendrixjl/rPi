@@ -29,7 +29,7 @@ enum {
 
 void setServo(int percent)
 {
-	int bitCount;
+	int bitCount=32;
 	unsigned int bits = 0;
 
 	// 32 bits = 2 milliseconds
