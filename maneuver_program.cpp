@@ -28,7 +28,7 @@ void maneuver_program()
 
 	write("Waiting for signal");
 	writeln();
-	pause_till_signal();
+//	pause_till_signal();
 	write("Signal!");
 	writeln();
 	
