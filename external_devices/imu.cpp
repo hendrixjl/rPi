@@ -51,7 +51,7 @@ void imu::integrate()
 	writeln(mags[2]); write(',');
 }
 
-Matrix3f rotationFromCompass(const Vector3f& acceleration, const Vector3f& magnetic_field)
+Matrix3f imu::rotationFromCompass(const Vector3f& acceleration, const Vector3f& magnetic_field)
 {
 	Vector3f down = -acceleration;     // usually true
 	Vector3f east = down.cross(magnetic_field); // actually it's magnetic east
@@ -97,7 +97,7 @@ void imu::fuse_gyro_only(Quaternionf& rotation, float dt, const Vector3f& angula
 void imu::fuse_default(Quaternionf& rotation, float dt, const Vector3f& angular_velocity,
   const Vector3f& acceleration, const Vector3f& magnetic_field)
 {
-    Vector3f correction = vector(0, 0, 0);
+    Vector3f correction(0, 0, 0);
 
     if (abs(acceleration.norm() - 1) <= 0.3)
     {
