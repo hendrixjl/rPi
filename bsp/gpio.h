@@ -73,7 +73,7 @@ typedef enum  {
 	ALT0=4,
 	ALT1=5,
 	ALT2=6,
-	ALT3=4,
+	ALT3=7,
 	ALT4=3,
 	ALT5=2,
 	ALL_MASK=7
