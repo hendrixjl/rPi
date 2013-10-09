@@ -50,7 +50,7 @@ void initHardware()
 {
 
 	// set PWM alternate function for GPIO18
-	gpio_set_fsel(PIN_18, ALT1); // SET_GPIO_ALT(18, 5);
+	gpio_set_fsel(PIN_18, ALT5); // SET_GPIO_ALT(18, 5);
 
 	// stop clock and waiting for busy flag doesn't work, so kill clock
 	CLOCK_BAR[PWMClK_CNTL] = 0x5A000000 | (1 << 5); //*(clk + PWMCLK_CNTL) = 0x5A000000 | (1 << 5);
