@@ -33,7 +33,7 @@ public:
     void reset() {
         enum { RESET=0 };
         uint8_t command = RESET;
-        i2cbus_.command(addr_, MODE1, &command, sizeof(command))
+        i2cbus_.command(addr_, MODE1, &command, sizeof(command));
     }
     
     uint8_t getMode1() {
