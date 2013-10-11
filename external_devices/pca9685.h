@@ -8,7 +8,7 @@ class pca9685
 {
 public:
     enum led_t {
-      LED0 = 0;
+      LED0 = 0,
       LED1,
       LED2,
       LED3,
