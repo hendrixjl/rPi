@@ -36,14 +36,34 @@ public:
         i2cbus_.command(addr_, MODE1, &command, sizeof(command))
     }
     
+    uint8_t getMode1() {
+        return i2cbus_.query(addr_, MODE1);
+    }
+    
+    uint8_t getMode2() {
+        return i2cbus_.query(addr_, MODE2);
+    }
+    
     void set_frequency(uint32_t frequency) {
+        enum {
+            RESTART=0x80,
+            EXTCLK=0x40,
+            AI=0x20,
+            SLEEP= 0x10,
+            SUB1=0x08,
+            SUB2=0x04,
+            SUB3=0x02,
+            ALLCALL=0x01,
+            INVRT=0x10, // MODE2
+            OCH=0x40
+        }
         enum { CLOCK_FREQ_HZ = 25000000 };
         double prescaleval = (double(CLOCK_FREQ_HZ) / 
                               double(TWELVE_BIT_VALUE)) /
                              double(frequency) - 1.0; // why -1.0?
         uint8_t iprescale = uint8_t(prescaleval);
         uint8_t oldmode = i2cbus_.query(addr_, MODE1);
-        uint8_t newmode = (oldmode & 0x7F) | 0x10; // or sleep
+        uint8_t newmode = (oldmode & 0x7F) | SLEEP; // or sleep
         i2cbus_.command(addr_, MODE1, &newmode, sizeof(newmode));
         i2cbus_.command(addr_, PRESCALE, &iprescale, sizeof(iprescale));
         i2cbus_.command(addr_, MODE1, &oldmode, sizeof(oldmode));
