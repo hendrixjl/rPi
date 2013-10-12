@@ -93,10 +93,20 @@ public:
         duty = 100 - offset;
       }
       
-      set_interval_raw(led, offset * TWELVE_BIT_VALUE / 100,
+      set_interval(led, offset * TWELVE_BIT_VALUE / 100,
                              duty * TWELVE_BIT_VALUE / 100);
     }
     
+        
+    void set_interval(led_t led, int on_start, int off_start) {
+      uint8_t buffer[4];
+      buffer[ON_L] = on_start & 0xFF;
+      buffer[ON_H] = on_start >> 8;
+      buffer[OFF_L] = off_start & 0xFF;
+      buffer[OFF_L] = off_start >> 8;
+      i2cbus_.command(addr_, ledAddr(led), buffer, sizeof(buffer));
+    }
+
 private:
     enum subaddrs_t {
       MODE1 = 0,
@@ -122,15 +132,6 @@ private:
     
     int ledAddr(led_t led) {
       return LED_BASE + led*ADDRS_PER_LED;
-    }
-    
-    void set_interval_raw(led_t led, int on_start, int off_start) {
-      uint8_t buffer[4];
-      buffer[ON_L] = on_start & 0xFF;
-      buffer[ON_H] = on_start >> 8;
-      buffer[OFF_L] = off_start & 0xFF;
-      buffer[OFF_L] = off_start >> 8;
-      i2cbus_.command(addr_, ledAddr(led), buffer, sizeof(buffer));
     }
 
     uint8_t addr_;
