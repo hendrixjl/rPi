@@ -93,8 +93,8 @@ public:
         duty = 100 - offset;
       }
       
-      set_interval_raw(led_t led, offset * TWELVE_BIT_VALUE / 100,
-                                  duty * TWELVE_BIT_VALUE / 100);
+      set_interval_raw(led, offset * TWELVE_BIT_VALUE / 100,
+                             duty * TWELVE_BIT_VALUE / 100);
     }
     
 private:
