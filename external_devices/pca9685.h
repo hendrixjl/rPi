@@ -56,7 +56,7 @@ public:
             ALLCALL=0x01,
             INVRT=0x10, // MODE2
             OCH=0x40
-        }
+        };
         enum { CLOCK_FREQ_HZ = 25000000 };
         double prescaleval = (double(CLOCK_FREQ_HZ) / 
                               double(TWELVE_BIT_VALUE)) /
@@ -65,7 +65,7 @@ public:
         uint8_t oldmode = i2cbus_.query(addr_, MODE1);
         uint8_t newmode = (oldmode & 0x7F) | SLEEP; // or sleep
         i2cbus_.command(addr_, MODE1, &newmode, sizeof(newmode));
-        i2cbus_.command(addr_, PRESCALE, &iprescale, sizeof(iprescale));
+        i2cbus_.command(addr_, PRE_SCALE, &iprescale, sizeof(iprescale));
         i2cbus_.command(addr_, MODE1, &oldmode, sizeof(oldmode));
         enum { FIVE_MILLISECONDS = 5 };
         udelay(FIVE_MILLISECONDS);
@@ -109,7 +109,7 @@ private:
       PRE_SCALE = 0xFE,
       TestMode = 0xFF
     };
-    
+
     enum { TWELVE_BIT_VALUE=0x08000 };
 
     enum {
