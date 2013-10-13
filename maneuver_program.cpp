@@ -11,6 +11,7 @@
 #include "imu.h"
 #include "crawler.h"
 #include "timeUtils.h"
+#include "pca9685.h"
 
 void pause_till_signal()
 {
@@ -49,10 +50,18 @@ void maneuver_program()
 			crawler::maneuver_t{crawler::STOP_DIRECTION, 0, crawler::STOP_TURN, 0}
 	};
 
-	for (auto i=0U; i<sizeof(commands)/sizeof(crawler::maneuver_t); ++i)
-	{
-		mycrawler.maneuver(commands[i]);
-		udelay(1000);
+//	for (auto i=0U; i<sizeof(commands)/sizeof(crawler::maneuver_t); ++i)
+//	{
+//		mycrawler.maneuver(commands[i]);
+//		udelay(1000);
+//	}
+
+	pca9685 pwm(0x40, i2c1);
+
+	pwm.setFreq(60);
+	
+	for (uint32_t i=0; i<101; i++) {
+		pwm.
 	}
 
 	udelay(1000);
