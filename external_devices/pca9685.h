@@ -4,6 +4,8 @@
 #include "i2c.h"
 #include "mytypes.h"
 
+#include <iostream>
+
 class pca9685
 {
 public:
@@ -62,6 +64,7 @@ public:
                               double(TWELVE_BIT_VALUE)) /
                              double(frequency) - 1.0; // why -1.0?
         uint8_t iprescale = uint8_t(prescaleval);
+        std::cout << "iprescale=" << iprescale << std::endl;
         uint8_t oldmode = i2cbus_.query(addr_, MODE1);
         uint8_t newmode = (oldmode & 0x7F) | SLEEP; // or sleep
         i2cbus_.command(addr_, MODE1, &newmode, sizeof(newmode));
