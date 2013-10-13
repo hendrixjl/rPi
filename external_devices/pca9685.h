@@ -62,7 +62,7 @@ public:
         enum { CLOCK_FREQ_HZ = 25000000 };
         double prescaleval = (double(CLOCK_FREQ_HZ) / 
                               double(TWELVE_BIT_VALUE)) /
-                             double(frequency) - 1.0; // why -1.0?
+                             double(frequency); // why -1.0?
         uint8_t iprescale = uint8_t(prescaleval);
         std::cout << "iprescale=" << (uint32_t)iprescale << std::endl;
         uint8_t oldmode = i2cbus_.query(addr_, MODE1);
@@ -123,7 +123,7 @@ private:
       TestMode = 0xFF
     };
 
-    enum { TWELVE_BIT_VALUE=0x0800 };
+    enum { TWELVE_BIT_VALUE=0x01000 };
 
     enum {
       ADDRS_PER_LED = 4,
