@@ -58,10 +58,10 @@ void maneuver_program()
 
 	pca9685 pwm(0x40, i2c1);
 
-	pwm.setFreq(60);
+	pwm.set_frequency(60);
 	
 	for (uint32_t i=0; i<101; i++) {
-		pwm.
+		pwm.set_duty(i);
 	}
 
 	udelay(1000);
