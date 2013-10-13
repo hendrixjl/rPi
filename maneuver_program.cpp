@@ -61,7 +61,7 @@ void maneuver_program()
 	pwm.set_frequency(60);
 	
 	for (uint32_t i=0; i<101; i++) {
-		pwm.set_duty(i);
+		pwm.set_duty(pca9685::LED0, i);
 	}
 
 	udelay(1000);
