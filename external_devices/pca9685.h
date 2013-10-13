@@ -123,7 +123,7 @@ private:
       TestMode = 0xFF
     };
 
-    enum { TWELVE_BIT_VALUE=0x08000 };
+    enum { TWELVE_BIT_VALUE=0x0800 };
 
     enum {
       ADDRS_PER_LED = 4,
