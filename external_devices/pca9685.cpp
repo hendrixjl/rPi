@@ -18,16 +18,16 @@ enum subaddrs_t {
 };
 
 enum {
-            RESTART=0x80, // MODE1 bits
-            EXTCLK=0x40,
-            AI=0x20,
-            SLEEP= 0x10,
-            SUB1=0x08,
-            SUB2=0x04,
-            SUB3=0x02,
-            ALLCALL=0x01,
-            INVRT=0x10, // MODE2
-            OCH=0x40
+      RESTART=0x80, // MODE1 bits
+      EXTCLK=0x40,
+      AI=0x20,
+      SLEEP= 0x10,
+      SUB1=0x08,
+      SUB2=0x04,
+      SUB3=0x02,
+      ALLCALL=0x01,
+      INVRT=0x10, // MODE2
+      OCH=0x40
 };
 
 enum { TWELVE_BIT_VALUE = 0x01000 };
