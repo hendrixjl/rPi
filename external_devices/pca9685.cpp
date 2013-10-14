@@ -29,7 +29,7 @@ enum {
             OCH=0x40
 };
 
-enum { TWELVE_BITS = 0x01000 };
+enum { TWELVE_BIT_VALUE = 0x01000 };
 
 pca9685::pca9685(uint8_t address, i2c& i2cbus) : addr_(address), i2cbus_(i2cbus) {
     reset();
