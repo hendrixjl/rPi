@@ -2,6 +2,8 @@
 #include "stdout.h"
 #include "timeUtils.h"
 
+#include <iostream>
+using namespace std;
 
 using namespace Eigen;
 
