@@ -2,6 +2,8 @@
 #include "timeUtils.h"
 
 #include <iostream>
+#include <cassert>
+
 using namespace std;
 
 
@@ -51,11 +53,12 @@ uint8_t pca9685::getMode2() {
 }
     
 void pca9685::set_frequency(uint32_t frequency) {
+    // prescale formula from pca9685 documentation
     enum { CLOCK_FREQ_HZ = 25000000 };
-    double prescaleval = (double(CLOCK_FREQ_HZ) / 
-                          double(TWELVE_BIT_VALUE)) /
-                         double(frequency); // why -1.0?
-    uint8_t iprescale = uint8_t(prescaleval);
+    double prescaleval = double(CLOCK_FREQ_HZ) / 
+                          double(TWELVE_BIT_VALUE * frequency) - 1;
+    assert( prescaleval <= 255.0 );
+    uint8_t iprescale = static_cast<uint8_t>(prescaleval);
     cout << "iprescale=" << (uint32_t)iprescale << endl;
     uint8_t oldmode = i2cbus_.query(addr_, MODE1);
     uint8_t newmode = (oldmode & 0x7F) | SLEEP; // or sleep
