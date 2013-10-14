@@ -4,7 +4,7 @@
 using namespace std;
 
 
-    enum subaddrs_t {
+enum subaddrs_t {
       MODE1 = 0,
       MODE2 = 1,
       SUBADR1 = 2,
@@ -14,9 +14,9 @@ using namespace std;
       LED_BASE = 6,
       PRE_SCALE = 0xFE,
       TestMode = 0xFF
-    };
+};
 
-    enum {
+enum {
             RESTART=0x80, // MODE1 bits
             EXTCLK=0x40,
             AI=0x20,
@@ -27,9 +27,9 @@ using namespace std;
             ALLCALL=0x01,
             INVRT=0x10, // MODE2
             OCH=0x40
-    };
+};
 
-    enum { TWELVE_BITS = 0x01000 };
+enum { TWELVE_BITS = 0x01000 };
 
 pca9685::pca9685(uint8_t address, i2c& i2cbus) : addr_(address), i2cbus_(i2cbus) {
     reset();
@@ -67,7 +67,7 @@ void pca9685::set_frequency(uint32_t frequency) {
     i2cbus_.command(addr_, MODE1, &oldmode, sizeof(oldmode));
 }
     
-void pca9685::set_duty(led_t led, int duty, int offset=0) {
+void pca9685::set_duty(pwmled led, int duty, int offset=0) {
     if (offset < 0) {
         duty = 0;
     }
@@ -86,8 +86,19 @@ void pca9685::set_duty(led_t led, int duty, int offset=0) {
                              duty * TWELVE_BIT_VALUE / 100);
 }
     
+enum {
+      ADDRS_PER_LED = 4,
+      ON_L = 0,
+      ON_H = 1,
+      OFF_L = 2,
+      OFF_H = 3
+};
+    
+int pca9685::ledAddr(led_t led) {
+      return LED_BASE + static_cast<uint32_t>(led)*ADDRS_PER_LED;
+}
         
-void pca9685::set_interval(led_t led, int on_start, int off_start) {
+void pca9685::set_interval(pwmled led, int on_start, int off_start) {
       uint8_t buffer[4];
       buffer[ON_L] = on_start & 0xFF;
       buffer[ON_H] = on_start >> 8;
@@ -96,14 +107,3 @@ void pca9685::set_interval(led_t led, int on_start, int off_start) {
       i2cbus_.command(addr_, ledAddr(led), buffer, sizeof(buffer));
 }
 
-    enum {
-      ADDRS_PER_LED = 4,
-      ON_L = 0,
-      ON_H = 1,
-      OFF_L = 2,
-      OFF_H = 3
-    };
-    
-    int ledAddr(led_t led) {
-      return LED_BASE + led*ADDRS_PER_LED;
-    }
