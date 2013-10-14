@@ -83,6 +83,7 @@ void pca9685::set_duty(pwmled led, int duty, int offset) {
         duty = 100 - offset;
     }
       
+    cout << "offset=" << offset << " duty=" << duty << endl;
     set_interval(led, offset * TWELVE_BIT_VALUE / 100,
                              duty * TWELVE_BIT_VALUE / 100);
 }
@@ -100,6 +101,7 @@ static int ledAddr(pwmled led) {
 }
         
 void pca9685::set_interval(pwmled led, int on_start, int off_start) {
+      cout << " on_start=" << on_start << " off_start=" << off_start << endl;
       uint8_t buffer[4];
       buffer[ON_L] = on_start & 0xFF;
       buffer[ON_H] = on_start >> 8;
