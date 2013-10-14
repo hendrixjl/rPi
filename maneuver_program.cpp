@@ -5,13 +5,15 @@
  *      Author: jonathanhendrix
  */
 
-#include "stdout.h"
 #include "gpio.h"
 #include "i2c.h"
 #include "imu.h"
 #include "crawler.h"
 #include "timeUtils.h"
 #include "pca9685.h"
+
+#include <iostream>
+using namespace std;
 
 void pause_till_signal()
 {
@@ -60,8 +62,10 @@ void maneuver_program()
 
 	pwm.set_frequency(60);
 	
-	for (uint32_t i=0; i<101; i++) {
-		pwm.set_duty(pca9685::LED0, i);
+	for (uint32_t i=0; i<101; i+=10) {
+		cout << "duty = " << duty << endl;
+		pwm.set_duty(pwmled::LED0, i);
+		udelay(1000);
 	}
 
 	udelay(1000);
