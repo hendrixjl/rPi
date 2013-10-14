@@ -17,7 +17,7 @@ enum subaddrs_t {
       TestMode = 0xFF
 };
 
-enum {
+enum ControlBits {
       RESTART=0x80, // MODE1 bits
       EXTCLK=0x40,
       AI=0x20,
@@ -90,10 +90,10 @@ void pca9685::set_duty(pwmled led, int duty, int offset) {
     
 enum {
       ADDRS_PER_LED = 4,
-      ON_L = 0,
-      ON_H = 1,
-      OFF_L = 2,
-      OFF_H = 3
+      ON_LOW_BYTE_OFFSET = 0,
+      ON_HIGH_BYTE_OFFSET = 1,
+      OFF_LOW_BYTE_OFFSET = 2,
+      OFF_HIGH_BYTE_OFFSET = 3
 };
     
 static int ledAddr(pwmled led) {
@@ -103,10 +103,10 @@ static int ledAddr(pwmled led) {
 void pca9685::set_interval(pwmled led, int on_start, int off_start) {
       cout << " on_start=" << on_start << " off_start=" << off_start << endl;
       uint8_t buffer[4];
-      buffer[ON_L] = on_start & 0xFF;
-      buffer[ON_H] = on_start >> 8;
-      buffer[OFF_L] = off_start & 0xFF;
-      buffer[OFF_L] = off_start >> 8;
+      buffer[ON_LOW_BYTE_OFFSET] = on_start & 0xFF;
+      buffer[ON_HIGH_BYTE_OFFSET] = on_start >> 8;
+      buffer[OFF_LOW_BYTE_OFFSET] = off_start & 0xFF;
+      buffer[OFF_HIGH_BYTE_OFFSET] = off_start >> 8;
       i2cbus_.command(addr_, ledAddr(led), buffer, sizeof(buffer));
 }
 
