@@ -30,7 +30,7 @@ imu::~imu()
 
 void imu::integrate()
 {
-	write(getTime()); write(',');
+	cout << getTime() << ",";
 	int16_t angles[3];
 	int16_t accels[3] = {};
 	int16_t mags[3] = {};
@@ -39,16 +39,16 @@ void imu::integrate()
 	accelerometer_.getAcc(accels);
 	magnetometer_.getMag(mags);
 
-	write(angles[1]); write(',');
-	write(angles[2]); write(',');
+	cout << angles[1] << ',';
+	cout << angles[2] << ',';
 
-	write(accels[0]); write(',');
-	write(accels[1]); write(',');
-	write(accels[2]); write(',');
+	cout << accels[0] << ',';
+	cout << accels[1] << ',';
+	cout << accels[2] << ',';
 
-	write(mags[0]); write(',');
-	write(mags[1]); write(',');
-	writeln(mags[2]); write(',');
+	cout << mags[0] << ',';
+	cout << mags[1] << ',';
+	cout << mags[2] << ',';
 }
 
 Matrix3f imu::rotationFromCompass(const Vector3f& acceleration, const Vector3f& magnetic_field)
