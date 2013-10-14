@@ -65,4 +65,6 @@ void maneuver_program()
 	}
 
 	udelay(1000);
+        pwm.reset();
+        
 }
