@@ -68,7 +68,7 @@ void pca9685::set_frequency(uint32_t frequency) {
     i2cbus_.command(addr_, MODE1, &oldmode, sizeof(oldmode));
 }
     
-void pca9685::set_duty(pwmled led, int duty, int offset=0) {
+void pca9685::set_duty(pwmled led, int duty, int offset) {
     if (offset < 0) {
         duty = 0;
     }
@@ -95,7 +95,7 @@ enum {
       OFF_H = 3
 };
     
-int pca9685::ledAddr(led_t led) {
+static int ledAddr(pwmled led) {
       return LED_BASE + static_cast<uint32_t>(led)*ADDRS_PER_LED;
 }
         
