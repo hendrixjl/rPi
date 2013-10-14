@@ -107,10 +107,10 @@ void pca9685::set_interval(pwmled led, int on_start, int off_start) {
       cout << " on_start=" << on_start << " off_start=" << off_start << endl;
       uint8_t buffer[] = 
       {
-          on_start & 0xFF;
-          on_start >> 8;
-          off_start & 0xFF;
-          off_start >> 8;
+          on_start & 0xFF,
+          on_start >> 8,
+          off_start & 0xFF,
+          off_start >> 8
       };
 //      i2cbus_.command(addr_, ledAddr(led), buffer, sizeof(buffer));
       i2cbus_.command(addr_, ledAddr(led) + ON_LOW_BYTE_OFFSET, &buffer[ON_LOW_BYTE_OFFSET], 1);
