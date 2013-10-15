@@ -1,11 +1,12 @@
 #ifndef CRAWLER_H_
 #define CRAWLER_H_
 
-#include "mcp23008.h"
-#include "pca9685.h"
+#include "pwm_driver.h"
+#include "gpio_output_driver.h"
 #include "mytypes.h"
 
-class i2c;
+#include <memory>
+
 
 class crawler {
 public:
@@ -33,15 +34,15 @@ public:
 	    power_t turn_power;
 	};
 
-	crawler(i2c& bus);
+	crawler();
 
 	~crawler();
 
 	void maneuver(const maneuver_t& maneuver);
 
 private:
-	mcp23008 gpio_;
-	pca9685 pwm_;
+	std::unique_ptr<gpio_output_driver> gpio_;
+	std::unique_ptr<pwm_driver> pwm_;
 	direction current_direction_;
 	turn current_turn_;
 
