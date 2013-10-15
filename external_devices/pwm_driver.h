@@ -10,6 +10,11 @@ class pwm_driver
 {
 public:
     /**
+     * virtual destructor so interface will work
+     */
+    ~pwm_driver() {}
+    
+    /**
      * Set the frequency in hertz for the PWM device.
      * @param hertz - the desired frequency.
      */
