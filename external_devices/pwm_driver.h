@@ -12,7 +12,7 @@ public:
     /**
      * virtual destructor so interface will work
      */
-    ~pwm_driver() {}
+    virtual ~pwm_driver() {}
     
     /**
      * Set the frequency in hertz for the PWM device.
