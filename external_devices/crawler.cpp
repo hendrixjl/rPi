@@ -1,7 +1,6 @@
 #include "crawler.h"
 #include "format.h"
 #include "i2c.h"
-#include "pwm.h"
 
 #include <iostream>
 using namespace std;
@@ -10,7 +9,8 @@ namespace
 {
 
 enum {
-	MCP23008=0x20
+	MCP23008=0x20,
+	PCA9685=0x40
 };
 
 enum {
@@ -28,6 +28,7 @@ enum {
 
 crawler::crawler(i2c& bus)
 : gpio_(MCP23008, bus),
+  pwm_(PCA9685, bus),
   current_direction_(STOP_DIRECTION),
   current_turn_(STOP_TURN)
 {
@@ -52,10 +53,10 @@ void crawler::maneuver(const maneuver_t& maneuver)
 }
 
 
-uint8_t crawler::turn_to_olat(turn_t turn)
+uint8_t crawler::turn_to_olat(crawler::turn turn)
 {
 	uint8_t value=0;
-    if (turn == crawler::NO_CHANGE_TURN)
+    if (turn == crawler::NO_CHANGE)
     {
         turn = current_turn_;
     }
@@ -64,25 +65,25 @@ uint8_t crawler::turn_to_olat(turn_t turn)
     	current_turn_ = turn;
     }
 
-    if (turn == crawler::STOP_TURN)
+    if (turn == crawler::STOP)
     {
         value = 0;
     }
-    else if (turn == crawler::RIGHT_TURN)
+    else if (turn == crawler::RIGHT)
     {
         value = TURN_ENABLE | RIGHT;
     }
-    else if (turn == crawler::LEFT_TURN)
+    else if (turn == crawler::LEFT)
     {
         value = TURN_ENABLE | LEFT;
     }
     return value;
 }
 
-uint8_t crawler::direction_to_olat(direction_t dir)
+uint8_t crawler::direction_to_olat(crawler::direction dir)
 {
 	uint8_t value=0;
-    if (dir == crawler::NO_CHANGE_DIRECTION)
+    if (dir == crawler::NO_CHANGE)
     {
         dir = current_direction_;
     }
@@ -91,15 +92,15 @@ uint8_t crawler::direction_to_olat(direction_t dir)
     	current_direction_ = dir;
     }
 
-    if (dir == crawler::STOP_DIRECTION)
+    if (dir == crawler::STOP)
     {
         value = 0;
     }
-    else if (dir == FORWARD_DIRECTION)
+    else if (dir == FORWARD)
     {
         value = DIRECTION_ENABLE | FORWARD;
     }
-    else if (dir == BACKWARD_DIRECTION)
+    else if (dir == BACKWARD)
     {
         value = DIRECTION_ENABLE | BACKWARD;
     }
