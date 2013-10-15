@@ -3,11 +3,18 @@
 
 /**
  * This is an abstract class for a PWM controller.
+ * A pwm_driver object controls a *single* PWM signal.
  */
  
 class pwm_driver
 {
 public:
+    /**
+     * Set the frequency in hertz for the PWM device.
+     * @param hertz - the desired frequency.
+     */
+    virtual void set_frequency(int hertz)=0;
+
     /**
      * Set the duty cycle for a PWM device.
      * @param duty - The duty cycle in percentage.
