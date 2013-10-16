@@ -35,7 +35,7 @@ public:
     
     uint8_t getMode2();
     
-    void set_frequency(uint32_t frequency);
+    void set_frequency(int frequency);
     
     /**
      * Set the duty cycle of the LED
