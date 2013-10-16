@@ -42,7 +42,8 @@ public:
 
 private:
 	std::unique_ptr<gpio_output_driver> gpio_;
-	std::unique_ptr<pwm_driver> pwm_;
+	std::unique_ptr<pwm_driver> drive_pwm_;
+	std::unique_ptr<pwm_driver> turn_pwm_;
 	direction current_direction_;
 	turn current_turn_;
 
