@@ -28,10 +28,15 @@ enum {
 
 crawler::crawler(i2c& bus)
 : gpio_(MCP23008, bus),
-  pwm_(PCA9685, bus),
   current_direction_(STOP_DIRECTION),
   current_turn_(STOP_TURN)
 {
+	auto pwmdevice = make_shared<pca9685>(PCA9685, bus);
+	enum { SIXTY_HZ = 60 };
+	pwmdevice->set_frequency(SIXTY_HZ);
+	forward_back_pwm_ = make_unique<pwm_driver>(pca9685::pwmled0, pwmdevice);
+	left_right_pwm_ = make_unique<pwm_driver>(pca9685::pwmled1, pwmdevice);
+	
 	gpio_.set_iodir(ALL_PINS, mcp23008::OUTPUT);
 	gpio_.set_input_polarity(ALL_PINS, mcp23008::NORMAL_LOGIC);
     gpio_.set_olat(OFF);
