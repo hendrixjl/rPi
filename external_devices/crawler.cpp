@@ -56,8 +56,8 @@ void crawler::maneuver(const maneuver_t& maneuver)
 	uint8_t v = direction_to_olat(maneuver.direction) | turn_to_olat(maneuver.turn);
 	cout << static_cast<uint32_t>(v) << endl;
     gpio_.set_olat(v);
-//    setTurnServo(maneuver.turn_power);
-//    setDirectionServo(maneuver.direction_power);
+    left_right_pwm_->set_duty(maneuver.turn_power);
+    forward_back_pwm_->set_duty(maneuver.drive_power);
 }
 
 
