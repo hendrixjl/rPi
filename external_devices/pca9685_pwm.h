@@ -6,19 +6,27 @@
 #include "i2c.h"
 
 /**
- * implements pwm_driver on a pca9685 signal line.
+ * Adapts a pca9685 LED signal to a pwm_driver object.
  */
  
 class pca_9685_pwm : public pwm_driver
 {
 public:
-    pca_9685_pwm(led, pca9685& device);
-    virtual ~pca_9685_pwm() override;
-    virtual set_frequency(int hertz) override;
-    virtual set_duty(int duty) override;
+    pca_9685_pwm(pca9685:pwmled led, pca9685& device)
+    : device_(device), signal_(led) {}
+    
+    virtual ~pca_9685_pwm() override {}
+    
+    virtual set_frequency(int hertz) override {
+        device_.set_frequency(hertz);
+    }
+    
+    virtual set_duty(int duty) override {
+        device_.set_duty(signal_, duty);
+    }
 private:
     pca9685 device_;
-    pca9685::led signal_;
+    pca9685:pwmled signal_;
 };
 
 #endif 
