@@ -52,7 +52,7 @@ uint8_t pca9685::getMode2() {
     return i2cbus_.query(addr_, MODE2);
 }
     
-void pca9685::set_frequency(uint32_t frequency) {
+void pca9685::set_frequency(int frequency) {
     // prescale formula from pca9685 documentation
     enum { CLOCK_FREQ_HZ = 25000000 };
     double prescaleval = double(CLOCK_FREQ_HZ) / 
