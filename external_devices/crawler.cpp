@@ -2,6 +2,9 @@
 #include "format.h"
 #include "i2c.h"
 
+#include "make_unique"
+#include "pca9685.h"
+
 #include <iostream>
 using namespace std;
 
