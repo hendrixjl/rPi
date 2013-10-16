@@ -41,14 +41,14 @@ public:
 	void maneuver(const maneuver_t& maneuver);
 
 private:
-	std::unique_ptr<gpio_output_driver> gpio_;
+	std::unique_ptr<gpio_output_driver> right_;
+	std::unique_ptr<gpio_output_driver> left_;
+	std::unique_ptr<gpio_output_driver> forward_;
+	std::unique_ptr<gpio_output_driver> backwards_;
 	std::unique_ptr<pwm_driver> drive_pwm_;
 	std::unique_ptr<pwm_driver> turn_pwm_;
 	direction current_direction_;
 	turn current_turn_;
-
-	uint8_t turn_to_olat(turn turn);
-	uint8_t direction_to_olat(direction dir);
 
 	crawler(const crawler&)=delete; // no copy
 	crawler& operator=(const crawler&)=delete; // no assign
