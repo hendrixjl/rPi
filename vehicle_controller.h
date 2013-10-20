@@ -1,6 +1,8 @@
 #ifndef __VEHICLE_CONTROLLER_H__
 #define __VEHICLE_CONTROLLER_H__
 
+#include <memory>
+
 class vehicle_controller
 {
 public:
