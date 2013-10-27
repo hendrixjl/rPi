@@ -222,6 +222,7 @@ private:
 	i2c(const i2c&); // no copy
 	i2c& operator=(const i2c&); // no assign
 
+public:
 	/**
 	 * Setup the i2c bus 0 and initialize it to disabled.
 	 */

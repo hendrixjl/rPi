@@ -12,7 +12,7 @@
 class pca_9685_pwm : public pwm_driver
 {
 public:
-    pca_9685_pwm(pca9685:pwmled led, shared_ptr<pca9685>& device)
+    pca_9685_pwm(pca9685::pwmled led, shared_ptr<pca9685>& device)
     : device_(device), signal_(led) {}
     
     virtual ~pca_9685_pwm() override {}

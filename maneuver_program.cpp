@@ -9,10 +9,10 @@
 #include "i2c.h"
 #include "imu.h"
 #include "vehicle_controller.h"
-#include "timeUtils.h"
 #include "pca9685.h"
 
 #include <iostream>
+#include <unistd.h>
 using namespace std;
 
 void pause_till_signal()
@@ -37,18 +37,18 @@ void maneuver_program()
     vehicle_controller vc;
     
     vc.fb_control(vehicle_controller::fb_dir::FORWARD, 30);
-	udelay(1000);
+	sleep(1);
     
     vc.rl_control(vehicle_controller::rl_dir::RIGHT, 10);
-	udelay(1000);
+	sleep(1);
     
     vc.fb_control(vehicle_controller::fb_dir::STOP, 30);
-	udelay(1000);
+	sleep(1);
     
     vc.rl_control(vehicle_controller::rl_dir::LEFT, 10);
-	udelay(1000);
+	sleep(1);
     
     vc.fb_control(vehicle_controller::fb_dir::BACKWARD, 20);
-	udelay(1000);
+	sleep(1);
         
 }

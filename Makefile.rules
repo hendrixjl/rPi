@@ -2,7 +2,7 @@ ifdef __BARE_METAL__
 
 PREFIX := arm-none-eabi-
 DEFINES += -D__BARE_METAL__
-CPP := $(PREFIX)g++
+CPP := $(PREFIX)g++-4.7
 CC := $(PREFIX)gcc
 AS := $(PREFIX)as
 AR := $(PREFIX)ar
@@ -14,7 +14,7 @@ CPPFLAGS += -fno-exceptions
 endif
 
 ifndef __OVERRIDE__
-CPP := $(PREFIX)g++
+CPP := $(PREFIX)g++-4.7
 CC := $(PREFIX)gcc
 AS := $(PREFIX)as
 AR := $(PREFIX)ar

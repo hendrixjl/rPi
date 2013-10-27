@@ -1,6 +1,6 @@
 #include "gpio_dir_controller.h"
-
 #include "mcp23008.h"
+#include "make_unique"
 
 mcp23008 mcp23008_0x20(0x20, i2c::setup1());
 
@@ -8,7 +8,7 @@ class mcp23008_gpio_output_driver: public gpio_output_driver
 {
 public:
     mcp23008_gpio_output_driver(int pin) : pin_(pin) {
-		mcp23008_0x20.set_iodir(pin_, ACTIVE_HIGH_OUTPUT_IOCON);
+		mcp23008_0x20.set_iodir(pin_, mcp23008::ACTIVE_HIGH_OUTPUT_IOCON);
 	}
     /**
      * Turn the pin on (active state)

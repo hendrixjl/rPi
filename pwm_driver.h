@@ -25,7 +25,6 @@ public:
      * @param duty - The duty cycle in percentage.
      */
     virtual void set_duty(int duty)=0;
-private:
 };
 
 

@@ -99,7 +99,7 @@ enum {
       OFF_HIGH_BYTE_OFFSET = 3
 };
     
-static int ledAddr(pwmled led) {
+static int ledAddr(pca9685::pwmled led) {
       return LED_BASE + static_cast<uint32_t>(led)*ADDRS_PER_LED;
 }
         
