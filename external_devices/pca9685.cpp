@@ -1,8 +1,8 @@
 #include "pca9685.h"
-#include "timeUtils.h"
 
 #include <iostream>
 #include <cassert>
+#include <unistd.h>
 
 using namespace std;
 
@@ -65,8 +65,8 @@ void pca9685::set_frequency(int frequency) {
     i2cbus_.command(addr_, MODE1, &newmode, sizeof(newmode));
     i2cbus_.command(addr_, PRE_SCALE, &iprescale, sizeof(iprescale));
     i2cbus_.command(addr_, MODE1, &oldmode, sizeof(oldmode));
-    enum { FIVE_MILLISECONDS = 5 };
-    udelay(FIVE_MILLISECONDS);
+    enum { FIVE_MILLISECONDS = 5000 };
+    usleep(FIVE_MILLISECONDS);
     oldmode |= 0x80;
     i2cbus_.command(addr_, MODE1, &oldmode, sizeof(oldmode));
 }

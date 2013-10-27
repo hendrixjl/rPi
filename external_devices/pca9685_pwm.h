@@ -12,21 +12,21 @@
 class pca_9685_pwm : public pwm_driver
 {
 public:
-    pca_9685_pwm(pca9685::pwmled led, shared_ptr<pca9685>& device)
+    pca_9685_pwm(pca9685::pwmled led, std::shared_ptr<pca9685>& device)
     : device_(device), signal_(led) {}
     
     virtual ~pca_9685_pwm() override {}
     
-    virtual set_frequency(int hertz) override {
-        device_.set_frequency(hertz);
+    virtual void set_frequency(int hertz) override {
+        device_->set_frequency(hertz);
     }
     
-    virtual set_duty(int duty) override {
-        device_.set_duty(signal_, duty);
+    virtual void set_duty(int duty) override {
+        device_->set_duty(signal_, duty);
     }
 private:
-    shared_ptr<pca9685> device_;
-    pca9685:pwmled signal_;
+    std::shared_ptr<pca9685> device_;
+    pca9685::pwmled signal_;
 };
 
 #endif 

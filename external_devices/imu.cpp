@@ -1,6 +1,5 @@
 #include "imu.h"
 #include "stdout.h"
-#include "timeUtils.h"
 
 #include <iostream>
 using namespace std;
@@ -32,7 +31,6 @@ imu::~imu()
 
 void imu::integrate()
 {
-	cout << getTime() << ",";
 	int16_t angles[3];
 	int16_t accels[3] = {};
 	int16_t mags[3] = {};
